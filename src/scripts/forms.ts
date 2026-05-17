@@ -1,20 +1,6 @@
 import { siteConfig } from '../config/site.config';
+import { buildLeadNotificationHtml } from './lead-notification-email';
 import { trackFormSubmit, trackLeadSuccess } from './tracking';
-
-function escapeHtml(text: string) {
-  return text
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
-}
-
-function buildLeadEmailHtml(data: Record<string, string>) {
-  const rows = Object.entries(data)
-    .map(([k, v]) => `<p><strong>${escapeHtml(k)}:</strong> ${escapeHtml(v || '–')}</p>`)
-    .join('');
-  return `<!DOCTYPE html><html><body style="font-family:Arial,sans-serif">${rows}</body></html>`;
-}
 
 export function initLeadForms() {
   document.querySelectorAll<HTMLFormElement>('.lead-form, #contact-form').forEach((form) => {
@@ -77,11 +63,11 @@ export function initLeadForms() {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            from: { email: 'noreply@connect-crm.de', name: 'Tatari Website' },
-            to: [{ email: 'senoralpha39@gmail.com', name: 'Admin' }],
-            subject: `Lead: ${payload.Quelle} — ${name}`,
-            message: `Neue Anfrage von ${name}`,
-            htmlMessage: buildLeadEmailHtml(payload),
+            from: { email: 'noreply@connect-crm.de', name: 'Tatari Investment' },
+            to: [{ email: siteConfig.email, name: 'Tatari Vertrieb' }],
+            subject: `Neuer Investment-Lead · ${name} · ${payload.Quelle}`,
+            message: `Neue Anfrage von ${name} (${email})`,
+            htmlMessage: buildLeadNotificationHtml(payload),
           }),
         });
         if (!res.ok) throw new Error('fail');

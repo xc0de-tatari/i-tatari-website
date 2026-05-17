@@ -1,6 +1,7 @@
 import { links } from '../data/links';
 import { initLeadForms } from './forms';
 import { initCookieConsent } from './cookie-consent';
+import { buildContactNotificationHtml } from './lead-notification-email';
 
 function initMobileNav() {
   const toggle = document.querySelector('.menu-toggle');
@@ -124,36 +125,6 @@ function initHeaderScroll() {
   });
 }
 
-function buildContactEmailHtml(data: { name: string; email: string; phone: string; message: string }) {
-  const now = new Date().toLocaleString('de-DE', { dateStyle: 'full', timeStyle: 'short' });
-  return `
-    <!DOCTYPE html>
-    <html>
-      <head><meta charset="utf-8"></head>
-      <body style="font-family:Arial,sans-serif;line-height:1.6;color:#333">
-        <div style="max-width:600px;margin:0 auto;padding:20px">
-          <h2 style="color:#C9A961">Neue Kontaktanfrage – Tatari Investments</h2>
-          <p><strong>Name:</strong> ${escapeHtml(data.name)}</p>
-          <p><strong>E-Mail:</strong> ${escapeHtml(data.email)}</p>
-          <p><strong>Telefon:</strong> ${escapeHtml(data.phone || '–')}</p>
-          <p><strong>Nachricht:</strong></p>
-          <p style="white-space:pre-wrap">${escapeHtml(data.message)}</p>
-          <hr style="border:none;border-top:1px solid #eee;margin:20px 0" />
-          <p style="font-size:12px;color:#888">Gesendet am ${now} über i-tatari.com</p>
-        </div>
-      </body>
-    </html>
-  `;
-}
-
-function escapeHtml(text: string) {
-  return text
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;');
-}
-
 function initContactForm() {
   const form = document.getElementById('contact-form') as HTMLFormElement | null;
   const status = document.getElementById('form-status');
@@ -184,16 +155,16 @@ function initContactForm() {
     submitBtn.textContent = 'Wird gesendet…';
     setStatus('', '');
 
-    const htmlMessage = buildContactEmailHtml({ name, email, phone, message });
+    const htmlMessage = buildContactNotificationHtml({ name, email, phone, message });
 
     try {
       const res = await fetch(links.formApi, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          from: { email: 'noreply@connect-crm.de', name: 'CRM System' },
-          to: [{ email: 'senoralpha39@gmail.com', name: 'Admin' }],
-          subject: 'Neue Kontaktanfrage – Tatari Investments',
+          from: { email: 'noreply@connect-crm.de', name: 'Tatari Investment' },
+          to: [{ email: links.email, name: 'Tatari Vertrieb' }],
+          subject: `Neuer Lead · ${name} · Kontaktformular`,
           message: `Kontaktanfrage von ${name} (${email})`,
           htmlMessage,
         }),
