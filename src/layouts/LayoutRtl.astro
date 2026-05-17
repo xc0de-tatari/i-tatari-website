@@ -10,8 +10,14 @@ interface Props {
 const { title, description } = Astro.props;
 ---
 
-<Layout title={title} description={description} includeLocalBusiness={false}>
-  <div dir="rtl" lang="ar" class="rtl-root">
+<Layout
+  title={title}
+  description={description}
+  lang="ar"
+  noindex
+  includeLocalBusiness={false}
+>
+  <div dir="rtl" class="rtl-root">
     <slot />
   </div>
 </Layout>

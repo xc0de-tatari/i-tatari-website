@@ -1,14 +1,19 @@
 ---
-import { securityItems } from '../data/site';
+import type { Locale } from '../i18n';
+import { getSiteContent, getUi } from '../i18n/content';
+
+interface Props { locale?: Locale }
+const locale = Astro.props.locale ?? 'de';
+const { securityItems } = getSiteContent(locale);
+const t = getUi(locale).security;
 ---
 
 <section class="section">
   <div class="container center">
-    <p class="section-label" style="justify-content:center">TRANSPARENZ & BEGLEITUNG</p>
-    <h2 class="section-title">Strukturiert investieren — mit klarem Risikoprofil</h2>
-    <p class="section-desc">
-      Tatari begleitet deutschsprachige Investoren mit Due Diligence, Vertragslogik und Euro-Kalkulation — ohne Rendite- oder Sicherheitsgarantien.
-    </p>
+    <p class="section-label" style="justify-content:center">{t.label}</p>
+    <h2 class="section-title">{t.title}</h2>
+    <p class="section-desc">{t.desc}</p>
+    <p class="section-desc">{t.extra}</p>
   </div>
 
   <div class="container security-grid">

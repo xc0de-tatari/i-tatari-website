@@ -1,0 +1,109 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../Header.astro';
+import Footer from '../Footer.astro';
+import FloatingActions from '../FloatingActions.astro';
+import JsonLd from '../seo/JsonLd.astro';
+import Disclaimer from '../conversion/Disclaimer.astro';
+import LeadForm from '../conversion/LeadForm.astro';
+import WhatsAppButton from '../conversion/WhatsAppButton.astro';
+import CTAButton from '../conversion/CTAButton.astro';
+import type { EnPageContent } from '../../data/en-content';
+import { canonicalUrl, buildWebPageSchema, buildBreadcrumbSchema, mergeSchemas } from '../../lib/seo';
+
+interface Props {
+  page: EnPageContent;
+}
+
+const { page } = Astro.props;
+const schemas = mergeSchemas(
+  buildBreadcrumbSchema([
+    { name: 'Home', url: '/en/' },
+    { name: page.hero.label, url: page.path },
+  ]),
+  buildWebPageSchema({
+    name: page.seo.title,
+    description: page.seo.description,
+    url: page.path,
+  })
+);
+---
+
+<Layout
+  title={page.seo.title}
+  description={page.seo.description}
+  canonical={canonicalUrl(page.path)}
+  lang="en"
+>
+  <Fragment slot="head"><JsonLd data={schemas} /></Fragment>
+  <Header locale="en" />
+  <main id="main-content">
+    <section class="hero">
+      <div class="container hero-content center">
+        <p class="section-label" style="justify-content:center">{page.hero.label}</p>
+        <h1>{page.hero.headline}</h1>
+        <p class="hero-desc" style="max-width:720px;margin-inline:auto">{page.hero.subheadline}</p>
+        <div class="hero-actions">
+          <CTAButton href="/en/#contact" label={page.cta} />
+          <WhatsAppButton template="germany" label="WhatsApp" />
+        </div>
+      </div>
+    </section>
+
+    {page.sections.map((section) => (
+      <section class="section">
+        <div class="container">
+          <h2 class="section-title">{section.title}</h2>
+          {section.description && <p class="section-desc">{section.description}</p>}
+          <ul class="cluster-highlights">
+            {section.items.map((item) => (
+              <li>{item}</li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    ))}
+
+    <section id="contact" class="section section-alt">
+      <div class="container center">
+        <h2 class="section-title">Get in touch</h2>
+        <p class="section-desc">We respond within 24 hours — English advisory for Egypt, Dubai & Saudi Arabia.</p>
+      </div>
+      <div class="container" style="max-width:560px;margin-top:2rem">
+        <LeadForm formId="en-lead" />
+      </div>
+      <div class="container center" style="margin-top:1.5rem">
+        <Disclaimer compact />
+      </div>
+    </section>
+  </main>
+  <Footer locale="en" />
+  <FloatingActions />
+</Layout>
+
+<style>
+  .cluster-highlights {
+    list-style: none;
+    padding: 0;
+    margin-top: 1.5rem;
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .cluster-highlights li {
+    padding: 0.85rem 1rem 0.85rem 2rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    position: relative;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+  }
+
+  .cluster-highlights li::before {
+    content: '✓';
+    position: absolute;
+    left: 0.75rem;
+    color: var(--gold);
+  }
+</style>

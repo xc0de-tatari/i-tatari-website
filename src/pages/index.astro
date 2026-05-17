@@ -1,50 +1,35 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import { getMetaKeywords } from '../data/keywords';
-import { getPageSeoBundle } from '../lib/page-seo';
-import StickyMobileCta from '../components/conversion/StickyMobileCta.astro';
 import Header from '../components/Header.astro';
-import Hero from '../components/Hero.astro';
-import Developers from '../components/Developers.astro';
-import Benefits from '../components/Benefits.astro';
-import CitySpotlights from '../components/CitySpotlights.astro';
-import Properties from '../components/Properties.astro';
-import Testimonials from '../components/Testimonials.astro';
-import Comparison from '../components/Comparison.astro';
-import Calculator from '../components/Calculator.astro';
-import Security from '../components/Security.astro';
-import News from '../components/News.astro';
-import Locations from '../components/Locations.astro';
-import Trust from '../components/Trust.astro';
-import FAQ from '../components/FAQ.astro';
-import Contact from '../components/Contact.astro';
 import Footer from '../components/Footer.astro';
 import FloatingActions from '../components/FloatingActions.astro';
-import SeoTopics from '../components/SeoTopics.astro';
-import WestWindFeatured from '../components/home/WestWindFeatured.astro';
-import HomePillars from '../components/home/HomePillars.astro';
-import PaymentPlan from '../components/home/PaymentPlan.astro';
-import GermanInvestors from '../components/home/GermanInvestors.astro';
-import FinalCta from '../components/home/FinalCta.astro';
+import StickyMobileCta from '../components/conversion/StickyMobileCta.astro';
+import HomePage from '../components/home/HomePage.astro';
 import JsonLd from '../components/seo/JsonLd.astro';
-import { faqs as coreFaqs } from '../data/site';
+import { getPageSeoBundle } from '../lib/page-seo';
 import { keywordFaqs } from '../data/keyword-faqs';
+import { faqs as coreFaqs } from '../data/site';
 import { buildFaqSchema, canonicalUrl } from '../lib/seo';
 
 const homeSeo = getPageSeoBundle('/', {
-  metaTitle: 'Tatari Investment | Offplan Immobilien Ägypten | West Wind Sheikh Zayed',
+  metaTitle: 'Tatari Investment | Ägypten, Dubai & Saudi-Arabien',
   metaDescription:
-    'Offplan Ägypten: West Wind El Bostan Street, zinsfreie Bauträger-Raten nach Prüfung, Clinics ab 24 m². Deutsch — DACH & GCC. Vorbehaltlich Verfügbarkeit.',
+    'Immobilien in Ägypten, Dubai und Saudi-Arabien: Offplan, Premium-Projekte, deutschsprachige Vermittlung. West Wind Sheikh Zayed — vorbehaltlich Verfügbarkeit.',
 });
-const metaKeywords = [...homeSeo.metaKeywords, ...getMetaKeywords(15)];
-const homeFaqs = [...coreFaqs, ...keywordFaqs.slice(0, 8)];
-const faqSchema = buildFaqSchema(homeFaqs);
+const seen = new Set<string>();
+const homeFaqs = [...coreFaqs, ...keywordFaqs].filter((faq) => {
+  const key = faq.q.toLowerCase().trim();
+  if (seen.has(key)) return false;
+  seen.add(key);
+  return true;
+});
+const faqSchema = buildFaqSchema(homeFaqs.slice(0, 12));
 ---
 
 <Layout
   title={homeSeo.metaTitle}
   description={homeSeo.metaDescription}
-  keywords={metaKeywords}
+  keywords={homeSeo.metaKeywords}
   canonical={canonicalUrl('/')}
 >
   {faqSchema && (
@@ -52,30 +37,11 @@ const faqSchema = buildFaqSchema(homeFaqs);
       <JsonLd data={faqSchema} />
     </Fragment>
   )}
-  <Header />
+  <Header locale="de" />
   <main id="main-content">
-    <Hero />
-    <HomePillars />
-    <Benefits />
-    <PaymentPlan />
-    <WestWindFeatured />
-    <Developers />
-    <CitySpotlights />
-    <Properties />
-    <Testimonials />
-    <Comparison />
-    <Calculator />
-    <Security />
-    <News />
-    <Locations />
-    <Trust />
-    <GermanInvestors />
-    <SeoTopics />
-    <FAQ />
-    <FinalCta />
-    <Contact />
+    <HomePage locale="de" />
   </main>
-  <Footer />
+  <Footer locale="de" />
   <FloatingActions />
   <StickyMobileCta />
 </Layout>

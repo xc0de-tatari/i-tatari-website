@@ -1,35 +1,34 @@
 ---
-import { sections } from '../../data/links';
+import type { Locale } from '../../i18n';
+import { getPageSections, getUi } from '../../i18n/content';
+
+interface Props {
+  locale?: Locale;
+}
+
+const locale = Astro.props.locale ?? 'de';
+const t = getUi(locale).payment;
+const sections = getPageSections(locale);
+const instalmentHref = locale === 'en' ? '/en/installment-property-egypt' : '/immobilien-auf-raten-aegypten';
 ---
 
-<section class="section" id="ratenzahlung">
+<section class="section" id={locale === 'en' ? 'payment-plan' : 'ratenzahlung'}>
   <div class="container">
-    <p class="section-label">Zahlungsplan</p>
-    <h2 class="section-title">Zinsfreie Bauträger-Raten — planbar statt Sofortzahlung</h2>
-    <p class="section-desc">
-      Viele Offplan-Projekte ermöglichen gestaffelte Zahlungen während der Bauphase. Konditionen sind
-      projektspezifisch — nach persönlicher Vorprüfung und Ratenplan-Prüfung, vorbehaltlich Verfügbarkeit.
-    </p>
+    <p class="section-label">{t.label}</p>
+    <h2 class="section-title">{t.title}</h2>
+    <p class="section-desc">{t.desc}</p>
     <div class="benefits-grid" style="margin-top:2rem">
-      <article class="benefit-card">
-        <div class="benefit-icon">1</div>
-        <h3>Anzahlung</h3>
-        <p>Typisch 5–10 % bei Vertragsunterzeichnung — projektabhängig.</p>
-      </article>
-      <article class="benefit-card">
-        <div class="benefit-icon">2</div>
-        <h3>Ratenphase</h3>
-        <p>Meilenstein- oder Monatsraten bis zur Übergabe — zinsfrei nach Prüfung möglich.</p>
-      </article>
-      <article class="benefit-card">
-        <div class="benefit-icon">3</div>
-        <h3>Übergabe</h3>
-        <p>Restzahlung bei Fertigstellung — Tatari begleitet den Prozess.</p>
-      </article>
+      {t.steps.map((step) => (
+        <article class="benefit-card">
+          <div class="benefit-icon">{step.n}</div>
+          <h3>{step.title}</h3>
+          <p>{step.desc}</p>
+        </article>
+      ))}
     </div>
     <p class="center" style="margin-top:1.5rem">
-      <a href="/immobilien-auf-raten-aegypten" class="btn btn-outline">Immobilien auf Raten →</a>
-      <a href={sections.kontakt} class="btn btn-primary" style="margin-left:0.75rem">Ratenplan prüfen</a>
+      <a href={instalmentHref} class="btn btn-outline">{t.link}</a>
+      <a href={sections.kontakt} class="btn btn-primary" style="margin-left:0.75rem">{t.cta}</a>
     </p>
   </div>
 </section>

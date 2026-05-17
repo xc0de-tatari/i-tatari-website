@@ -33,7 +33,7 @@ const seoBundle = getPageSeoBundle(path, {
   metaTitle: page.seo.title,
   metaDescription: page.seo.description,
 });
-const pageKeywords = [...(page.seo.keywords ?? []), ...seoBundle.metaKeywords].slice(0, 25);
+const pageKeywords = (page.seo.keywords ?? []).slice(0, 6);
 
 const breadcrumbs = [
   { name: 'Start', url: '/' },

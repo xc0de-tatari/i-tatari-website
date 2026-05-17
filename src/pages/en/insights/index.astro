@@ -1,0 +1,52 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+import FloatingActions from '../../../components/FloatingActions.astro';
+import BlogCard from '../../../components/conversion/BlogCard.astro';
+import { articles } from '../../../data/articles';
+import { canonicalUrl } from '../../../lib/seo';
+
+const enArticles = articles.filter((a) => a.lang === 'en');
+---
+
+<Layout
+  title="Insights | Egypt Real Estate | Tatari Investment"
+  description="English guides on buying offplan property in Egypt — for GCC and international investors."
+  canonical={canonicalUrl('/en/insights')}
+  lang="en"
+>
+  <Header locale="en" />
+  <main id="main-content">
+    <section class="hero" style="min-height:45vh">
+      <div class="container hero-content center">
+        <p class="section-label" style="justify-content:center">Insights</p>
+        <h1>Guides for international investors</h1>
+        <p class="hero-desc" style="max-width:640px;margin-inline:auto">
+          English articles on Egypt offplan, GCC entry and buying from abroad.
+        </p>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container topics-grid">
+        {enArticles.map((article) => (
+          <BlogCard article={article} />
+        ))}
+      </div>
+    </section>
+  </main>
+  <Footer locale="en" />
+  <FloatingActions />
+</Layout>
+
+<style>
+  .topics-grid {
+    display: grid;
+    gap: 1.25rem;
+  }
+  @media (min-width: 640px) {
+    .topics-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

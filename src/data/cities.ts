@@ -117,7 +117,7 @@ export function cityMeta(city: CityData) {
   const stateBit = city.state ? ` (${city.state})` : '';
   return {
     title: `Immobilien Ägypten von ${city.name}${stateBit} | Offplan & Raten | Tatari`,
-    description: `Von ${city.name}: Offplan Ägypten, zinsfreie Bauträger-Raten nach Prüfung, West Wind Sheikh Zayed. Deutsch — vorbehaltlich Verfügbarkeit.`,
+    description: `Von ${city.name} in Offplan-Immobilien in Ägypten investieren: Beratung auf Deutsch, Bauträger-Raten nach Prüfung — Tatari Investment.`,
     headline: `Immobilien in Ägypten kaufen aus ${city.name} — Offplan & zinsfreie Bauträger-Raten`,
   };
 }

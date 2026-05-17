@@ -1,0 +1,52 @@
+---
+import type { Locale } from '../../i18n';
+import Hero from '../Hero.astro';
+import InternationalMarkets from './InternationalMarkets.astro';
+import HomePillars from './HomePillars.astro';
+import Benefits from '../Benefits.astro';
+import PaymentPlan from './PaymentPlan.astro';
+import WestWindFeatured from './WestWindFeatured.astro';
+import Developers from '../Developers.astro';
+import CitySpotlights from '../CitySpotlights.astro';
+import Properties from '../Properties.astro';
+import Testimonials from '../Testimonials.astro';
+import Comparison from '../Comparison.astro';
+import Calculator from '../Calculator.astro';
+import Security from '../Security.astro';
+import News from '../News.astro';
+import Locations from '../Locations.astro';
+import Trust from '../Trust.astro';
+import InvestorsSection from './InvestorsSection.astro';
+import SeoTopics from '../SeoTopics.astro';
+import FAQ from '../FAQ.astro';
+import FinalCta from './FinalCta.astro';
+import Contact from '../Contact.astro';
+
+interface Props {
+  locale?: Locale;
+}
+
+const { locale = 'de' } = Astro.props;
+---
+
+<Hero locale={locale} />
+<InternationalMarkets locale={locale} />
+<HomePillars locale={locale} />
+<Benefits locale={locale} />
+<PaymentPlan locale={locale} />
+<WestWindFeatured locale={locale} />
+<Developers locale={locale} />
+<CitySpotlights locale={locale} />
+<Properties locale={locale} />
+<Testimonials locale={locale} />
+<Comparison locale={locale} />
+<Calculator locale={locale} />
+<Security locale={locale} />
+<News locale={locale} />
+<Locations locale={locale} />
+<Trust locale={locale} />
+<InvestorsSection locale={locale} />
+<SeoTopics locale={locale} />
+<FAQ locale={locale} />
+<FinalCta locale={locale} />
+<Contact locale={locale} />

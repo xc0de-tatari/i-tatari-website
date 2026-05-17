@@ -20,7 +20,7 @@ import { sections } from '../../data/links';
         <p class="section-label" style="justify-content:center">Themenübersicht</p>
         <h1>Investieren in Ägypten — alle Themen</h1>
         <p class="hero-desc" style="max-width:720px;margin-inline:auto">
-          Über 997 Suchbegriffe in 20 Cluster — von Makro & Offplan über Commercial Units bis West Wind.
+          20 Ratgeber-Themen — von Makro & Offplan über Commercial Units bis West Wind.
           Wählen Sie Ihr Thema oder starten Sie direkt mit der Beratung.
         </p>
         <div class="hero-actions">
@@ -41,7 +41,7 @@ import { sections } from '../../data/links';
                 <h2>
                   <a href={href}>{cluster.name.replace(/^\d+\s/, '')}</a>
                 </h2>
-                <p class="topic-count">{cluster.count} Suchbegriffe · Top: {cluster.topKeyword}</p>
+                <p class="topic-count">{intro.subheadline}</p>
                 <p style="font-size:0.9rem;color:var(--text-muted);margin-bottom:0.75rem">
                   {intro.subheadline}
                 </p>

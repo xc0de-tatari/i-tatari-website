@@ -1,4 +1,5 @@
 import type { PillarPageConfig } from './types';
+import { internationalPillarPages } from '../international-markets';
 
 const disclaimer =
   'Alle Konditionen vorbehaltlich Verfügbarkeit, Bonitäts- und Projektprüfung. Keine Garantie auf Rendite, Zinsfreiheit oder Finanzierungszusage.';
@@ -634,6 +635,8 @@ export const pillarPages: Record<string, PillarPageConfig> = {
     ],
     relatedLinks: relatedCore,
   },
+
+  ...internationalPillarPages,
 };
 
 export function getPillarPage(slug: string): PillarPageConfig | undefined {

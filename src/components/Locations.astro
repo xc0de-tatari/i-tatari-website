@@ -1,35 +1,65 @@
 ---
-import { locations } from '../data/site';
+import type { Locale } from '../i18n';
+import { getSiteContent, getPageSections, getUi, locationCardCta } from '../i18n/content';
 import { locationImages } from '../data/images';
-import { sections } from '../data/links';
+import { imageAlt } from '../lib/seo';
+import OptimizedImage from './seo/OptimizedImage.astro';
+import { defaultSizes } from '../lib/images';
+
+interface Props {
+  locale?: Locale;
+}
+
+const locale = Astro.props.locale ?? 'de';
+const { locations } = getSiteContent(locale);
+const t = getUi(locale).locations;
+const sections = getPageSections(locale);
 ---
 
-<section class="section">
+<section class="section" id="investment-locations">
   <div class="container center">
-    <p class="section-label" style="justify-content:center">Premium Standorte</p>
-    <h2 class="section-title">Top Investment-Locations</h2>
-    <p class="section-desc">
-      Sorgfältig ausgewählte Projekte in den am schnellsten wachsenden Märkten des Nahen Ostens.
-    </p>
+    <p class="section-label" style="justify-content:center">{t.label}</p>
+    <h2 class="section-title">{t.title}</h2>
+    <p class="section-desc">{t.desc}</p>
   </div>
 
   <div class="container locations-grid">
     {locations.map((loc) => (
       <article class={`location-card ${loc.featured ? 'featured' : ''}`}>
         <div class="location-image">
-          <img src={locationImages[loc.name]} alt={loc.name} loading="lazy" />
-          {loc.featured && <span class="location-badge badge badge-top">Top Investment</span>}
+          <OptimizedImage
+            src={locationImages[loc.name]}
+            alt={imageAlt(loc.name, locale === 'en' ? 'Investment location' : 'Investment-Standort', loc.country)}
+            width={400}
+            height={240}
+            sizes={defaultSizes('card')}
+          />
+          {loc.featured && (
+            <span class="location-badge badge badge-top">
+              {locale === 'en' ? 'Top investment' : 'Top Investment'}
+            </span>
+          )}
         </div>
-        <p class="country">{loc.country}</p>
-        <h3>{loc.name}</h3>
-        <div class="location-roi">
-          <span>Potenzial <strong>{loc.yieldNote}</strong></span>
-          <span>Ab <strong>{loc.price}</strong></span>
+        <div>
+          <p class="country">{loc.country}</p>
+          <h3>{loc.name}</h3>
+          <div class="location-roi">
+            <span>
+              {locale === 'en' ? 'Potential' : 'Potenzial'} <strong>{loc.yieldNote}</strong>
+            </span>
+            <span>
+              {locale === 'en' ? 'From' : 'Ab'} <strong>{loc.price}</strong>
+            </span>
+          </div>
+          <ul>
+            {loc.points.map((pt) => (
+              <li>{pt}</li>
+            ))}
+          </ul>
+          <a href={loc.href ?? sections.kontakt} class="btn btn-outline">
+            {locationCardCta(locale, loc.href)}
+          </a>
         </div>
-        <ul>
-          {loc.points.map((pt) => <li>{pt}</li>)}
-        </ul>
-        <a href={sections.kontakt} class="btn btn-outline">Mehr erfahren</a>
       </article>
     ))}
   </div>

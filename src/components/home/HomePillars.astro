@@ -1,53 +1,45 @@
 ---
+import type { Locale } from '../../i18n';
+import { getUi } from '../../i18n/content';
 import { pillarPages, productPages } from '../../data/navigation';
+
+interface Props {
+  locale?: Locale;
+}
+
+const locale = Astro.props.locale ?? 'de';
+const t = getUi(locale).pillars;
+
+const morePillarLinks =
+  locale === 'en'
+    ? [
+        { href: '/en/buy-property-egypt', label: 'Buy in Egypt' },
+        { href: '/en/offplan-property-egypt', label: 'Offplan Egypt' },
+        { href: '/en/real-estate-dubai', label: 'Dubai real estate' },
+        { href: '/en/projects/west-wind', label: 'West Wind' },
+        { href: '/en/insights', label: 'Insights' },
+      ]
+    : [...pillarPages, ...productPages];
 ---
 
 <section class="section" id="investment-themen">
   <div class="container">
-    <p class="section-label">Investment-Ratgeber</p>
-    <h2 class="section-title">Warum Ägypten, Offplan & Tatari — alle Kernthemen</h2>
-    <p class="section-desc">
-      Strukturierte SEO-Seiten für Ihre Recherche — intern verlinkt, claim-safe, deutschsprachig.
-    </p>
+    <p class="section-label">{t.label}</p>
+    <h2 class="section-title">{t.title}</h2>
+    <p class="section-desc">{t.desc}</p>
 
     <div class="pillars-grid">
-      <article class="pillar-card">
-        <h3>Warum Ägypten jetzt</h3>
-        <p>Wachstumsmarkt, Offplan-Einstieg, Sachwert-Diversifikation für DACH-Investoren.</p>
-        <a href="/immobilien-kaufen-aegypten">Immobilien in Ägypten kaufen →</a>
-      </article>
-      <article class="pillar-card">
-        <h3>Warum Offplan</h3>
-        <p>Frühe Preise, Bauträger-Raten, Bauphasen — Chancen und Risiken transparent erklärt.</p>
-        <a href="/offplan-immobilien-aegypten">Offplan Immobilien →</a>
-      </article>
-      <article class="pillar-card">
-        <h3>Direkt vom Bauträger</h3>
-        <p>Developer Direct mit Due Diligence — ohne aufgeblähte Zwischenebenen.</p>
-        <a href="/direkt-vom-bautraeger-aegypten">Direkt vom Bauträger →</a>
-      </article>
-      <article class="pillar-card">
-        <h3>Immobilien auf Raten</h3>
-        <p>Zinsfreie Bauträger-Raten nach Vorprüfung — planbar statt Sofortzahlung.</p>
-        <a href="/immobilien-auf-raten-aegypten">Auf Raten kaufen →</a>
-      </article>
-      <article class="pillar-card">
-        <h3>Renditepotenzial</h3>
-        <p>Szenarien für ROI, Miete und Wertentwicklung — ohne Garantien.</p>
-        <a href="/rendite-immobilien-aegypten">Rendite erklärt →</a>
-      </article>
-      <article class="pillar-card">
-        <h3>Warum Tatari</h3>
-        <p>Lokale Präsenz, Projekt-Screening, deutschsprachige Begleitung.</p>
-        <a href="/warum-tatari-investment">Due Diligence →</a>
-      </article>
+      {t.cards.map((card) => (
+        <article class="pillar-card">
+          <h3>{card.title}</h3>
+          <p>{card.desc}</p>
+          <a href={card.href}>{card.link}</a>
+        </article>
+      ))}
     </div>
 
-    <nav class="pillars-more" aria-label="Weitere Ratgeber">
-      {pillarPages.map((p) => (
-        <a href={p.href}>{p.label}</a>
-      ))}
-      {productPages.map((p) => (
+    <nav class="pillars-more" aria-label={t.moreLabel}>
+      {morePillarLinks.map((p) => (
         <a href={p.href}>{p.label}</a>
       ))}
     </nav>

@@ -1,0 +1,19 @@
+---
+import { images } from '../data/images';
+
+interface Props {
+  class?: string;
+}
+
+const { class: className = '' } = Astro.props;
+---
+
+<img
+  src={images.logo}
+  alt="Tatari Investment — Offplan Immobilien Ägypten, Dubai & Saudi-Arabien"
+  class:list={['logo-img', className]}
+  width="176"
+  height="84"
+  decoding="async"
+  fetchpriority="high"
+/>

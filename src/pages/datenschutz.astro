@@ -1,0 +1,222 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import LegalNav from '../components/legal/LegalNav.astro';
+import { canonicalUrl } from '../lib/seo';
+import { legalPaths, links } from '../data/links';
+
+const title = 'Datenschutzerklärung | Hometrend & Tatari Investments';
+const description =
+  'Datenschutzerklärung gemäß DSGVO — Informationen zur Verarbeitung personenbezogener Daten auf i-tatari.com.';
+const stand = 'Mai 2026';
+const impressumPhone = '+49 171 4733388';
+---
+
+<Layout
+  title={title}
+  description={description}
+  canonical={canonicalUrl(legalPaths.datenschutz)}
+  includeLocalBusiness={false}
+>
+  <Header />
+  <main id="main-content">
+    <article class="legal-page section">
+      <div class="container legal-page-inner">
+        <header class="legal-page-header">
+          <p class="section-label">Rechtliches</p>
+          <h1>Datenschutzerklärung</h1>
+          <p class="legal-meta">Stand: {stand}</p>
+        </header>
+
+        <LegalNav />
+
+        <section class="legal-block" aria-labelledby="ds-1">
+          <h2 id="ds-1">1. Verantwortlicher</h2>
+          <p>Verantwortlich für die Datenverarbeitung auf dieser Website im Sinne der DSGVO:</p>
+          <address class="legal-address">
+            <strong>Hometrend &amp; Tatari Investments</strong><br />
+            Geschäftsführer: Frank Deubrecht, Taleb Tatari<br />
+            Hydenstraße 17<br />
+            76275 Ettlingen<br />
+            Deutschland
+          </address>
+          <p style="margin-top: 1rem">
+            Telefon: <a href="tel:+491714733388">{impressumPhone}</a><br />
+            E-Mail: <a href={`mailto:${links.email}`}>{links.email}</a><br />
+            Website: <a href="https://www.i-tatari.com">https://www.i-tatari.com</a>
+          </p>
+          <p>
+            Weitere Standorte (ohne eigene Verantwortlichkeit für diese Website): Repräsentanz Frankfurt,
+            Bockenheimer Landstraße 2–4, 60306 Frankfurt am Main; Middle East Office, Arkan Plaza – Building 4,
+            Sheikh Zayed, Kairo, Ägypten.
+          </p>
+        </section>
+
+        <section class="legal-block" aria-labelledby="ds-2">
+          <h2 id="ds-2">2. Allgemeine Hinweise</h2>
+          <p>
+            Wir nehmen den Schutz Ihrer personenbezogenen Daten sehr ernst. Personenbezogene Daten sind alle Daten,
+            mit denen Sie persönlich identifiziert werden können. Diese Erklärung informiert Sie darüber, welche Daten
+            wir erheben, wofür wir sie nutzen und welche Rechte Sie haben.
+          </p>
+        </section>
+
+        <section class="legal-block" aria-labelledby="ds-3">
+          <h2 id="ds-3">3. Hosting &amp; Server-Logfiles</h2>
+          <p>
+            Beim Aufruf unserer Website werden automatisch technische Informationen durch den Hosting-Anbieter
+            verarbeitet (z.&nbsp;B. IP-Adresse, Datum/Uhrzeit, aufgerufene URL, Browser, Betriebssystem). Rechtsgrundlage
+            ist Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an einem sicheren und stabilen Betrieb der Website).
+            Logdaten werden nur so lange gespeichert, wie es für Betrieb und Sicherheit erforderlich ist.
+          </p>
+        </section>
+
+        <section class="legal-block" aria-labelledby="ds-4">
+          <h2 id="ds-4">4. Cookies &amp; Einwilligungsmanagement</h2>
+          <p>
+            Wir verwenden Cookies und vergleichbare Technologien. <strong>Technisch notwendige</strong> Speicherung
+            (z.&nbsp;B. Ihre Cookie-Auswahl in <code>localStorage</code>) erfolgt ohne Einwilligung auf Grundlage von
+            Art. 6 Abs. 1 lit. f DSGVO.
+          </p>
+          <p>
+            <strong>Statistik- und Marketing-Cookies</strong> (z.&nbsp;B. Google Analytics, Google Tag Manager, Meta
+            Pixel, TikTok, LinkedIn, Google Ads) setzen wir nur ein, wenn Sie über unser Cookie-Banner ausdrücklich
+            zugestimmt haben (Art. 6 Abs. 1 lit. a DSGVO). Sie können Ihre Einwilligung jederzeit mit Wirkung für die
+            Zukunft widerrufen — über „Cookies“ im Footer oder durch Löschen der gespeicherten Einstellungen im Browser.
+          </p>
+          <p>
+            <button type="button" class="btn btn-outline" data-open-cookie-settings>
+              Cookie-Einstellungen öffnen
+            </button>
+          </p>
+        </section>
+
+        <section class="legal-block" aria-labelledby="ds-5">
+          <h2 id="ds-5">5. Kontaktformular &amp; Beratungsanfragen</h2>
+          <p>
+            Wenn Sie uns per Formular, E-Mail, Telefon oder WhatsApp kontaktieren, verarbeiten wir die von Ihnen
+            mitgeteilten Daten (z.&nbsp;B. Name, E-Mail, Telefon, Nachricht, Projektinteresse) zur Bearbeitung Ihrer
+            Anfrage.
+          </p>
+          <ul>
+            <li><strong>Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. b DSGVO (vorvertragliche Maßnahmen) und/oder lit. f DSGVO (berechtigtes Interesse an Kundenkommunikation)</li>
+            <li><strong>Speicherdauer:</strong> bis Abschluss der Kommunikation, danach gemäß gesetzlichen Aufbewahrungsfristen (z.&nbsp;B. handels- und steuerrechtlich bis zu 10 Jahre, sofern relevant)</li>
+          </ul>
+          <p>
+            Formularübermittlungen können über einen technischen Dienstleister (E-Mail-Versand/API) verarbeitet werden.
+            Es gelten die Datenschutzbestimmungen des jeweils eingesetzten Anbieters.
+          </p>
+        </section>
+
+        <section class="legal-block" aria-labelledby="ds-6">
+          <h2 id="ds-6">6. Analyse- &amp; Marketing-Tools (nur nach Einwilligung)</h2>
+          <p>Sofern Sie zugestimmt haben, können u.&nbsp;a. folgende Dienste eingesetzt werden:</p>
+          <ul>
+            <li><strong>Google Tag Manager / Google Analytics (GA4)</strong> — Google Ireland Ltd. / Google LLC (USA), Messung der Website-Nutzung</li>
+            <li><strong>Meta Pixel (Facebook/Instagram)</strong> — Meta Platforms Ireland Ltd., Conversion-Messung</li>
+            <li><strong>TikTok Pixel</strong> — TikTok Technology Limited, Conversion-Messung</li>
+            <li><strong>LinkedIn Insight Tag</strong> — LinkedIn Ireland Unlimited Company</li>
+            <li><strong>Google Ads</strong> — Conversion-Tracking bei Werbekampagnen</li>
+          </ul>
+          <p>
+            Anbieter können Daten auch in Drittländer (insbesondere USA) übermitteln. Soweit erforderlich, stützen wir
+            uns auf Standardvertragsklauseln der EU-Kommission und/oder vergleichbare Garantien gemäß Art. 46 DSGVO.
+            IP-Adressen können gekürzt oder anonymisiert werden, soweit die jeweiligen Tools dies unterstützen.
+          </p>
+        </section>
+
+        <section class="legal-block" aria-labelledby="ds-7">
+          <h2 id="ds-7">7. Externe Inhalte &amp; Schriftarten</h2>
+          <ul>
+            <li>
+              <strong>Google Fonts</strong> — Schriften können von Servern der Google LLC geladen werden (IP-Adresse).
+              Rechtsgrundlage: Art. 6 Abs. 1 lit. f DSGVO (einheitliche Darstellung) bzw. lit. a bei Marketing-Cookies.
+            </li>
+            <li>
+              <strong>Bilder (z.&nbsp;B. Unsplash)</strong> — externe Bild-CDNs können technische Daten (IP) verarbeiten.
+            </li>
+            <li>
+              <strong>WhatsApp, soziale Netzwerke</strong> — beim Klick verlassen Sie unsere Website; es gelten die
+              Datenschutzbestimmungen des jeweiligen Anbieters (Meta/Instagram, WhatsApp/Meta).
+            </li>
+            <li>
+              <strong>Calendly</strong> — bei Terminbuchung über externe Links gelten die Datenschutzinformationen von Calendly.
+            </li>
+          </ul>
+        </section>
+
+        <section class="legal-block" aria-labelledby="ds-8">
+          <h2 id="ds-8">8. Keine automatisierte Entscheidungsfindung</h2>
+          <p>
+            Wir nutzen Ihre Daten nicht für automatisierte Entscheidungen oder Profiling im Sinne von Art. 22 DSGVO.
+          </p>
+        </section>
+
+        <section class="legal-block" aria-labelledby="ds-9">
+          <h2 id="ds-9">9. Weitergabe an Dritte</h2>
+          <p>
+            Eine Weitergabe erfolgt nur, wenn dies zur Vertragserfüllung erforderlich ist, Sie eingewilligt haben, eine
+            rechtliche Verpflichtung besteht oder ein berechtigtes Interesse vorliegt (z.&nbsp;B. IT-Dienstleister,
+            E-Mail-Versand, Steuerberater). Eine Weitergabe zu Werbezwecken ohne Einwilligung erfolgt nicht.
+          </p>
+        </section>
+
+        <section class="legal-block" aria-labelledby="ds-10">
+          <h2 id="ds-10">10. Ihre Rechte</h2>
+          <p>Sie haben gegenüber uns u.&nbsp;a. folgende Rechte:</p>
+          <ul>
+            <li>Auskunft (Art. 15 DSGVO)</li>
+            <li>Berichtigung (Art. 16 DSGVO)</li>
+            <li>Löschung (Art. 17 DSGVO)</li>
+            <li>Einschränkung der Verarbeitung (Art. 18 DSGVO)</li>
+            <li>Datenübertragbarkeit (Art. 20 DSGVO)</li>
+            <li>Widerspruch gegen Verarbeitung (Art. 21 DSGVO)</li>
+            <li>Widerruf erteilter Einwilligungen (Art. 7 Abs. 3 DSGVO) — jederzeit ohne Beeinträchtigung der Rechtmäßigkeit der bis dahin erfolgten Verarbeitung</li>
+          </ul>
+          <p>
+            Zur Ausübung Ihrer Rechte genügt eine Nachricht an{' '}
+            <a href={`mailto:${links.email}`}>{links.email}</a>.
+          </p>
+        </section>
+
+        <section class="legal-block" aria-labelledby="ds-11">
+          <h2 id="ds-11">11. Beschwerderecht bei einer Aufsichtsbehörde</h2>
+          <p>
+            Sie haben das Recht, sich bei einer Datenschutz-Aufsichtsbehörde zu beschweren. Zuständig ist u.&nbsp;a. die
+            Aufsichtsbehörde Ihres Wohnsitzes. Für Baden-Württemberg:
+          </p>
+          <p>
+            Der Landesbeauftragte für den Datenschutz und die Informationsfreiheit Baden-Württemberg (LfDI BW)<br />
+            <a href="https://www.baden-wuerttemberg.datenschutz.de" target="_blank" rel="noopener noreferrer">
+              www.baden-wuerttemberg.datenschutz.de
+            </a>
+          </p>
+        </section>
+
+        <section class="legal-block" aria-labelledby="ds-12">
+          <h2 id="ds-12">12. Datensicherheit</h2>
+          <p>
+            Wir verwenden SSL/TLS-Verschlüsselung für die Übertragung und treffen angemessene technische und
+            organisatorische Maßnahmen zum Schutz Ihrer Daten vor Verlust, Missbrauch und unbefugtem Zugriff.
+          </p>
+        </section>
+
+        <section class="legal-block" aria-labelledby="ds-13">
+          <h2 id="ds-13">13. Änderungen dieser Datenschutzerklärung</h2>
+          <p>
+            Wir behalten uns vor, diese Datenschutzerklärung anzupassen, wenn sich Rechtslage, Technik oder unsere
+            Dienste ändern. Die jeweils aktuelle Version finden Sie auf dieser Seite.
+          </p>
+        </section>
+
+        <p class="legal-back">
+          <a href="/" class="btn btn-outline">← Zur Startseite</a>
+          <a href={legalPaths.impressum} class="btn btn-outline">Impressum</a>
+          <a href={legalPaths.agb} class="btn btn-outline">AGB</a>
+        </p>
+      </div>
+    </article>
+  </main>
+  <Footer />
+</Layout>

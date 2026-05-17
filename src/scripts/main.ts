@@ -1,6 +1,6 @@
 import { links } from '../data/links';
 import { initLeadForms } from './forms';
-import { initTrackingHandlers } from './tracking';
+import { initCookieConsent } from './cookie-consent';
 
 function initMobileNav() {
   const toggle = document.querySelector('.menu-toggle');
@@ -213,6 +213,7 @@ function initContactForm() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  initCookieConsent();
   initMobileNav();
   initFaq();
   initCalculator();
@@ -221,5 +222,4 @@ document.addEventListener('DOMContentLoaded', () => {
   initHeaderScroll();
   initContactForm();
   initLeadForms();
-  initTrackingHandlers();
 });

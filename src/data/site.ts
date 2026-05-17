@@ -11,7 +11,7 @@ export const developers = [
 
 export const heroStats = [
   { value: '500+', label: 'Begleitete Investoren' },
-  { value: 'Ägypten', label: 'Offplan-Fokus' },
+  { value: '3', label: 'Märkte: Ägypten · Dubai · KSA' },
   { value: 'Direkt', label: 'Bauträger-Zugang' },
   { value: '24h', label: 'Erstreaktion' },
 ];
@@ -29,7 +29,7 @@ export const benefits = [
   { icon: '💳', title: 'Zinsfreie Bauträger-Raten', desc: 'Direkte Bauträger-Ratenzahlung nach individueller Prüfung — strukturierter Einstieg ab kleineren Anzahlungen.' },
   { icon: '🤝', title: 'Direkt vom Bauträger', desc: 'Offplan-Projekte mit direktem Entwicklerzugang, lokaler Due Diligence und On-Ground-Support in Ägypten.' },
   { icon: '✅', title: 'Geprüfte Projekte', desc: 'Ausgewählte Offplan-Entwicklungen mit dokumentierter Projektlogik — z. B. West Wind in Sheikh Zayed.' },
-  { icon: '🌍', title: 'Ägypten & Naher Osten', desc: 'Fokus auf Wachstumsmärkte wie Greater Cairo, Sheikh Zayed, New Capital — ergänzend internationale Optionen.' },
+  { icon: '🌍', title: 'Ägypten, Dubai & Saudi', desc: 'Vermittlung in Ägypten (Schwerpunkt), Dubai/VAE und Saudi-Arabien — ein Ansprechpartner, deutschsprachig.' },
 ];
 
 export const cities = [
@@ -57,16 +57,30 @@ export const cities = [
     gradient: 'linear-gradient(135deg, #1a2535 0%, #0d1520 100%)',
   },
   {
-    badge: '⚡ TOP INVESTMENT 2026',
-    country: 'UAE',
+    badge: '🇦🇪 VAE MARKT',
+    country: 'VAE',
     name: 'Dubai',
-    subtitle: 'Die Welthauptstadt des Luxus',
+    subtitle: 'Luxus-Offplan & Ready Properties',
     tag: '👑 PREMIUM',
-    priceFrom: '65.000€',
+    priceFrom: 'ab ~65.000€*',
     yieldNote: 'Marktabhängig*',
-    facts: ['0% Einkommenssteuer auf Miete (lokal)', 'Etablierter Luxusmarkt', '200+ Nationalitäten', 'Starke Infrastruktur'],
-    highlights: ['Steuerliche Rahmenbedingungen prüfen', 'Golden Visa bei Investitionsschwelle möglich', 'Weltklasse Infrastruktur', 'Premium-Lifestyle', 'Internationale Käufer', 'Ergänzung zu Ägypten-Portfolio'],
+    href: '/immobilien-dubai',
+    facts: ['Etablierter internationaler Markt', 'Top-Entwickler (Emaar, Damac u. a.)', 'Offplan & fertige Objekte', 'Deutschsprachige Vermittlung'],
+    highlights: ['Golden Visa bei Schwellenwert möglich*', 'Steuerliche Prüfung empfohlen', 'Marina, Downtown, neue Communities', 'Portfolio-Ergänzung zu Ägypten'],
     gradient: 'linear-gradient(135deg, #2a2210 0%, #1a1508 100%)',
+  },
+  {
+    badge: '🇸🇦 KSA MARKT',
+    country: 'Saudi-Arabien',
+    name: 'Riyadh & Jeddah',
+    subtitle: 'Vision 2030 — Neubauprojekte',
+    tag: '🏗️ WACHSTUM',
+    priceFrom: 'auf Anfrage*',
+    yieldNote: 'Marktabhängig*',
+    href: '/immobilien-saudi-arabien',
+    facts: ['Vision 2030 & Urbanisierung', 'Riyadh & Jeddah im Fokus', 'Internationale Investoren willkommen*', 'Regulatorik projektabhängig'],
+    highlights: ['Neue Masterplans & Communities', 'Diversifikation im GCC', 'Langfristiger Anlagehorizont', 'Due Diligence auf Deutsch'],
+    gradient: 'linear-gradient(135deg, #1a2a1a 0%, #0d1a12 100%)',
   },
   {
     country: 'Ägypten',
@@ -75,6 +89,7 @@ export const cities = [
     tag: '🏡 FAMILY',
     priceFrom: '35.000€',
     yieldNote: 'Renditepotenzial*',
+    href: '/projekte/west-wind',
     facts: ['Gated Communities', '15 Min zu den Pyramiden', 'Internationale Schulen', 'Größte Mall Afrikas'],
     highlights: ['Etablierte Premium-Community', 'Grüne Wohnanlagen', 'Top-Schulen & Universitäten', 'Mall of Arabia', 'Sports Clubs & Golf', 'Starke Expat-Community'],
     gradient: 'linear-gradient(135deg, #1f1a2e 0%, #12101a 100%)',
@@ -146,21 +161,38 @@ export const properties = [
     href: '/projekte/west-wind',
   },
   {
-    timeline: 'Beratung',
-    location: 'Ägypten',
-    title: 'Offplan Portfolio',
-    area: 'Greater Cairo & Küste',
-    price: 'ab 25.000€*',
-    down: 'nach Prüfung',
-    rooms: '—',
-    baths: '—',
+    timeline: 'Offplan',
+    location: 'VAE',
+    title: 'Dubai — Premium Apartment',
+    area: 'Dubai Marina / Downtown',
+    price: 'auf Anfrage',
+    down: 'projektabhängig',
+    rooms: '1–3',
+    baths: '1–3',
     sqm: 'variabel',
     yieldNote: 'Szenario*',
-    rent: 'Szenario auf Anfrage',
-    features: ['Direkt Bauträger', 'Raten nach Prüfung', 'Euro-Kalkulation', 'DE-Beratung'],
-    developer: 'Ausgewählte Partner',
+    rent: 'nicht garantiert',
+    features: ['Top-Developer', 'Offplan & Ready', 'Golden Visa möglich*', 'DE-Beratung'],
+    developer: 'Emaar · Damac u. a.',
     image: 'dubai',
-    href: '/immobilien-kaufen-aegypten',
+    href: '/immobilien-dubai',
+  },
+  {
+    timeline: 'Offplan',
+    location: 'Saudi-Arabien',
+    title: 'Riyadh — Wohn & Investment',
+    area: 'Riyadh / ausgewählte Projekte',
+    price: 'auf Anfrage',
+    down: 'projektabhängig',
+    rooms: 'variabel',
+    baths: 'variabel',
+    sqm: 'variabel',
+    yieldNote: 'Szenario*',
+    rent: 'nicht garantiert',
+    features: ['Vision 2030', 'Due Diligence', 'Strukturierte Vermittlung', 'GCC-Diversifikation'],
+    developer: 'Ausgewählte Partner',
+    image: 'saudi',
+    href: '/immobilien-saudi-arabien',
   },
 ];
 
@@ -199,10 +231,10 @@ export const newsItems = [
 ];
 
 export const locations = [
-  { country: 'Ägypten', name: 'Sheikh Zayed', yieldNote: 'Potenzial*', price: 'auf Anfrage', points: ['West Wind — El Bostan Street', 'Rofayda Hospital & Park Street', 'Mixed-Use Commercial', 'Offplan Bauträger'], featured: true },
-  { country: 'Ägypten', name: 'New Cairo', yieldNote: 'Potenzial*', price: 'ab ~35.000€*', points: ['Verwaltungshauptstadt', 'Infrastrukturwachstum', 'Urbanisierung', 'Offplan-Einstieg'] },
-  { country: 'Ägypten', name: 'Alamein', yieldNote: 'Potenzial*', price: 'ab ~28.000€*', points: ['Mittelmeer-Küste', 'Tourismus', 'Resort-Projekte', 'Szenario-Kalkulation'] },
-  { country: 'UAE', name: 'Dubai', yieldNote: 'Markt*', price: 'ab ~65.000€*', points: ['Premium-Markt', 'Internationale Käufer', 'Steuerliche Prüfung', 'Ergänzung zum Ägypten-Fokus'] },
+  { country: 'Ägypten', name: 'Sheikh Zayed', yieldNote: 'Potenzial*', price: 'auf Anfrage', href: '/projekte/west-wind', points: ['West Wind — El Bostan Street', 'Mixed-Use Commercial', 'Offplan Bauträger', 'Flagship-Projekt'], featured: true },
+  { country: 'VAE', name: 'Dubai', yieldNote: 'Markt*', price: 'ab ~65.000€*', href: '/immobilien-dubai', points: ['Luxus-Offplan & Ready', 'Emaar · Damac · ausgewählte Developer', 'Golden Visa möglich*', 'Deutsch begleitet'], featured: true },
+  { country: 'Saudi-Arabien', name: 'Riyadh', yieldNote: 'Markt*', price: 'auf Anfrage*', href: '/immobilien-saudi-arabien', points: ['Vision 2030 Projekte', 'Riyadh & Jeddah', 'GCC-Diversifikation', 'Strukturierte Vermittlung'], featured: true },
+  { country: 'Ägypten', name: 'New Cairo', yieldNote: 'Potenzial*', price: 'ab ~35.000€*', href: '/immobilien-kaufen-aegypten', points: ['Verwaltungshauptstadt', 'Infrastrukturwachstum', 'Urbanisierung', 'Offplan-Einstieg'] },
 ];
 
 export const steps = [
@@ -220,7 +252,8 @@ export const faqs = [
   { q: 'Wie hoch sind die Nebenkosten?', a: 'Alle Gebühren werden transparent vor Vertragsabschluss kommuniziert. Typischerweise 4-6% für Registrierung und Übergabe – keine versteckten Kosten.' },
   { q: 'Kann ich die Immobilie vermieten?', a: 'Ja. Wir unterstützen Sie bei der Vermietung und Verwaltung – auch nach dem Kauf, ohne Zusatzkosten für die Betreuung.' },
   { q: 'Welche Rendite kann ich realistisch erwarten?', a: 'Das Renditepotenzial hängt von Projekt, Lage, Nutzung und Marktzyklus ab. Wir kommunizieren transparente Szenarien und Kalkulationen — ohne garantierte Renditeversprechen.' },
-  { q: 'Brauche ich ein Visum oder Residenz?', a: 'Für den Kauf nicht zwingend. In Dubai ist eine 10-jährige Golden Visa bei ausreichender Investition möglich.' },
+  { q: 'Brauche ich ein Visum oder Residenz?', a: 'Für den Kauf nicht zwingend. In Dubai ist eine Golden Visa bei ausreichender Investition möglich*. In Saudi-Arabien sind Regeln projektabhängig — wir klären das im Erstgespräch.' },
+  { q: 'Vermittelt Tatari auch Immobilien in Saudi-Arabien?', a: 'Ja. Neben Ägypten und Dubai begleiten wir ausgewählte Projekte in Saudi-Arabien (z. B. Riyadh) — vorbehaltlich Verfügbarkeit und regulatorischer Prüfung.' },
   { q: 'Was ist der Unterschied zwischen Off-Plan und Ready?', a: 'Off-Plan bedeutet Kauf während der Bauphase zu günstigeren Preisen. Ready sind fertiggestellte Objekte, sofort bezugsfertig.' },
   { q: 'Wie funktioniert die Schlüsselübergabe?', a: 'Nach Fertigstellung und letzter Zahlung erhalten Sie die Schlüssel schlüsselfertig. Wir begleiten Sie durch den gesamten Prozess.' },
   { q: 'Gibt es versteckte Kosten?', a: 'Alle relevanten Gebühren und Zahlungspläne werden vor Vertragsabschluss transparent kommuniziert — projektabhängig.' },
@@ -228,12 +261,10 @@ export const faqs = [
 ];
 
 export const navLinks = [
-  { href: '/#vorteile', label: 'Vorteile' },
-  { href: '/projekte', label: 'Projekte' },
+  { href: '/#maerkte', label: 'Märkte' },
   { href: '/immobilien-kaufen-aegypten', label: 'Ägypten' },
+  { href: '/immobilien-dubai', label: 'Dubai' },
+  { href: '/immobilien-saudi-arabien', label: 'Saudi-Arabien' },
   { href: '/projekte/west-wind', label: 'West Wind' },
-  { href: '/#standorte', label: 'Standorte' },
-  { href: '/#rechner', label: 'Rechner' },
-  { href: '/#faq', label: 'FAQ' },
   { href: '/#kontakt', label: 'Kontakt' },
 ];

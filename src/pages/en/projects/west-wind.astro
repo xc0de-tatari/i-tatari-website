@@ -1,0 +1,43 @@
+---
+/** English overview — full project detail remains bilingual-ready at /projekte/west-wind */
+import EnPage from '../../../components/templates/EnPage.astro';
+import type { EnPageContent } from '../../../data/en-content';
+
+const page: EnPageContent = {
+  slug: 'west-wind',
+  path: '/en/projects/west-wind',
+  seo: {
+    title: 'West Wind Sheikh Zayed | Offplan Egypt | Tatari',
+    description:
+      'West Wind mixed-use offplan in Sheikh Zayed: clinics, offices, retail. English advisory — subject to availability.',
+  },
+  hero: {
+    label: 'Flagship project',
+    headline: 'West Wind — Sheikh Zayed City',
+    subheadline:
+      'Mixed-use development on El Bostan Street: medical units, admin offices and retail. Instalment plans after review.',
+  },
+  sections: [
+    {
+      title: 'Unit types',
+      items: [
+        'Medical / clinic units',
+        'Administrative offices',
+        'Retail & pharmacy units',
+        'Developer-direct payment plans — project-specific',
+      ],
+    },
+    {
+      title: 'Next step',
+      items: [
+        'Request floor plans and availability',
+        'Euro calculation on request',
+        'Visit the German project page for full details',
+      ],
+    },
+  ],
+  cta: 'Request West Wind info',
+};
+---
+
+<EnPage page={page} />

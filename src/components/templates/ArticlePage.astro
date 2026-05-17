@@ -46,18 +46,27 @@ const schemas = mergeSchemas(
   description={article.seo.description}
   canonical={canonicalUrl(path)}
   ogType="article"
+  lang={article.lang === 'en' ? 'en' : 'de'}
 >
   <Fragment slot="head"><JsonLd data={schemas} /></Fragment>
-  <Header />
+  <Header locale={article.lang === 'en' ? 'en' : 'de'} />
   <main id="main-content">
     <article class="section">
       <div class="container article-wrap">
         <Breadcrumbs
-          items={[
-            { name: 'Start', url: '/' },
-            { name: 'Wissen', url: '/wissen' },
-            { name: article.category, url: path },
-          ]}
+          items={
+            article.lang === 'en'
+              ? [
+                  { name: 'Home', url: '/en/' },
+                  { name: 'Insights', url: '/en/insights' },
+                  { name: article.category, url: path },
+                ]
+              : [
+                  { name: 'Start', url: '/' },
+                  { name: 'Wissen', url: '/wissen' },
+                  { name: article.category, url: path },
+                ]
+          }
         />
         <p class="section-label">{article.category}</p>
         <h1>{article.title}</h1>
@@ -103,7 +112,7 @@ const schemas = mergeSchemas(
       </div>
     </section>
   </main>
-  <Footer />
+  <Footer locale={article.lang === 'en' ? 'en' : 'de'} />
   <FloatingActions />
 </Layout>
 

@@ -1,20 +1,27 @@
 ---
-import { sections } from '../../data/links';
+import type { Locale } from '../../i18n';
+import { getPageSections, getUi } from '../../i18n/content';
 import { links } from '../../data/links';
-import { ctas } from '../../data/ctas';
+
+interface Props {
+  locale?: Locale;
+}
+
+const locale = Astro.props.locale ?? 'de';
+const t = getUi(locale).finalCta;
+const sections = getPageSections(locale);
 ---
 
 <section class="section final-cta">
   <div class="container center">
-    <h2 class="section-title">Bereit für Ihr Offplan-Gespräch?</h2>
-    <p class="section-desc" style="max-width:560px;margin-inline:auto">
-      Kostenlose Erstberatung, West Wind Verfügbarkeit oder WhatsApp — Tatari antwortet innerhalb von 24 Stunden,
-      vorbehaltlich Verfügbarkeit.
-    </p>
+    <h2 class="section-title">{t.title}</h2>
+    <p class="section-desc" style="max-width:560px;margin-inline:auto">{t.desc}</p>
     <div class="hero-actions" style="justify-content:center;margin-top:1.5rem">
-      <a href={sections.kontakt} class="btn btn-primary btn-lg">{ctas.consultation.label}</a>
+      <a href={sections.kontakt} class="btn btn-primary btn-lg">
+        {locale === 'en' ? 'Free consultation' : 'Kostenlose Investment-Beratung sichern'}
+      </a>
       <a href={links.whatsapp} class="btn btn-outline" target="_blank" rel="noopener noreferrer">
-        {ctas.whatsapp.label}
+        {locale === 'en' ? 'WhatsApp advisory' : 'WhatsApp-Beratung starten'}
       </a>
     </div>
   </div>

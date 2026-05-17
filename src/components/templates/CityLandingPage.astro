@@ -70,9 +70,9 @@ const related = [
 ---
 
 <Layout
-  title={seoBundle.metaTitle || meta.title}
-  description={seoBundle.metaDescription || meta.description}
-  keywords={seoBundle.metaKeywords}
+  title={meta.title}
+  description={meta.description}
+  keywords={[seoBundle.primaryKeyword, `Immobilien Ägypten ${city.name}`, city.name]}
   canonical={canonicalUrl(path)}
 >
   <Fragment slot="head"><JsonLd data={schemas} /></Fragment>

@@ -1,8 +1,9 @@
 ---
-import { images } from '../data/images';
 import JsonLd from '../components/seo/JsonLd.astro';
-import Tracking from '../components/seo/Tracking.astro';
-import { trackingConfig } from '../config/tracking.config';
+import TrackingConfig from '../components/seo/TrackingConfig.astro';
+import CookieBanner from '../components/legal/CookieBanner.astro';
+import { SEO_OG_IMAGE, SEO_SITE_NAME } from '../lib/seo-assets';
+import { getHreflangAlternates } from '../i18n/index';
 import {
   buildOrganizationSchema,
   buildLocalBusinessSchema,
@@ -15,36 +16,49 @@ interface Props {
   description?: string;
   canonical?: string;
   ogImage?: string;
+  ogImageAlt?: string;
   ogType?: 'website' | 'article';
   twitterSite?: string;
   noindex?: boolean;
   keywords?: string[];
   includeLocalBusiness?: boolean;
   lang?: string;
+  articlePublished?: string;
+  articleModified?: string;
 }
 
 const {
-  title = 'Tatari Investment | Offplan Immobilien Ägypten & Naher Osten | Deutsche Beratung',
-  description = 'Premium Offplan-Immobilien in Ägypten: direkt vom Bauträger, zinsfreie Raten nach Prüfung, lokale Due Diligence. Strukturierter Einstieg für Investoren aus DACH & Europa — Tatari Investment.',
+  title = 'Tatari Investment | Offplan Immobilien Ägypten, Dubai & Saudi-Arabien',
+  description = 'Premium Offplan-Immobilien in Ägypten, Dubai und Saudi-Arabien: deutschsprachige Beratung, Bauträger-Raten nach Prüfung, West Wind Sheikh Zayed — Tatari Investment.',
   canonical,
-  ogImage = images.og,
+  ogImage = SEO_OG_IMAGE.url,
+  ogImageAlt = SEO_OG_IMAGE.alt,
   ogType = 'website',
   twitterSite = '@TatariInvestment',
   noindex = false,
   keywords = [],
   includeLocalBusiness = true,
   lang = 'de',
+  articlePublished,
+  articleModified,
 } = Astro.props;
 
 const canonicalUrl = canonical ?? new URL(Astro.url.pathname, Astro.site).href;
-const siteName = 'Tatari Investment';
-const gtmId = trackingConfig.gtmId;
+const siteName = SEO_SITE_NAME;
+
+const googleVerification = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION as string | undefined;
+const bingVerification = import.meta.env.PUBLIC_BING_SITE_VERIFICATION as string | undefined;
 
 const globalSchemas = mergeSchemas(
   buildOrganizationSchema(description),
   buildWebsiteSchema(),
   includeLocalBusiness ? buildLocalBusinessSchema() : null
 );
+
+const hreflangs = getHreflangAlternates(Astro.url.pathname);
+const ogLocale = lang === 'en' ? 'en_US' : 'de_DE';
+const ogLocaleAlt = lang === 'en' ? 'de_DE' : 'en_US';
+const htmlLanguage = lang === 'en' ? 'English' : 'German';
 ---
 
 <!doctype html>
@@ -54,33 +68,53 @@ const globalSchemas = mergeSchemas(
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    {keywords.length > 0 && <meta name="keywords" content={keywords.join(', ')} />}
+    {keywords.length > 0 && (
+      <meta name="keywords" content={[...new Set(keywords)].slice(0, 6).join(', ')} />
+    )}
     <link rel="canonical" href={canonicalUrl} />
+    {hreflangs.map((alt) => (
+      <link rel="alternate" hreflang={alt.lang} href={alt.href} />
+    ))}
     <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large'} />
     <meta name="theme-color" content="#050505" />
     <meta name="author" content={siteName} />
+    <meta name="application-name" content={siteName} />
+    {googleVerification && <meta name="google-site-verification" content={googleVerification} />}
+    {bingVerification && <meta name="msvalidate.01" content={bingVerification} />}
     <meta property="og:type" content={ogType} />
     <meta property="og:site_name" content={siteName} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:image" content={ogImage} />
-    <meta property="og:image:alt" content={`${siteName} — Offplan Immobilien Ägypten`} />
-    <meta property="og:locale" content="de_DE" />
-    <meta property="og:locale:alternate" content="en_US" />
+    <meta property="og:image:secure_url" content={ogImage} />
+    <meta property="og:image:width" content={String(SEO_OG_IMAGE.width)} />
+    <meta property="og:image:height" content={String(SEO_OG_IMAGE.height)} />
+    <meta property="og:image:alt" content={ogImageAlt} />
+    <meta property="og:locale" content={ogLocale} />
+    <meta property="og:locale:alternate" content={ogLocaleAlt} />
+    {ogType === 'article' && articlePublished && (
+      <meta property="article:published_time" content={articlePublished} />
+    )}
+    {ogType === 'article' && articleModified && (
+      <meta property="article:modified_time" content={articleModified} />
+    )}
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content={twitterSite} />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
-    <meta name="twitter:image:alt" content={`${siteName} — Offplan Immobilien Ägypten`} />
+    <meta name="twitter:image:alt" content={ogImageAlt} />
     <meta name="geo.region" content="EG" />
-    <meta name="language" content="German" />
-    <link rel="icon" href={images.logo} />
+    <meta name="language" content={htmlLanguage} />
+    <link rel="icon" href="/favicon.png" type="image/png" sizes="96x46" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/logo-square.png" />
+    <link rel="manifest" href="/site.webmanifest" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preconnect" href="https://images.unsplash.com" crossorigin />
-    <link rel="preconnect" href="https://i-tatari.com" crossorigin />
+    <link rel="preconnect" href="https://www.i-tatari.com" crossorigin />
     <link
       rel="preload"
       as="style"
@@ -98,24 +132,15 @@ const globalSchemas = mergeSchemas(
         rel="stylesheet"
       />
     </noscript>
-    <Tracking />
+    <TrackingConfig />
     <JsonLd data={globalSchemas} />
     <slot name="head" />
   </head>
   <body>
-    <a href="#main-content" class="skip-link">Zum Inhalt springen</a>
-    {gtmId && (
-      <noscript>
-        <iframe
-          src={`https://www.googletagmanager.com/ns.html?id=${gtmId}`}
-          height="0"
-          width="0"
-          style="display:none;visibility:hidden"
-          title="Google Tag Manager"></iframe>
-      </noscript>
-    )}
+    <a href="#main-content" class="skip-link">{lang === 'en' ? 'Skip to content' : 'Zum Inhalt springen'}</a>
     <slot />
     <slot name="footer" />
+    <CookieBanner />
     <script>
       import '../scripts/main.ts';
     </script>

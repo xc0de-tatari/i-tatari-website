@@ -1,36 +1,60 @@
 ---
+import type { Locale } from '../i18n';
+import { getUi } from '../i18n/content';
 import { clusters } from '../data/clusters';
-import { getClusterHref } from '../data/cluster-intros';
+import { getClusterIntro, getClusterHref } from '../data/cluster-intros';
+
+interface Props {
+  locale?: Locale;
+}
+
+const locale = Astro.props.locale ?? 'de';
+const t = getUi(locale).seoTopics;
+const pillarCards = getUi(locale).pillars.cards;
+
+function clusterTitle(name: string) {
+  return name.replace(/^\d+\s*/, '').trim();
+}
 ---
 
 <section class="section section-alt" aria-labelledby="seo-topics-title">
   <div class="container">
-    <p class="section-label">Themen & Suchanfragen</p>
-    <h2 id="seo-topics-title" class="section-title">
-      Offplan-Immobilien Ägypten — alle Investment-Themen
-    </h2>
-    <p class="section-desc">
-      Tatari Investment deckt die wichtigsten Suchintentionen ab: von zinsfreien Bauträger-Raten über
-      Commercial Units bis West Wind in Sheikh Zayed — natürlich integriert, ohne Keyword-Stuffing.
-    </p>
+    <p class="section-label">{t.label}</p>
+    <h2 id="seo-topics-title" class="section-title">{t.title}</h2>
+    <p class="section-desc">{t.desc}</p>
 
     <div class="topics-grid">
-      {clusters.map((cluster) => (
-        <article class="topic-card">
-          <h3>{cluster.name.replace(/^\d+\s/, '')}</h3>
-          <p class="topic-count">{cluster.count} relevante Suchbegriffe</p>
-          <ul>
-            {cluster.sampleKeywords.map((kw) => (
-              <li>{kw}</li>
-            ))}
-          </ul>
-          <a href={getClusterHref(cluster.slug)} class="topic-link">
-            {cluster.slug.includes('west-wind')
-              ? 'West Wind Projekt ansehen →'
-              : 'Thema vertiefen →'}
-          </a>
-        </article>
-      ))}
+      {locale === 'en'
+        ? pillarCards.map((card) => (
+            <article class="topic-card">
+              <h3>{card.title}</h3>
+              <p class="topic-sub">{card.desc}</p>
+              <a href={card.href} class="topic-link">
+                {card.link}
+              </a>
+            </article>
+          ))
+        : clusters.map((cluster) => {
+            const intro = getClusterIntro(cluster.slug);
+            return (
+              <article class="topic-card">
+                <h3>{intro.headline}</h3>
+                <p class="topic-sub">{intro.subheadline}</p>
+                <p class="topic-intro">{intro.intro}</p>
+                <ul class="topic-highlights">
+                  {intro.highlights.slice(0, 3).map((h) => (
+                    <li>{h}</li>
+                  ))}
+                </ul>
+                <a href={getClusterHref(cluster.slug)} class="topic-link">
+                  {cluster.slug.includes('west-wind')
+                    ? 'West Wind ansehen'
+                    : `${clusterTitle(cluster.name)} — mehr erfahren`}
+                  <span aria-hidden="true"> →</span>
+                </a>
+              </article>
+            );
+          })}
     </div>
   </div>
 </section>
@@ -59,6 +83,9 @@ import { getClusterHref } from '../data/cluster-intros';
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
     transition: border-color 0.2s;
   }
 
@@ -67,40 +94,53 @@ import { getClusterHref } from '../data/cluster-intros';
   }
 
   .topic-card h3 {
-    font-size: 1rem;
-    color: var(--gold);
+    font-size: 1.05rem;
+    color: var(--text);
     margin-bottom: 0.35rem;
+    line-height: 1.35;
+    word-break: break-word;
   }
 
-  .topic-count {
-    font-size: 0.75rem;
-    color: var(--text-dim);
-    margin-bottom: 0.75rem;
+  .topic-sub {
+    font-size: 0.8rem;
+    color: var(--gold);
+    margin-bottom: 0.65rem;
+    line-height: 1.4;
   }
 
-  .topic-card ul {
+  .topic-intro {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    line-height: 1.55;
+    margin-bottom: 0.85rem;
+    flex: 1;
+  }
+
+  .topic-highlights {
     margin-bottom: 1rem;
   }
 
-  .topic-card li {
+  .topic-highlights li {
     font-size: 0.8rem;
-    color: var(--text-muted);
-    padding: 0.2rem 0;
-    padding-left: 0.75rem;
+    color: var(--text-dim);
+    padding: 0.25rem 0 0.25rem 1rem;
     position: relative;
+    line-height: 1.45;
   }
 
-  .topic-card li::before {
-    content: '·';
+  .topic-highlights li::before {
+    content: '✓';
     position: absolute;
     left: 0;
     color: var(--gold);
+    font-size: 0.7rem;
   }
 
   .topic-link {
     font-size: 0.85rem;
     font-weight: 600;
     color: var(--gold);
+    margin-top: auto;
   }
 
   .topic-link:hover {

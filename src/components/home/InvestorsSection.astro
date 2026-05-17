@@ -1,0 +1,50 @@
+---
+import type { Locale } from '../../i18n';
+import { getPageSections, getUi } from '../../i18n/content';
+
+interface Props {
+  locale?: Locale;
+}
+
+const locale = Astro.props.locale ?? 'de';
+const t = getUi(locale).investors;
+const sections = getPageSections(locale);
+const holidayHref = locale === 'en' ? '/en/buy-property-egypt' : '/urlaub-und-investment-aegypten';
+const financeHref = locale === 'en' ? '/en/installment-property-egypt' : '/immobilienfinanzierung-aegypten-deutsche';
+---
+
+<section class="section section-alt" id={locale === 'en' ? 'international-investors' : 'deutsche-investoren'}>
+  <div class="container">
+    <p class="section-label">{t.label}</p>
+    <h2 class="section-title">{t.title}</h2>
+    <p class="section-desc">{t.desc}</p>
+    <div class="benefits-grid" style="margin-top:2rem">
+      {t.cards.map((card) => (
+        <article class="benefit-card">
+          <div class="benefit-icon">{card.icon}</div>
+          <h3>{card.title}</h3>
+          <p>
+            {card.desc}
+            {locale === 'de' && card.title === 'Besichtigungsreise' && (
+              <>
+                {' '}
+                <a href={holidayHref}>Urlaub & Investment</a>.
+              </>
+            )}
+            {locale === 'de' && card.title === 'Vorprüfung' && (
+              <>
+                {' '}
+                <a href={financeHref}>Ratenplan-Prüfung</a>
+              </>
+            )}
+          </p>
+        </article>
+      ))}
+    </div>
+    <div class="center" style="margin-top:2rem">
+      <a href={sections.kontakt} class="btn btn-primary">
+        {locale === 'en' ? 'Free consultation' : 'Kostenlose Beratung sichern'}
+      </a>
+    </div>
+  </div>
+</section>

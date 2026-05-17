@@ -1,8 +1,14 @@
-import { links } from '../data/links';
-import { images } from '../data/images';
+import { links, socialLinks } from '../data/links';
+import {
+  SEO_OG_IMAGE,
+  SEO_SITE,
+  SEO_SITE_NAME,
+  organizationLogoSchema,
+  publisherSchema,
+} from './seo-assets';
 
-const SITE = 'https://www.i-tatari.com';
-const SITE_NAME = 'Tatari Investment';
+const SITE = SEO_SITE;
+const SITE_NAME = SEO_SITE_NAME;
 
 export interface BreadcrumbItem {
   name: string;
@@ -54,12 +60,12 @@ export function buildFaqSchema(faqs: FaqItem[]) {
 export function buildOrganizationSchema(description?: string) {
   return {
     '@context': 'https://schema.org',
-    '@type': 'RealEstateAgent',
+    '@type': ['RealEstateAgent', 'Organization'],
     '@id': `${SITE}/#organization`,
     name: SITE_NAME,
     url: SITE,
-    logo: images.logo,
-    image: images.og,
+    logo: organizationLogoSchema(),
+    image: SEO_OG_IMAGE.url,
     email: links.email,
     telephone: links.phone,
     areaServed: [
@@ -67,11 +73,13 @@ export function buildOrganizationSchema(description?: string) {
       { '@type': 'Country', name: 'Austria' },
       { '@type': 'Country', name: 'Switzerland' },
       { '@type': 'Country', name: 'Egypt' },
+      { '@type': 'Country', name: 'United Arab Emirates' },
+      { '@type': 'Country', name: 'Saudi Arabia' },
     ],
     description:
       description ??
-      'Deutschsprachige Beratung für Offplan-Immobilien in Ägypten — direkt vom Bauträger, vorbehaltlich Verfügbarkeit.',
-    sameAs: [links.whatsapp],
+      'Deutschsprachige Beratung für Offplan-Immobilien in Ägypten, Dubai und Saudi-Arabien — direkt vom Bauträger, vorbehaltlich Verfügbarkeit.',
+    sameAs: [links.whatsapp, ...socialLinks.map((s) => s.href)],
     knowsLanguage: ['de', 'en', 'ar'],
   };
 }
@@ -86,7 +94,7 @@ export function buildLocalBusinessSchema() {
     url: SITE,
     telephone: links.phone,
     email: links.email,
-    image: images.og,
+    image: SEO_OG_IMAGE.url,
     address: {
       '@type': 'PostalAddress',
       addressLocality: 'Sheikh Zayed City',
@@ -144,12 +152,8 @@ export function buildArticleSchema(opts: {
     inLanguage: 'de-DE',
     datePublished: opts.datePublished ?? '2026-01-01',
     dateModified: opts.dateModified ?? '2026-05-16',
-    author: { '@type': 'Organization', name: SITE_NAME, url: SITE },
-    publisher: {
-      '@type': 'Organization',
-      name: SITE_NAME,
-      logo: { '@type': 'ImageObject', url: images.logo },
-    },
+    author: publisherSchema(),
+    publisher: publisherSchema(),
     mainEntityOfPage: canonicalUrl(opts.url),
   };
 }
@@ -187,7 +191,7 @@ export function buildRealEstateListingSchema(opts: {
     name: opts.name,
     description: opts.description,
     url: canonicalUrl(opts.url),
-    image: opts.image ?? images.og,
+    image: opts.image ?? SEO_OG_IMAGE.url,
     inLanguage: 'de-DE',
     offers: opts.price
       ? {
@@ -213,6 +217,32 @@ export function buildWebsiteSchema() {
     name: SITE_NAME,
     url: SITE,
     inLanguage: 'de-DE',
+    publisher: { '@id': `${SITE}/#organization` },
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: {
+        '@type': 'EntryPoint',
+        urlTemplate: `${SITE}/investieren?q={search_term_string}`,
+      },
+      'query-input': 'required name=search_term_string',
+    },
+  };
+}
+
+/** CollectionPage / hub pages (investieren, wissen, städte-hub) */
+export function buildCollectionPageSchema(opts: {
+  name: string;
+  description: string;
+  url: string;
+}) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: opts.name,
+    description: opts.description,
+    url: opts.url.startsWith('http') ? opts.url : canonicalUrl(opts.url),
+    inLanguage: 'de-DE',
+    isPartOf: { '@id': `${SITE}/#website` },
     publisher: { '@id': `${SITE}/#organization` },
   };
 }

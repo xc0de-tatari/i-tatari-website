@@ -1,0 +1,194 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import LegalNav from '../components/legal/LegalNav.astro';
+import { canonicalUrl } from '../lib/seo';
+import { legalPaths, links } from '../data/links';
+
+const title = 'AGB | Hometrend & Tatari Investments';
+const description =
+  'Allgemeine Geschäftsbedingungen für die Nutzung der Website und Immobilienvermittlung von Hometrend & Tatari Investments.';
+const stand = 'Mai 2026';
+const impressumPhone = '+49 171 4733388';
+---
+
+<Layout
+  title={title}
+  description={description}
+  canonical={canonicalUrl(legalPaths.agb)}
+  includeLocalBusiness={false}
+>
+  <Header />
+  <main id="main-content">
+    <article class="legal-page section">
+      <div class="container legal-page-inner">
+        <header class="legal-page-header">
+          <p class="section-label">Rechtliches</p>
+          <h1>Allgemeine Geschäftsbedingungen (AGB)</h1>
+          <p class="legal-meta">Stand: {stand}</p>
+        </header>
+
+        <LegalNav />
+
+        <section class="legal-block" aria-labelledby="agb-1">
+          <h2 id="agb-1">§ 1 Geltungsbereich</h2>
+          <p>
+            Diese Allgemeinen Geschäftsbedingungen (AGB) gelten für die Nutzung der Website{' '}
+            <a href="https://www.i-tatari.com">www.i-tatari.com</a> sowie für alle Beratungs-, Vermittlungs- und
+            Informationsleistungen von <strong>Hometrend &amp; Tatari Investments</strong> (nachfolgend „Tatari“)
+            gegenüber Verbrauchern und Unternehmern im Bereich Immobilien in Ägypten, Dubai (VAE), Saudi-Arabien und
+            verwandten Märkten.
+          </p>
+          <p>
+            Abweichende Bedingungen des Kunden werden nur anerkannt, wenn wir ihrer Geltung ausdrücklich schriftlich
+            zugestimmt haben.
+          </p>
+        </section>
+
+        <section class="legal-block" aria-labelledby="agb-2">
+          <h2 id="agb-2">§ 2 Vertragspartner &amp; Unternehmensangaben</h2>
+          <address class="legal-address">
+            Hometrend &amp; Tatari Investments<br />
+            Geschäftsführer: Frank Deubrecht, Taleb Tatari<br />
+            Hydenstraße 17, 76275 Ettlingen, Deutschland<br />
+            Telefon: <a href="tel:+491714733388">{impressumPhone}</a><br />
+            E-Mail: <a href={`mailto:${links.email}`}>{links.email}</a>
+          </address>
+          <p>Impressum und Datenschutz: <a href={legalPaths.impressum}>Impressum</a>, <a href={legalPaths.datenschutz}>Datenschutz</a>.</p>
+        </section>
+
+        <section class="legal-block" aria-labelledby="agb-3">
+          <h2 id="agb-3">§ 3 Leistungen von Tatari</h2>
+          <p>Tatari erbringt insbesondere:</p>
+          <ul>
+            <li>Informationen zu Offplan- und Premium-Immobilienprojekten</li>
+            <li>Erstberatung, Vorqualifizierung und Projektvermittlung</li>
+            <li>Unterstützung bei Kommunikation mit Bauträgern und lokalen Partnern</li>
+            <li>Koordination von Besichtigungsreisen (optional)</li>
+          </ul>
+          <p>
+            Tatari ist <strong>Immobilienvermittler/-berater</strong>, nicht Bauträger, Bank oder Rechtsanwalt. Ein
+            konkreter Kauf- oder Reservierungsvertrag kommt — sofern zustande — zwischen Kunde und Bauträger bzw.
+            Verkäufer zustande, sofern nicht ausdrücklich anders vereinbart.
+          </p>
+        </section>
+
+        <section class="legal-block" aria-labelledby="agb-4">
+          <h2 id="agb-4">§ 4 Keine Anlage-, Steuer- oder Rechtsberatung</h2>
+          <p>
+            Alle Inhalte auf der Website (Renditebeispiele, Rechner, Marktvergleiche, Prognosen) dienen ausschließlich
+            der allgemeinen Information. Sie stellen <strong>keine</strong> Anlage-, Steuer- oder Rechtsberatung dar.
+          </p>
+          <p>
+            Renditen, Wertsteigerungen, Mieteinnahmen, Wechselkurse, Verfügbarkeiten und Zahlungspläne sind
+            <strong>nicht garantiert</strong> und können sich jederzeit ändern. Entscheidungen sollten auf Basis
+            individueller Prüfung und professioneller Beratung vor Ort getroffen werden.
+          </p>
+        </section>
+
+        <section class="legal-block" aria-labelledby="agb-5">
+          <h2 id="agb-5">§ 5 Website-Inhalte &amp; Verfügbarkeit</h2>
+          <p>
+            Projektbeschreibungen, Preise, Grundrisse, Bilder und Termine sind unverbindlich und vorbehaltlich
+            Verfügbarkeit beim Bauträger. Irrtümer, Zwischenverkauf und Änderungen durch Dritte bleiben vorbehalten.
+          </p>
+          <p>
+            Wir bemühen uns um aktuelle Inhalte, übernehmen jedoch keine Gewähr für Vollständigkeit, Richtigkeit oder
+            ständige Erreichbarkeit der Website.
+          </p>
+        </section>
+
+        <section class="legal-block" aria-labelledby="agb-6">
+          <h2 id="agb-6">§ 6 Anfragen, Reservierung &amp; Provision</h2>
+          <p>
+            Unverbindliche Anfragen über Formular, E-Mail, Telefon oder WhatsApp begründen noch keinen Vertrag. Eine
+            Reservierung oder EOI (Expression of Interest) setzt die jeweiligen Bedingungen des Bauträgers und eine
+            gesonderte schriftliche Bestätigung voraus.
+          </p>
+          <p>
+            Provisionen oder Vermittlungsgebühren werden — sofern anfallend — vor Vertragsschluss transparent
+            mitgeteilt. Für Verbraucher gelten die gesetzlichen Informations- und Widerrufsrechte, soweit einschlägig.
+          </p>
+        </section>
+
+        <section class="legal-block" aria-labelledby="agb-7">
+          <h2 id="agb-7">§ 7 Pflichten des Kunden</h2>
+          <p>Der Kunde stellt vollständige und wahrheitsgemäße Angaben bereit und prüft Vertragsunterlagen, Zahlungspläne und rechtliche Rahmenbedingungen im Zielland eigenverantwortlich bzw. mit qualifizierten Beratern.</p>
+        </section>
+
+        <section class="legal-block" aria-labelledby="agb-8">
+          <h2 id="agb-8">§ 8 Haftung</h2>
+          <p>
+            Tatari haftet unbeschränkt bei Vorsatz und grober Fahrlässigkeit sowie bei Schäden aus der Verletzung des
+            Lebens, des Körpers oder der Gesundheit. Bei leichter Fahrlässigkeit haften wir nur bei Verletzung wesentlicher
+            Vertragspflichten (Kardinalpflichten), begrenzt auf den vorhersehbaren, typischen Schaden.
+          </p>
+          <p>
+            Eine Haftung für mittelbare Schäden, entgangenen Gewinn oder Investitionsverluste ist — soweit gesetzlich
+            zulässig — ausgeschlossen, sofern nicht Vorsatz oder grobe Fahrlässigkeit vorliegt.
+          </p>
+        </section>
+
+        <section class="legal-block" aria-labelledby="agb-9">
+          <h2 id="agb-9">§ 9 Urheberrecht</h2>
+          <p>
+            Texte, Bilder, Designs und Medien auf dieser Website sind urheberrechtlich geschützt. Vervielfältigung,
+            Bearbeitung oder Verbreitung außerhalb der gesetzlichen Schranken bedürfen unserer schriftlichen Zustimmung.
+          </p>
+        </section>
+
+        <section class="legal-block" aria-labelledby="agb-10">
+          <h2 id="agb-10">§ 10 Datenschutz</h2>
+          <p>
+            Die Verarbeitung personenbezogener Daten richtet sich nach unserer{' '}
+            <a href={legalPaths.datenschutz}>Datenschutzerklärung</a>. Kontaktformulare dürfen nur mit Kenntnis
+            dieser Informationen genutzt werden.
+          </p>
+        </section>
+
+        <section class="legal-block" aria-labelledby="agb-11">
+          <h2 id="agb-11">§ 11 Streitbeilegung</h2>
+          <p>
+            Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung bereit:{' '}
+            <a href="https://ec.europa.eu/consumers/odr/" target="_blank" rel="noopener noreferrer">
+              https://ec.europa.eu/consumers/odr/
+            </a>
+          </p>
+          <p>
+            Wir sind nicht verpflichtet und nicht bereit, an Streitbeilegungsverfahren vor einer
+            Verbraucherschlichtungsstelle teilzunehmen.
+          </p>
+        </section>
+
+        <section class="legal-block" aria-labelledby="agb-12">
+          <h2 id="agb-12">§ 12 Anwendbares Recht &amp; Gerichtsstand</h2>
+          <p>
+            Es gilt das Recht der Bundesrepublik Deutschland unter Ausschluss des UN-Kaufrechts (CISG), soweit dem
+            keine zwingenden Verbraucherschutzvorschriften des Staates des Wohnsitzes des Verbrauchers entgegenstehen.
+          </p>
+          <p>
+            Ist der Kunde Kaufmann, juristische Person des öffentlichen Rechts oder öffentlich-rechtliches Sondervermögen,
+            ist ausschließlicher Gerichtsstand — soweit zulässig — Ettlingen.
+          </p>
+        </section>
+
+        <section class="legal-block" aria-labelledby="agb-13">
+          <h2 id="agb-13">§ 13 Salvatorische Klausel</h2>
+          <p>
+            Sollten einzelne Bestimmungen dieser AGB unwirksam sein, bleibt die Wirksamkeit der übrigen Bestimmungen
+            unberührt. An die Stelle der unwirksamen Regelung tritt eine wirksame Regelung, die dem wirtschaftlichen
+            Zweck am nächsten kommt.
+          </p>
+        </section>
+
+        <p class="legal-back">
+          <a href="/" class="btn btn-outline">← Zur Startseite</a>
+          <a href={legalPaths.impressum} class="btn btn-outline">Impressum</a>
+          <a href={legalPaths.datenschutz} class="btn btn-outline">Datenschutz</a>
+        </p>
+      </div>
+    </article>
+  </main>
+  <Footer />
+</Layout>

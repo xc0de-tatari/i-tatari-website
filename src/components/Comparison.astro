@@ -1,25 +1,31 @@
 ---
-import { comparisonRows } from '../data/site';
-import { sections } from '../data/links';
+import type { Locale } from '../i18n';
+import { getSiteContent, getPageSections, getUi } from '../i18n/content';
+interface Props {
+  locale?: Locale;
+}
+
+const locale = Astro.props.locale ?? 'de';
+const { comparisonRows } = getSiteContent(locale);
+const t = getUi(locale).comparison;
+const sections = getPageSections(locale);
 ---
 
 <section class="section">
   <div class="container center">
-    <p class="section-label" style="justify-content:center">📊 Investment Vergleich</p>
-    <h2 class="section-title">Ägypten, Dubai & Deutschland im Vergleich</h2>
-    <p class="section-desc">
-      Orientierungswerte — individuelle Steuer-, Rendite- und Risikoprofile können stark abweichen. Keine Garantien.*
-    </p>
+    <p class="section-label" style="justify-content:center">{t.label}</p>
+    <h2 class="section-title">{t.title}</h2>
+    <p class="section-desc">{t.desc}</p>
   </div>
 
   <div class="container comparison-wrap">
     <table class="comparison-table">
       <thead>
         <tr>
-          <th>Kategorie</th>
-          <th>🇦🇪 Dubai</th>
-          <th>🇪🇬 Ägypten</th>
-          <th>🇩🇪 Deutschland</th>
+          <th>{locale === 'en' ? 'Category' : 'Kategorie'}</th>
+          <th>🇦🇪 {t.dubai}</th>
+          <th>🇪🇬 {t.egypt}</th>
+          <th>🇩🇪 {t.germany}</th>
         </tr>
       </thead>
       <tbody>
@@ -43,10 +49,8 @@ import { sections } from '../data/links';
   </div>
 
   <div class="container comparison-cta">
-    <h3>Bereit für smartes Investieren?</h3>
-    <p style="color:var(--text-muted);margin:1rem 0 1.5rem">
-      Nutzen Sie die Vorteile internationaler Märkte mit deutscher Sicherheit und Betreuung
-    </p>
-    <a href={sections.kontakt} class="btn btn-primary">Kostenlose Beratung starten</a>
+    <h3>{t.ctaTitle}</h3>
+    <p style="color:var(--text-muted);margin:1rem 0 1.5rem">{t.ctaDesc}</p>
+    <a href={sections.kontakt} class="btn btn-primary">{t.ctaBtn}</a>
   </div>
 </section>

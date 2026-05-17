@@ -1,4 +1,6 @@
 ---
+import { legalPaths } from '../../data/links';
+
 interface Props {
   title?: string;
   source?: string;
@@ -109,7 +111,8 @@ const formId = `lead-form-${source}`;
     <div class="form-group form-group--full">
       <label class="checkbox-label consent">
         <input type="checkbox" name="consent" required />
-        Ich willige ein, dass Tatari Investment meine Daten zur Bearbeitung der Anfrage nutzt. *
+        Ich willige ein, dass Tatari Investment meine Daten zur Bearbeitung der Anfrage nutzt. Details in der{' '}
+        <a href={legalPaths.datenschutz} target="_blank" rel="noopener noreferrer">Datenschutzerklärung</a>. *
       </label>
     </div>
   </div>

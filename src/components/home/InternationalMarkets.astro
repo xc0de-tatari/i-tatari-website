@@ -1,0 +1,102 @@
+---
+import type { Locale } from '../../i18n';
+import { getUi, marketCardsEn } from '../../i18n/content';
+import { marketCards } from '../../data/international-markets';
+
+interface Props {
+  locale?: Locale;
+}
+
+const locale = Astro.props.locale ?? 'de';
+const t = getUi(locale).markets;
+const cards = locale === 'en' ? marketCardsEn : marketCards;
+const sectionId = locale === 'en' ? 'markets' : 'maerkte';
+---
+
+<section class="section" id={sectionId}>
+  <div class="container center">
+    <p class="section-label" style="justify-content:center">{t.label}</p>
+    <h2 class="section-title">
+      {t.title} <span class="text-gold">{t.titleGold}</span> {t.titleEnd}
+    </h2>
+    <p class="section-desc">{t.desc}</p>
+  </div>
+
+  <div class="container markets-grid">
+    {cards.map((m) => (
+      <article class:list={['market-card', m.featured && 'market-card--featured']}>
+        <span class="market-flag" aria-hidden="true">{m.flag}</span>
+        <p class="market-name">{m.name}</p>
+        <h3>{m.headline}</h3>
+        <p class="market-desc">{m.desc}</p>
+        <a href={m.href} class="btn btn-primary">{m.cta}</a>
+      </article>
+    ))}
+  </div>
+</section>
+
+<style>
+  .markets-grid {
+    display: grid;
+    gap: 1.25rem;
+    margin-top: 2.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .markets-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .market-card {
+    padding: 1.75rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+    text-align: left;
+    box-sizing: border-box;
+  }
+
+  .market-card--featured {
+    border-color: var(--border-gold);
+    background: linear-gradient(180deg, rgba(197, 160, 89, 0.08), var(--bg-card));
+  }
+
+  .market-flag {
+    font-size: 2rem;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .market-name {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--gold);
+    margin-bottom: 0.35rem;
+  }
+
+  .market-card h3 {
+    font-size: 1.05rem;
+    line-height: 1.35;
+    margin-bottom: 0.65rem;
+    word-break: break-word;
+  }
+
+  .market-desc {
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    line-height: 1.55;
+    margin-bottom: 1.25rem;
+    flex: 1;
+  }
+
+  .market-card .btn {
+    width: 100%;
+    justify-content: center;
+    box-sizing: border-box;
+  }
+</style>

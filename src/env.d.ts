@@ -14,6 +14,8 @@ interface ImportMetaEnv {
   readonly PUBLIC_GOOGLE_ADS_ID?: string;
   readonly PUBLIC_GOOGLE_ADS_CONVERSION_LABEL?: string;
   readonly PUBLIC_CALENDLY_URL?: string;
+  readonly PUBLIC_GOOGLE_SITE_VERIFICATION?: string;
+  readonly PUBLIC_BING_SITE_VERIFICATION?: string;
 }
 
 interface ImportMeta {

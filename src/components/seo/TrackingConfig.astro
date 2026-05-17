@@ -1,0 +1,14 @@
+---
+import { trackingConfig } from '../../config/tracking.config';
+
+const config = JSON.stringify({
+  gtmId: trackingConfig.gtmId ?? null,
+  ga4Id: trackingConfig.ga4Id ?? null,
+  metaPixelId: trackingConfig.metaPixelId ?? null,
+  tiktokPixelId: trackingConfig.tiktokPixelId ?? null,
+  linkedInPartnerId: trackingConfig.linkedInPartnerId ?? null,
+  googleAdsId: trackingConfig.googleAdsId ?? null,
+});
+---
+
+<script id="tracking-config" type="application/json" set:html={config} />

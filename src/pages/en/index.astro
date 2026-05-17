@@ -1,0 +1,35 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import FloatingActions from '../../components/FloatingActions.astro';
+import StickyMobileCta from '../../components/conversion/StickyMobileCta.astro';
+import HomePage from '../../components/home/HomePage.astro';
+import JsonLd from '../../components/seo/JsonLd.astro';
+import { enHome } from '../../data/en-content';
+import { getSiteContent } from '../../i18n/content';
+import { buildFaqSchema, canonicalUrl } from '../../lib/seo';
+
+const { faqs } = getSiteContent('en');
+const faqSchema = buildFaqSchema(faqs.slice(0, 12));
+---
+
+<Layout
+  title={enHome.seo.title}
+  description={enHome.seo.description}
+  canonical={canonicalUrl('/en/')}
+  lang="en"
+>
+  {faqSchema && (
+    <Fragment slot="head">
+      <JsonLd data={faqSchema} />
+    </Fragment>
+  )}
+  <Header locale="en" />
+  <main id="main-content">
+    <HomePage locale="en" />
+  </main>
+  <Footer locale="en" />
+  <FloatingActions />
+  <StickyMobileCta />
+</Layout>

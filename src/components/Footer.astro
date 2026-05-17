@@ -1,26 +1,35 @@
 ---
-import { images } from '../data/images';
-import { links, sections } from '../data/links';
+import BrandLogo from './BrandLogo.astro';
+import LanguageSwitcher from './LanguageSwitcher.astro';
+import SocialLinks from './SocialLinks.astro';
+import { getLocale, type Locale } from '../i18n/index';
+import { legalPaths, links, sections } from '../data/links';
 import { pillarPages, productPages } from '../data/navigation';
 import Disclaimer from './conversion/Disclaimer.astro';
+
+interface Props {
+  locale?: Locale;
+}
+
+const locale = Astro.props.locale ?? getLocale(Astro.url.pathname);
+const isEn = locale === 'en';
+const homeHref = isEn ? '/en/' : '/';
+const contactHref = isEn ? '/en/#contact' : sections.kontakt;
 ---
 
 <footer class="footer">
   <div class="container footer-grid">
     <div class="footer-brand">
-      <a href="/" class="logo" data-scroll-top>
-        <img
-          src={images.logo}
-          alt="Tatari Investment — Offplan Immobilien Ägypten Logo"
-          class="logo-img"
-          width="140"
-          height="48"
-        />
+      <a href={homeHref} class="logo" data-scroll-top>
+        <BrandLogo />
       </a>
       <p>
-        Deutschsprachiger Partner für Offplan- und Commercial-Immobilien in Ägypten — direkt vom Bauträger,
-        vorbehaltlich Verfügbarkeit.
+        {isEn
+          ? 'English advisory for real estate in Egypt, Dubai (UAE) and Saudi Arabia — offplan and premium projects, subject to availability.'
+          : 'Deutschsprachiger Partner für Immobilien in Ägypten, Dubai (VAE) und Saudi-Arabien — Offplan, Premium-Projekte, vorbehaltlich Verfügbarkeit.'}
       </p>
+      <SocialLinks variant="footer" />
+      <LanguageSwitcher locale={locale} />
     </div>
     <div>
       <h4>Investieren</h4>
@@ -47,7 +56,7 @@ import Disclaimer from './conversion/Disclaimer.astro';
         {productPages.map((p) => (
           <li><a href={p.href}>{p.label}</a></li>
         ))}
-        <li><a href={sections.kontakt}>Beratung buchen</a></li>
+        <li><a href={contactHref}>{isEn ? 'Book consultation' : 'Beratung buchen'}</a></li>
         <li><a href={`tel:${links.phone}`}>{links.phoneDisplay}</a></li>
         <li><a href={`mailto:${links.email}`}>{links.email}</a></li>
       </ul>
@@ -56,9 +65,12 @@ import Disclaimer from './conversion/Disclaimer.astro';
   <div class="container footer-bottom">
     <span>© 2026 Tatari Investment. Alle Rechte vorbehalten.</span>
     <div class="footer-legal">
-      <a href={sections.kontakt} title="Impressum">Impressum</a>
-      <a href={sections.kontakt} title="Datenschutz">Datenschutz</a>
-      <a href={sections.kontakt} title="AGB">AGB</a>
+      <a href={legalPaths.impressum} title="Impressum">Impressum</a>
+      <a href={legalPaths.datenschutz} title="Datenschutz">Datenschutz</a>
+      <a href={legalPaths.agb} title="AGB">AGB</a>
+      <button type="button" class="footer-cookie-btn" data-open-cookie-settings>
+        Cookies
+      </button>
     </div>
   </div>
   <div class="container footer-disclaimer">

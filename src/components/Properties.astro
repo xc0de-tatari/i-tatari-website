@@ -1,19 +1,27 @@
 ---
-import { properties } from '../data/site';
+import type { Locale } from '../i18n';
+import { getSiteContent, getPageSections, getUi } from '../i18n/content';
 import { propertyImages } from '../data/images';
-import { sections } from '../data/links';
 import OptimizedImage from './seo/OptimizedImage.astro';
 import { defaultSizes } from '../lib/images';
 import { imageAlt } from '../lib/seo';
+
+interface Props {
+  locale?: Locale;
+}
+
+const locale = Astro.props.locale ?? 'de';
+const { properties } = getSiteContent(locale);
+const t = getUi(locale).properties;
+const sections = getPageSections(locale);
+const projectsHref = locale === 'en' ? '/en/projects' : '/projekte';
 ---
 
-<section id="objekte" class="section">
+<section id={locale === 'en' ? 'properties' : 'objekte'} class="section">
   <div class="container center">
-    <p class="section-label" style="justify-content:center">🏆 Handverlesene Objekte</p>
-    <h2 class="section-title">West Wind & ausgewählte Offplan-Projekte</h2>
-    <p class="section-desc">
-      Flagship West Wind in Sheikh Zayed — Clinics, Offices, Retail. Preise und Verfügbarkeit auf Anfrage — vorbehaltlich Prüfung.
-    </p>
+    <p class="section-label" style="justify-content:center">{t.sectionLabel}</p>
+    <h2 class="section-title">{t.sectionTitle}</h2>
+    <p class="section-desc">{t.sectionDesc}</p>
   </div>
 
   <div class="container properties-grid">
@@ -21,14 +29,14 @@ import { imageAlt } from '../lib/seo';
       <article class="property-card">
         <div class="property-image">
           <OptimizedImage
-            src={propertyImages[p.title]}
+            src={propertyImages[p.title] ?? propertyImages['West Wind — Medical Unit']}
             alt={imageAlt(p.title, p.area, p.location)}
             width={400}
             height={250}
             sizes={defaultSizes('card')}
           />
           <div class="property-tags">
-            {p.featured && <span class="badge badge-gold">FLAGSHIP</span>}
+            {p.featured && <span class="badge badge-gold">{t.flagship}</span>}
             <span class="badge badge-gold">⏱️ {p.timeline}</span>
           </div>
         </div>
@@ -38,40 +46,40 @@ import { imageAlt } from '../lib/seo';
           <p class="property-area">{p.area}</p>
           <div class="property-price-row">
             <div>
-              <span>Gesamtpreis</span>
+              <span>{t.total}</span>
               <strong>{p.price}</strong>
             </div>
             <div>
-              <span>Anzahlung ab</span>
+              <span>{t.down}</span>
               <strong>{p.down}</strong>
             </div>
           </div>
           <div class="property-specs">
-            <div><span>Zimmer</span><strong>{p.rooms}</strong></div>
-            <div><span>Bäder</span><strong>{p.baths}</strong></div>
-            <div><span>Fläche</span><strong>{p.sqm}m²</strong></div>
-            <div><span>Potenzial</span><strong style="color:var(--gold)">{p.yieldNote}</strong></div>
+            <div><span>{t.rooms}</span><strong>{p.rooms}</strong></div>
+            <div><span>{t.baths}</span><strong>{p.baths}</strong></div>
+            <div><span>{t.area}</span><strong>{p.sqm}m²</strong></div>
+            <div><span>{t.potential}</span><strong style="color:var(--gold)">{p.yieldNote}</strong></div>
           </div>
           <div class="property-roi">
-            <span>Miete / Cashflow</span>
+            <span>{t.rent}</span>
             <strong>{p.rent}</strong>
           </div>
           <div class="property-features">
-            {p.features.map((f) => <span>✓ {f}</span>)}
+            {p.features.map((f) => (
+              <span>✓ {f}</span>
+            ))}
           </div>
-          <p class="property-developer">Entwickler: {p.developer}</p>
-          <a href={p.href ?? sections.kontakt} class="btn btn-primary">Details anfragen</a>
+          <p class="property-developer">{t.developer}: {p.developer}</p>
+          <a href={p.href ?? sections.kontakt} class="btn btn-primary">{t.cta}</a>
         </div>
       </article>
     ))}
   </div>
 
   <div class="container portfolio-cta">
-    <h3>Weitere 200+ exklusive Objekte verfügbar</h3>
-    <p style="color:var(--text-muted);margin:1rem 0 1.5rem">
-      Erhalten Sie Zugang zu unserem vollständigen Portfolio mit detaillierten Grundrissen, Videos und virtuellen Rundgängen.
-    </p>
-    <a href="/projekte" class="btn btn-outline" style="margin-right:0.75rem">Alle Projekte ansehen</a>
-    <a href={sections.kontakt} class="btn btn-primary">Portfolio anfordern</a>
+    <h3>{t.portfolioTitle}</h3>
+    <p style="color:var(--text-muted);margin:1rem 0 1.5rem">{t.portfolioDesc}</p>
+    <a href={projectsHref} class="btn btn-outline" style="margin-right:0.75rem">{t.portfolioBtn}</a>
+    <a href={sections.kontakt} class="btn btn-primary">{t.portfolioCta}</a>
   </div>
 </section>

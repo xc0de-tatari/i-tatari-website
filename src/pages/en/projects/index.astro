@@ -1,0 +1,31 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import Header from '../../../components/Header.astro';
+import Footer from '../../../components/Footer.astro';
+import { canonicalUrl } from '../../../lib/seo';
+---
+
+<Layout
+  title="Projects | Tatari Investment"
+  description="Offplan projects in Egypt, Dubai and Saudi Arabia — West Wind Sheikh Zayed and more."
+  canonical={canonicalUrl('/en/projects')}
+  lang="en"
+>
+  <Header locale="en" />
+  <main id="main-content" class="section">
+    <div class="container">
+      <h1 class="section-title">Projects</h1>
+      <ul style="list-style:none;padding:0;margin-top:2rem;display:grid;gap:1rem">
+        <li>
+          <a href="/en/projects/west-wind" style="color:var(--gold);font-size:1.1rem;font-weight:600">
+            West Wind — Sheikh Zayed →
+          </a>
+        </li>
+        <li>
+          <a href="/projekte/west-wind" style="color:var(--text-muted)">Full German project page →</a>
+        </li>
+      </ul>
+    </div>
+  </main>
+  <Footer locale="en" />
+</Layout>

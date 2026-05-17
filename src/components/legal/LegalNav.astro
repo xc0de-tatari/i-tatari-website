@@ -1,0 +1,19 @@
+---
+import { legalPaths } from '../../data/links';
+
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+
+const items = [
+  { href: legalPaths.impressum, label: 'Impressum' },
+  { href: legalPaths.datenschutz, label: 'Datenschutz' },
+  { href: legalPaths.agb, label: 'AGB' },
+];
+---
+
+<nav class="legal-nav" aria-label="Rechtliche Seiten">
+  {items.map((item) => (
+    <a href={item.href} aria-current={path === item.href ? 'page' : undefined}>
+      {item.label}
+    </a>
+  ))}
+</nav>

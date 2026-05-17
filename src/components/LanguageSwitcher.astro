@@ -1,0 +1,74 @@
+---
+import { getAlternatePath, getLocale, localeLabels, type Locale } from '../i18n/index';
+
+interface Props {
+  locale?: Locale;
+}
+
+const pathname = Astro.url.pathname;
+const current = Astro.props.locale ?? getLocale(pathname);
+const other: Locale = current === 'de' ? 'en' : 'de';
+const href = getAlternatePath(pathname, other);
+const strings = other === 'en' ? { label: 'EN', aria: 'Switch to English' } : { label: 'DE', aria: 'Auf Deutsch wechseln' };
+---
+
+<div class="lang-switcher" role="navigation" aria-label="Language">
+  <a
+    href={current === 'de' ? pathname : getAlternatePath(pathname, 'de')}
+    class:list={['lang-btn', { active: current === 'de' }]}
+    aria-current={current === 'de' ? 'page' : undefined}
+    hreflang="de"
+  >
+    DE
+  </a>
+  <span class="lang-divider" aria-hidden="true">|</span>
+  <a
+    href={current === 'en' ? pathname : href}
+    class:list={['lang-btn', { active: current === 'en' }]}
+    aria-current={current === 'en' ? 'page' : undefined}
+    hreflang="en"
+    title={localeLabels.en}
+  >
+    EN
+  </a>
+</div>
+
+<style>
+  .lang-switcher {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin-right: 0.75rem;
+  }
+
+  .lang-btn {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    color: var(--text-dim);
+    padding: 0.35rem 0.5rem;
+    border-radius: 6px;
+    transition: color 0.2s, background 0.2s;
+  }
+
+  .lang-btn:hover,
+  .lang-btn.active {
+    color: var(--gold);
+  }
+
+  .lang-btn.active {
+    background: rgba(197, 160, 89, 0.1);
+  }
+
+  .lang-divider {
+    color: var(--text-dim);
+    font-size: 0.7rem;
+    user-select: none;
+  }
+
+  @media (max-width: 900px) {
+    .lang-switcher {
+      margin-right: 0.5rem;
+    }
+  }
+</style>

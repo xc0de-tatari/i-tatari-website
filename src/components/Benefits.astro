@@ -1,15 +1,22 @@
 ---
-import { benefits } from '../data/site';
+import type { Locale } from '../i18n';
+import { getSiteContent, getUi } from '../i18n/content';
+
+interface Props {
+  locale?: Locale;
+}
+
+const locale = Astro.props.locale ?? 'de';
+const { benefits } = getSiteContent(locale);
+const t = getUi(locale).benefits;
+const sectionId = locale === 'en' ? 'benefits' : 'vorteile';
 ---
 
-<section id="vorteile" class="section">
+<section id={sectionId} class="section">
   <div class="container">
-    <p class="section-label">Ihre Vorteile</p>
-    <h2 class="section-title">Warum Tatari Investments?</h2>
-    <p class="section-desc">
-      Wir machen internationale Immobilieninvestitionen sicher, transparent und hochrentabel für deutsche
-      Investoren.
-    </p>
+    <p class="section-label">{t.label}</p>
+    <h2 class="section-title">{t.title}</h2>
+    <p class="section-desc">{t.desc}</p>
 
     <div class="benefits-grid">
       {benefits.map((b) => (
@@ -22,11 +29,8 @@ import { benefits } from '../data/site';
     </div>
 
     <div class="highlight-box">
-      <h3>Sicherheit steht an erster Stelle</h3>
-      <p>
-        Viele zögern bei internationalen Investments. Wir verstehen das. Deshalb begleiten wir Sie als deutsche
-        Makler persönlich und sorgen für vollständige Transparenz.
-      </p>
+      <h3>{t.highlightTitle}</h3>
+      <p>{t.highlightDesc}</p>
     </div>
   </div>
 </section>

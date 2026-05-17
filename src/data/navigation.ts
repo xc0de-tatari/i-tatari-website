@@ -17,7 +17,15 @@ export const pillarPages = [
 export const productPages = [
   { href: '/projekte', label: 'Alle Projekte' },
   { href: '/projekte/west-wind', label: 'West Wind' },
+  { href: '/immobilien-dubai', label: 'Immobilien Dubai' },
+  { href: '/immobilien-saudi-arabien', label: 'Immobilien Saudi-Arabien' },
   { href: '/investieren', label: 'Investment-Themen' },
+] as const;
+
+export const marketPages = [
+  { href: '/immobilien-kaufen-aegypten', label: 'Ägypten' },
+  { href: '/immobilien-dubai', label: 'Dubai (VAE)' },
+  { href: '/immobilien-saudi-arabien', label: 'Saudi-Arabien' },
 ] as const;
 
 export const footerInvestLinks = [

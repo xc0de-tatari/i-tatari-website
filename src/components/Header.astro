@@ -1,24 +1,37 @@
 ---
-import { navLinks } from '../data/site';
-import { images } from '../data/images';
-import { sections } from '../data/links';
+import BrandLogo from './BrandLogo.astro';
+import LanguageSwitcher from './LanguageSwitcher.astro';
+import { getLocale, type Locale } from '../i18n/index';
+import { getUi } from '../i18n/strings';
+
+interface Props {
+  locale?: Locale;
+}
+
+const locale = Astro.props.locale ?? getLocale(Astro.url.pathname);
+const { nav, cta, menuOpen } = getUi(locale);
+const homeHref = locale === 'en' ? '/en/' : '/';
+const contactHref = locale === 'en' ? '/en/#contact' : '/#kontakt';
 ---
 
 <header class="header" role="banner">
   <div class="container header-inner">
-    <a href="/" class="logo" data-scroll-top>
-      <img src={images.logo} alt="Tatari Investments" class="logo-img" width="140" height="48" />
+    <a href={homeHref} class="logo" data-scroll-top>
+      <BrandLogo />
     </a>
 
-    <nav class="nav-desktop" aria-label="Hauptnavigation">
-      {navLinks.map((link) => (
+    <nav class="nav-desktop" aria-label={locale === 'en' ? 'Main navigation' : 'Hauptnavigation'}>
+      {nav.map((link) => (
         <a href={link.href}>{link.label}</a>
       ))}
     </nav>
 
-    <a href={sections.kontakt} class="btn btn-primary nav-cta">Kostenlose Beratung</a>
+    <div class="header-actions">
+      <LanguageSwitcher locale={locale} />
+      <a href={contactHref} class="btn btn-primary nav-cta">{cta}</a>
+    </div>
 
-    <button class="menu-toggle" type="button" aria-label="Menü öffnen" aria-expanded="false">
+    <button class="menu-toggle" type="button" aria-label={menuOpen} aria-expanded="false">
       <span></span>
       <span></span>
       <span></span>
@@ -26,9 +39,10 @@ import { sections } from '../data/links';
   </div>
 </header>
 
-<nav class="mobile-nav" aria-label="Mobile Navigation">
-  {navLinks.map((link) => (
+<nav class="mobile-nav" aria-label={locale === 'en' ? 'Mobile navigation' : 'Mobile Navigation'}>
+  <LanguageSwitcher locale={locale} />
+  {nav.map((link) => (
     <a href={link.href}>{link.label}</a>
   ))}
-  <a href={sections.kontakt} class="btn btn-primary" style="margin-top: 1rem; text-align: center;">Kostenlose Beratung</a>
+  <a href={contactHref} class="btn btn-primary" style="margin-top: 1rem; text-align: center;">{cta}</a>
 </nav>

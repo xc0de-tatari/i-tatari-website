@@ -1,14 +1,22 @@
 ---
-import { developers, trustStats } from '../data/site';
+import type { Locale } from '../i18n';
+import { getSiteContent, getUi } from '../i18n/content';
 
+interface Props {
+  locale?: Locale;
+}
+
+const locale = Astro.props.locale ?? 'de';
+const { developers, trustStats } = getSiteContent(locale);
+const t = getUi(locale).developers;
 const doubled = [...developers, ...developers];
 ---
 
 <section class="developers">
   <div class="container">
-    <p class="section-label center" style="justify-content:center">Exklusiver Zugang zu</p>
-    <h3>Premium Entwickler-Partnern</h3>
-    <p class="sub">8 Premium-Entwickler • $200B+ Projektvolumen • Weltklasse-Qualität</p>
+    <p class="section-label center" style="justify-content:center">{t.label}</p>
+    <h3>{t.title}</h3>
+    <p class="sub">{t.desc}</p>
   </div>
 
   <div class="marquee">

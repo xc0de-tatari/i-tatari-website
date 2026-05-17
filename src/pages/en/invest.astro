@@ -1,0 +1,53 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { clusters } from '../../data/clusters';
+import { getClusterHref, getClusterIntro } from '../../data/cluster-intros';
+import { canonicalUrl } from '../../lib/seo';
+---
+
+<Layout
+  title="Investment topics | Tatari Investment"
+  description="Explore investment themes for Egypt offplan — English hub linking to detailed German guides."
+  canonical={canonicalUrl('/en/invest')}
+  lang="en"
+>
+  <Header locale="en" />
+  <main id="main-content" class="section">
+    <div class="container center">
+      <h1 class="section-title">Investment topics</h1>
+      <p class="section-desc" style="max-width:640px;margin-inline:auto">
+        Detailed guides are currently available in German. Switch language or browse the topics below.
+      </p>
+    </div>
+    <div class="container topics-grid" style="margin-top:2rem">
+      {clusters.slice(0, 12).map((c) => {
+        const intro = getClusterIntro(c.slug);
+        return (
+          <article style="padding:1.25rem;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-lg)">
+            <h2 style="font-size:1rem;margin-bottom:0.5rem">
+              <a href={getClusterHref(c.slug)} style="color:var(--gold)">
+                {c.name.replace(/^\d+\s/, '')}
+              </a>
+            </h2>
+            <p style="font-size:0.85rem;color:var(--text-muted)">{intro.subheadline}</p>
+          </article>
+        );
+      })}
+    </div>
+  </main>
+  <Footer locale="en" />
+</Layout>
+
+<style>
+  .topics-grid {
+    display: grid;
+    gap: 1rem;
+  }
+  @media (min-width: 768px) {
+    .topics-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

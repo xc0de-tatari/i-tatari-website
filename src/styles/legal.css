@@ -1,0 +1,122 @@
+/* Shared legal pages (Impressum, Datenschutz, AGB) */
+.legal-page {
+  padding-block: clamp(3rem, 8vw, 5rem);
+}
+
+.legal-page-inner {
+  max-width: 42rem;
+}
+
+.legal-page-header {
+  margin-bottom: 2.5rem;
+}
+
+.legal-page h1 {
+  font-size: clamp(1.75rem, 4vw, 2.25rem);
+  margin-top: 0.5rem;
+}
+
+.legal-meta {
+  color: var(--text-dim);
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+}
+
+.legal-block {
+  margin-bottom: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.legal-block:last-of-type {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.legal-block h2 {
+  font-size: 1.15rem;
+  margin-bottom: 0.75rem;
+  color: var(--gold);
+}
+
+.legal-block h3 {
+  font-size: 1rem;
+  margin: 1rem 0 0.5rem;
+  color: var(--text);
+}
+
+.legal-block p,
+.legal-address,
+.legal-list,
+.legal-dl,
+.legal-block li {
+  color: var(--text-muted);
+  line-height: 1.7;
+  font-size: 0.95rem;
+}
+
+.legal-block p + p,
+.legal-block ul + p {
+  margin-top: 0.75rem;
+}
+
+.legal-block ul,
+.legal-block ol {
+  margin: 0.5rem 0 0;
+  padding-left: 1.25rem;
+  color: var(--text-muted);
+}
+
+.legal-block li + li {
+  margin-top: 0.35rem;
+}
+
+.legal-address {
+  font-style: normal;
+}
+
+.legal-list {
+  margin: 0.25rem 0 0;
+  padding-left: 1.25rem;
+}
+
+.legal-dl {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.35rem 1.25rem;
+  margin: 0;
+}
+
+.legal-dl dt {
+  font-weight: 600;
+  color: var(--text);
+}
+
+.legal-dl a,
+.legal-block a {
+  color: var(--gold);
+  word-break: break-word;
+}
+
+.legal-back {
+  margin-top: 2.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.legal-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  margin-bottom: 2rem;
+  font-size: 0.85rem;
+}
+
+.legal-nav a {
+  color: var(--text-muted);
+}
+
+.legal-nav a[aria-current='page'] {
+  color: var(--gold);
+}

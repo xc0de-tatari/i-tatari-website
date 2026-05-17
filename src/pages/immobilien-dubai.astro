@@ -1,0 +1,9 @@
+---
+import PillarPage from '../components/pillar/PillarPage.astro';
+import { pillarPages } from '../data/pillar-pages';
+
+const page = pillarPages['immobilien-dubai'];
+if (!page) throw new Error('Pillar page not found: immobilien-dubai');
+---
+
+<PillarPage page={page} />

@@ -1,47 +1,51 @@
 ---
-import { sections } from '../data/links';
+import type { Locale } from '../i18n';
+import { getPageSections, getUi } from '../i18n/content';
+
+interface Props { locale?: Locale }
+const locale = Astro.props.locale ?? 'de';
+const t = getUi(locale).calculator;
+const sections = getPageSections(locale);
 ---
 
-<section id="rechner" class="section section-alt">
+<section id={locale === 'en' ? 'calculator' : 'rechner'} class="section section-alt">
   <div class="container center">
-    <h2 class="section-title">Ihre Rendite berechnen</h2>
-    <p class="section-desc">Sehen Sie selbst, wie profitabel eine Offland-Immobilie sein kann.</p>
+    <h2 class="section-title">{t.title}</h2>
+    <p class="section-desc">{t.desc}</p>
   </div>
 
   <div class="container calculator" id="roi-calculator">
     <div class="calculator-inputs card">
-      <h3>Ihre Investition</h3>
+      <h3>{t.investment}</h3>
       <div class="field">
-        <label>Immobilienpreis <span id="price-val">50.000€</span></label>
+        <label>{t.price} <span id="price-val">50.000€</span></label>
         <input type="range" id="price" min="25000" max="200000" step="5000" value="50000" />
       </div>
       <div class="field">
-        <label>Anzahlung <span id="down-val">3.500€</span></label>
+        <label>{t.down} <span id="down-val">3.500€</span></label>
         <input type="range" id="down" min="3500" max="50000" step="500" value="3500" />
       </div>
       <div class="field">
-        <label>Laufzeit (Jahre) <span id="years-val">5</span></label>
+        <label>{t.years} <span id="years-val">5</span></label>
         <input type="range" id="years" min="1" max="10" step="1" value="5" />
       </div>
       <div class="field">
-        <label>Erwarteter ROI (jährlich) <span id="roi-val">18%</span></label>
+        <label>{t.roi} <span id="roi-val">18%</span></label>
         <input type="range" id="roi" min="10" max="30" step="1" value="18" />
       </div>
     </div>
 
     <div class="calculator-results">
-      <h3>Gesamtrendite (<span id="years-label">5</span> Jahre)</h3>
+      <h3>{t.totalReturn} (<span id="years-label">5</span> {t.yearsUnit})</h3>
       <p class="calculator-total" id="total-return">45.000€</p>
-      <p class="calculator-sub">Erwartete Mieteinnahmen über <span id="years-sub">5</span> Jahre</p>
+      <p class="calculator-sub">{t.rentIncome} <span id="years-sub">5</span> {t.yearsUnit}</p>
       <div class="calc-metrics">
-        <div><span>Monatliche Rate</span><strong id="monthly-rate">775€</strong></div>
-        <div><span>Monatliche Rendite</span><strong id="monthly-return">750€</strong></div>
-        <div><span>Jährliche Rendite</span><strong id="yearly-return">9.000€</strong></div>
+        <div><span>{t.monthlyRate}</span><strong id="monthly-rate">775€</strong></div>
+        <div><span>{t.monthlyReturn}</span><strong id="monthly-return">750€</strong></div>
+        <div><span>{t.yearlyReturn}</span><strong id="yearly-return">9.000€</strong></div>
       </div>
-      <p class="calc-disclaimer">
-        * Die Berechnungen basieren auf durchschnittlichen Marktdaten und dienen als Richtwert. Tatsächliche Renditen können variieren.
-      </p>
-      <a href={sections.kontakt} class="btn btn-primary" style="margin-top:1.5rem;display:inline-flex">Jetzt persönliche Beratung anfordern</a>
+      <p class="calc-disclaimer">* {t.disclaimer}</p>
+      <a href={sections.kontakt} class="btn btn-primary" style="margin-top:1.5rem;display:inline-flex">{t.cta}</a>
     </div>
   </div>
 </section>

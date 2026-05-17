@@ -1,0 +1,23 @@
+{
+  "name": "Tatari Investment",
+  "short_name": "Tatari",
+  "description": "Immobilien in Ägypten, Dubai und Saudi-Arabien — deutschsprachige Beratung",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#050505",
+  "theme_color": "#050505",
+  "lang": "de-DE",
+  "icons": [
+    {
+      "src": "/logo-square.png",
+      "sizes": "310x310",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon.png",
+      "sizes": "96x46",
+      "type": "image/png"
+    }
+  ]
+}

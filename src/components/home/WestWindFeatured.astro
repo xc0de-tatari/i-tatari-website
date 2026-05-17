@@ -1,9 +1,21 @@
 ---
+import type { Locale } from '../../i18n';
+import { getPageSections, getUi } from '../../i18n/content';
 import { westWind } from '../../data/westwind';
+import { westWindEn } from '../../data/westwind-en';
 import { cityImages } from '../../data/images';
 import { imageAlt } from '../../lib/seo';
-import { sections } from '../../data/links';
-import { ctas } from '../../data/ctas';
+import { links } from '../../data/links';
+
+interface Props {
+  locale?: Locale;
+}
+
+const locale = Astro.props.locale ?? 'de';
+const t = getUi(locale).westWind;
+const ww = locale === 'en' ? westWindEn : westWind;
+const sections = getPageSections(locale);
+const projectHref = locale === 'en' ? '/en/projects/west-wind' : '/projekte/west-wind';
 ---
 
 <section class="section section-alt" id="west-wind-featured">
@@ -11,28 +23,32 @@ import { ctas } from '../../data/ctas';
     <div class="ww-featured-media">
       <img
         src={cityImages['Sheikh Zayed']}
-        alt={imageAlt('West Wind Mixed-Use Projekt', 'Clinics Offices Retail', 'Sheikh Zayed Ägypten')}
+        alt={imageAlt('West Wind mixed-use project', 'Clinics offices retail', 'Sheikh Zayed Egypt')}
         width="640"
         height="400"
         loading="lazy"
       />
     </div>
     <div>
-      <p class="section-label">Flagship-Projekt</p>
-      <h2 class="section-title">West Wind — Mixed-Use in Sheikh Zayed</h2>
-      <p class="section-desc">
-        {westWind.description}
-      </p>
+      <p class="section-label">{t.label}</p>
+      <h2 class="section-title">{t.title}</h2>
+      <p class="section-desc">{ww.description}</p>
       <ul class="ww-featured-list">
-        {westWind.unitSpecs.map((u) => (
-          <li><strong>{u.type}</strong> ab {u.sizeFrom} — {u.desc}</li>
+        {ww.unitSpecs.map((u) => (
+          <li>
+            <strong>{u.type}</strong> {locale === 'en' ? 'from' : 'ab'} {u.sizeFrom} — {u.desc}
+          </li>
         ))}
       </ul>
       <div class="hero-actions" style="justify-content:flex-start;margin-top:1.5rem">
-        <a href="/projekte/west-wind" class="btn btn-primary">{ctas.westWindAvailability.label}</a>
-        <a href={sections.kontakt} class="btn btn-outline">{ctas.floorPlans.label}</a>
+        <a href={projectHref} class="btn btn-primary">
+          {locale === 'en' ? ww.ctas.availability : 'West Wind Verfügbarkeit anfragen'}
+        </a>
+        <a href={sections.kontakt} class="btn btn-outline">
+          {locale === 'en' ? ww.ctas.floorPlans : 'Grundrisse & Preise erhalten'}
+        </a>
       </div>
-      <p class="ww-note">{westWind.disclaimers[0]}</p>
+      <p class="ww-note">{ww.disclaimers[0]}</p>
     </div>
   </div>
 </section>
