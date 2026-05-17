@@ -25,7 +25,7 @@ const sections = getPageSections(locale);
 
   <div class="container locations-grid">
     {locations.map((loc) => (
-      <article class={`location-card ${loc.featured ? 'featured' : ''}`}>
+      <article class:list={['location-card', loc.featured && 'featured']}>
         <div class="location-image">
           <OptimizedImage
             src={locationImages[loc.name]}
@@ -36,22 +36,24 @@ const sections = getPageSections(locale);
           />
           {loc.featured && (
             <span class="location-badge badge badge-top">
-              {locale === 'en' ? 'Top investment' : 'Top Investment'}
+              {locale === 'en' ? 'Top pick' : 'Top Investment'}
             </span>
           )}
         </div>
-        <div>
+        <div class="location-card-content">
           <p class="country">{loc.country}</p>
           <h3>{loc.name}</h3>
           <div class="location-roi">
             <span>
-              {locale === 'en' ? 'Potential' : 'Potenzial'} <strong>{loc.yieldNote}</strong>
+              {locale === 'en' ? 'Potential' : 'Potenzial'}
+              <strong>{loc.yieldNote}</strong>
             </span>
             <span>
-              {locale === 'en' ? 'From' : 'Ab'} <strong>{loc.price}</strong>
+              {locale === 'en' ? 'From' : 'Ab'}
+              <strong>{loc.price}</strong>
             </span>
           </div>
-          <ul>
+          <ul class="location-points">
             {loc.points.map((pt) => (
               <li>{pt}</li>
             ))}

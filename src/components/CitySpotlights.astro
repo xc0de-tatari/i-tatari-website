@@ -13,10 +13,18 @@ const t = getUi(locale).cities;
 const sections = getPageSections(locale);
 const sectionId = locale === 'en' ? 'locations' : 'standorte';
 const westWindHref = locale === 'en' ? '/en/projects/west-wind' : '/projekte/west-wind';
+
+function headerStyle(city: { gradient: string; name: string }) {
+  const img = cityImages[city.name];
+  const overlay = city.gradient || 'linear-gradient(135deg, #141414, #050505)';
+  return img
+    ? `background-image: linear-gradient(180deg, rgba(5,5,5,0.35) 0%, rgba(5,5,5,0.92) 100%), ${overlay}, url('${img}')`
+    : `background-image: linear-gradient(180deg, rgba(5,5,5,0.2) 0%, rgba(5,5,5,0.95) 100%), ${overlay}`;
+}
 ---
 
 <section id={sectionId} class="section section-alt">
-  <div>
+  <div class="container center">
     <p class="section-label" style="justify-content:center">{t.label}</p>
     <h2 class="section-title">
       {t.title}<span class="text-gold">{t.titleGold}</span>
@@ -27,26 +35,27 @@ const westWindHref = locale === 'en' ? '/en/projects/west-wind' : '/projekte/wes
   <div class="container cities-grid">
     {cities.map((city) => (
       <article class="city-card">
-        {city.badge && (
-          <div class="city-card-top">
-            <span class="badge badge-top">{city.badge}</span>
-          </div>
-        )}
-        <div>
-          <div class="city-meta">
-            <span class="badge badge-gold">{city.country}</span>
-            {city.tag && <span class="badge badge-urgent">{city.tag}</span>}
-          </div>
-          <h3>{city.name}</h3>
-          <p class="city-subtitle">{city.subtitle}</p>
-          <div class="city-stats">
-            <div>
-              <div class="city-stat-label">{t.investment}</div>
-              <div class="city-stat-value">{t.from} {city.priceFrom}</div>
+<div
+          class="city-card-header"
+          style={`${headerStyle(city)}; background-size: cover; background-position: center;`}
+        >
+          {city.badge && <span class="city-card-floating-badge badge badge-top">{city.badge}</span>}
+          <div class="city-card-header-inner">
+            <div class="city-meta">
+              <span class="badge badge-gold">{city.country}</span>
+              {city.tag && <span class="badge badge-urgent">{city.tag}</span>}
             </div>
-            <div>
-              <div class="city-stat-label">{t.potential}</div>
-              <div class="city-stat-value">{city.yieldNote}</div>
+            <h3>{city.name}</h3>
+            <p class="city-subtitle">{city.subtitle}</p>
+            <div class="city-stats">
+              <div class="city-stat-box">
+                <div class="city-stat-label">{t.investment}</div>
+                <div class="city-stat-value">{t.from} {city.priceFrom}</div>
+              </div>
+              <div class="city-stat-box">
+                <div class="city-stat-label">{t.potential}</div>
+                <div class="city-stat-value">{city.yieldNote}</div>
+              </div>
             </div>
           </div>
         </div>

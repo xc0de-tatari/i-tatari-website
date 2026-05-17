@@ -37,39 +37,58 @@ const projectsHref = locale === 'en' ? '/en/projects' : '/projekte';
           />
           <div class="property-tags">
             {p.featured && <span class="badge badge-gold">{t.flagship}</span>}
-            <span class="badge badge-gold">⏱️ {p.timeline}</span>
+            <span class="badge badge-gold">⏱ {p.timeline}</span>
           </div>
         </div>
         <div class="property-body">
           <p class="property-location">{p.location}</p>
           <h3>{p.title}</h3>
           <p class="property-area">{p.area}</p>
+
           <div class="property-price-row">
-            <div>
+            <div class="property-price-pill">
               <span>{t.total}</span>
               <strong>{p.price}</strong>
             </div>
-            <div>
+            <div class="property-price-pill">
               <span>{t.down}</span>
               <strong>{p.down}</strong>
             </div>
           </div>
+
           <div class="property-specs">
-            <div><span>{t.rooms}</span><strong>{p.rooms}</strong></div>
-            <div><span>{t.baths}</span><strong>{p.baths}</strong></div>
-            <div><span>{t.area}</span><strong>{p.sqm}m²</strong></div>
-            <div><span>{t.potential}</span><strong style="color:var(--gold)">{p.yieldNote}</strong></div>
+            <div class="property-spec">
+              <span>{t.rooms}</span>
+              <strong>{p.rooms}</strong>
+            </div>
+            <div class="property-spec">
+              <span>{t.baths}</span>
+              <strong>{p.baths}</strong>
+            </div>
+            <div class="property-spec">
+              <span>{t.area}</span>
+              <strong>{p.sqm} m²</strong>
+            </div>
+            <div class="property-spec property-spec--gold">
+              <span>{t.potential}</span>
+              <strong>{p.yieldNote}</strong>
+            </div>
           </div>
-          <div class="property-roi">
+
+          <p class="property-rent">
             <span>{t.rent}</span>
             <strong>{p.rent}</strong>
-          </div>
-          <div class="property-features">
+          </p>
+
+          <div class="property-feature-chips">
             {p.features.map((f) => (
-              <span>✓ {f}</span>
+              <span>{f}</span>
             ))}
           </div>
-          <p class="property-developer">{t.developer}: {p.developer}</p>
+
+          <p class="property-developer">
+            <strong>{t.developer}:</strong> {p.developer}
+          </p>
           <a href={p.href ?? sections.kontakt} class="btn btn-primary">{t.cta}</a>
         </div>
       </article>
@@ -78,7 +97,7 @@ const projectsHref = locale === 'en' ? '/en/projects' : '/projekte';
 
   <div class="container portfolio-cta">
     <h3>{t.portfolioTitle}</h3>
-    <p style="color:var(--text-muted);margin:1rem 0 1.5rem">{t.portfolioDesc}</p>
+    <p style="color:var(--text-muted);margin:1rem 0 1.5rem;max-width:36rem;margin-inline:auto">{t.portfolioDesc}</p>
     <a href={projectsHref} class="btn btn-outline" style="margin-right:0.75rem">{t.portfolioBtn}</a>
     <a href={sections.kontakt} class="btn btn-primary">{t.portfolioCta}</a>
   </div>
