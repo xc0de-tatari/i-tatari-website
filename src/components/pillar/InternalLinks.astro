@@ -1,0 +1,43 @@
+---
+interface Props {
+  title?: string;
+  links: { href: string; label: string }[];
+}
+
+const { title = 'Verwandte Themen', links } = Astro.props;
+---
+
+<section class="section section-alt">
+  <div class="container">
+    <p class="section-label">Interne Links</p>
+    <h2 class="section-title">{title}</h2>
+    <nav class="internal-links" aria-label={title}>
+      {links.map((link) => (
+        <a href={link.href}>{link.label} →</a>
+      ))}
+    </nav>
+  </div>
+</section>
+
+<style>
+  .internal-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+  }
+
+  .internal-links a {
+    padding: 0.6rem 1rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    font-size: 0.9rem;
+    color: var(--gold);
+    transition: border-color 0.2s;
+  }
+
+  .internal-links a:hover {
+    border-color: var(--border-gold);
+  }
+</style>

@@ -1,0 +1,81 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getMetaKeywords } from '../data/keywords';
+import { getPageSeoBundle } from '../lib/page-seo';
+import StickyMobileCta from '../components/conversion/StickyMobileCta.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import Developers from '../components/Developers.astro';
+import Benefits from '../components/Benefits.astro';
+import CitySpotlights from '../components/CitySpotlights.astro';
+import Properties from '../components/Properties.astro';
+import Testimonials from '../components/Testimonials.astro';
+import Comparison from '../components/Comparison.astro';
+import Calculator from '../components/Calculator.astro';
+import Security from '../components/Security.astro';
+import News from '../components/News.astro';
+import Locations from '../components/Locations.astro';
+import Trust from '../components/Trust.astro';
+import FAQ from '../components/FAQ.astro';
+import Contact from '../components/Contact.astro';
+import Footer from '../components/Footer.astro';
+import FloatingActions from '../components/FloatingActions.astro';
+import SeoTopics from '../components/SeoTopics.astro';
+import WestWindFeatured from '../components/home/WestWindFeatured.astro';
+import HomePillars from '../components/home/HomePillars.astro';
+import PaymentPlan from '../components/home/PaymentPlan.astro';
+import GermanInvestors from '../components/home/GermanInvestors.astro';
+import FinalCta from '../components/home/FinalCta.astro';
+import JsonLd from '../components/seo/JsonLd.astro';
+import { faqs as coreFaqs } from '../data/site';
+import { keywordFaqs } from '../data/keyword-faqs';
+import { buildFaqSchema, canonicalUrl } from '../lib/seo';
+
+const homeSeo = getPageSeoBundle('/', {
+  metaTitle: 'Tatari Investment | Offplan Immobilien Ägypten | West Wind Sheikh Zayed',
+  metaDescription:
+    'Offplan Ägypten: West Wind El Bostan Street, zinsfreie Bauträger-Raten nach Prüfung, Clinics ab 24 m². Deutsch — DACH & GCC. Vorbehaltlich Verfügbarkeit.',
+});
+const metaKeywords = [...homeSeo.metaKeywords, ...getMetaKeywords(15)];
+const homeFaqs = [...coreFaqs, ...keywordFaqs.slice(0, 8)];
+const faqSchema = buildFaqSchema(homeFaqs);
+---
+
+<Layout
+  title={homeSeo.metaTitle}
+  description={homeSeo.metaDescription}
+  keywords={metaKeywords}
+  canonical={canonicalUrl('/')}
+>
+  {faqSchema && (
+    <Fragment slot="head">
+      <JsonLd data={faqSchema} />
+    </Fragment>
+  )}
+  <Header />
+  <main id="main-content">
+    <Hero />
+    <HomePillars />
+    <Benefits />
+    <PaymentPlan />
+    <WestWindFeatured />
+    <Developers />
+    <CitySpotlights />
+    <Properties />
+    <Testimonials />
+    <Comparison />
+    <Calculator />
+    <Security />
+    <News />
+    <Locations />
+    <Trust />
+    <GermanInvestors />
+    <SeoTopics />
+    <FAQ />
+    <FinalCta />
+    <Contact />
+  </main>
+  <Footer />
+  <FloatingActions />
+  <StickyMobileCta />
+</Layout>

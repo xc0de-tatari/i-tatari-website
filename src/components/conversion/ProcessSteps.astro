@@ -1,0 +1,58 @@
+---
+interface Props {
+  title?: string;
+  steps: string[];
+  city?: string;
+}
+
+const { title = 'Ihr Weg zum Investment', steps, city } = Astro.props;
+const heading = city ? `${title} — von ${city} aus` : title;
+---
+
+<div class="process-steps">
+  <h2 class="section-title">{heading}</h2>
+  <ol>
+    {steps.map((step, i) => (
+      <li>
+        <span class="step-num">{i + 1}</span>
+        <span>{step}</span>
+      </li>
+    ))}
+  </ol>
+</div>
+
+<style>
+  .process-steps ol {
+    list-style: none;
+    margin-top: 1.5rem;
+    display: grid;
+    gap: 0.75rem;
+    max-width: 640px;
+  }
+
+  .process-steps li {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    padding: 1rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    font-size: 0.95rem;
+    color: var(--text-muted);
+  }
+
+  .step-num {
+    flex-shrink: 0;
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--gold);
+    color: #000;
+    font-weight: 800;
+    border-radius: 50%;
+    font-size: 0.85rem;
+  }
+</style>

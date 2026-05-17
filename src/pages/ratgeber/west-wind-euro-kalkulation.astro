@@ -1,0 +1,6 @@
+---
+import LeadMagnetPage from '../../components/templates/LeadMagnetPage.astro';
+import { leadMagnets } from '../../data/lead-magnets';
+const magnet = leadMagnets.find((m) => m.slug === 'west-wind-euro-kalkulation')!;
+---
+<LeadMagnetPage magnet={magnet} />

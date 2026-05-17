@@ -1,0 +1,30 @@
+---
+import { securityItems } from '../data/site';
+---
+
+<section class="section">
+  <div class="container center">
+    <p class="section-label" style="justify-content:center">TRANSPARENZ & BEGLEITUNG</p>
+    <h2 class="section-title">Strukturiert investieren — mit klarem Risikoprofil</h2>
+    <p class="section-desc">
+      Tatari begleitet deutschsprachige Investoren mit Due Diligence, Vertragslogik und Euro-Kalkulation — ohne Rendite- oder Sicherheitsgarantien.
+    </p>
+  </div>
+
+  <div class="container security-grid">
+    {securityItems.map((item) => (
+      <article class="security-card card">
+        <h3>{item.title}</h3>
+        <p>{item.desc}</p>
+      </article>
+    ))}
+  </div>
+
+  <div class="container cert-badges">
+    <span class="cert-badge">🇩🇪 Beratung auf Deutsch</span>
+    <span class="cert-badge">🏛️ Vertragslogik erklärt</span>
+    <span class="cert-badge">🔒 DSGVO</span>
+    <span class="cert-badge">🏗️ Bauträger-Direkt</span>
+    <span class="cert-badge">✓ 500+ begleitete Investoren</span>
+  </div>
+</section>

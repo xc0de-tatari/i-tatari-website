@@ -1,0 +1,68 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../Header.astro';
+import Footer from '../Footer.astro';
+import FloatingActions from '../FloatingActions.astro';
+import LeadForm from '../conversion/LeadForm.astro';
+import type { LeadMagnet } from '../../data/lead-magnets';
+import { canonicalUrl } from '../../lib/seo';
+
+interface Props {
+  magnet: LeadMagnet;
+}
+
+const { magnet } = Astro.props;
+const path = `/ratgeber/${magnet.slug}`;
+---
+
+<Layout
+  title={`${magnet.title} | Tatari Investment`}
+  description={magnet.description}
+  canonical={canonicalUrl(path)}
+>
+  <Header />
+  <main id="main-content">
+    <section class="section">
+      <div class="container" style="max-width:720px">
+        <p class="section-label">Lead Magnet</p>
+        <h1 class="section-title">{magnet.title}</h1>
+        <p class="section-desc">{magnet.description}</p>
+        <ul class="magnet-bullets">
+          {magnet.bullets.map((b) => (
+            <li>{b}</li>
+          ))}
+        </ul>
+        <LeadForm
+          title="Jetzt anfordern"
+          source={`magnet-${magnet.id}`}
+          magnetId={magnet.id}
+        />
+      </div>
+    </section>
+  </main>
+  <Footer />
+  <FloatingActions />
+</Layout>
+
+<style>
+  .magnet-bullets {
+    margin: 1.5rem 0 2rem;
+    display: grid;
+    gap: 0.5rem;
+  }
+  .magnet-bullets li {
+    padding: 0.75rem 1rem 0.75rem 2rem;
+    position: relative;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    font-size: 0.9rem;
+    color: var(--text-muted);
+  }
+  .magnet-bullets li::before {
+    content: '✓';
+    position: absolute;
+    left: 0.75rem;
+    color: var(--gold);
+  }
+</style>

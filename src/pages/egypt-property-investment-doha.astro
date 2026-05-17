@@ -1,0 +1,7 @@
+---
+import GccLandingPage from '../components/templates/GccLandingPage.astro';
+import { gccPages } from '../data/gcc-pages';
+const page = gccPages.find((p) => p.slug === 'egypt-property-investment-doha');
+if (!page) throw new Error('missing');
+---
+<GccLandingPage page={page} />

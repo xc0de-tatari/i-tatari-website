@@ -1,0 +1,52 @@
+---
+import { comparisonRows } from '../data/site';
+import { sections } from '../data/links';
+---
+
+<section class="section">
+  <div class="container center">
+    <p class="section-label" style="justify-content:center">📊 Investment Vergleich</p>
+    <h2 class="section-title">Ägypten, Dubai & Deutschland im Vergleich</h2>
+    <p class="section-desc">
+      Orientierungswerte — individuelle Steuer-, Rendite- und Risikoprofile können stark abweichen. Keine Garantien.*
+    </p>
+  </div>
+
+  <div class="container comparison-wrap">
+    <table class="comparison-table">
+      <thead>
+        <tr>
+          <th>Kategorie</th>
+          <th>🇦🇪 Dubai</th>
+          <th>🇪🇬 Ägypten</th>
+          <th>🇩🇪 Deutschland</th>
+        </tr>
+      </thead>
+      <tbody>
+        {comparisonRows.map((row) => (
+          <tr>
+            <td>{row.category}</td>
+            <td class="col-dubai">{row.dubai}</td>
+            <td class="col-egypt">{row.egypt}</td>
+            <td class="col-de">{row.germany}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="container comparison-benefits">
+    <div class="comparison-benefit"><h4>Renditepotenzial</h4><p>Szenarien — nicht garantiert</p></div>
+    <div class="comparison-benefit"><h4>Steuerliche Prüfung</h4><p>Individuell klären</p></div>
+    <div class="comparison-benefit"><h4>Strukturierter Prozess</h4><p>Due Diligence & DE-Beratung</p></div>
+    <div class="comparison-benefit"><h4>West Wind</h4><p>Sheikh Zayed Mixed-Use</p></div>
+  </div>
+
+  <div class="container comparison-cta">
+    <h3>Bereit für smartes Investieren?</h3>
+    <p style="color:var(--text-muted);margin:1rem 0 1.5rem">
+      Nutzen Sie die Vorteile internationaler Märkte mit deutscher Sicherheit und Betreuung
+    </p>
+    <a href={sections.kontakt} class="btn btn-primary">Kostenlose Beratung starten</a>
+  </div>
+</section>

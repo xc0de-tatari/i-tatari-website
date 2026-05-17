@@ -1,0 +1,77 @@
+---
+import { properties } from '../data/site';
+import { propertyImages } from '../data/images';
+import { sections } from '../data/links';
+import OptimizedImage from './seo/OptimizedImage.astro';
+import { defaultSizes } from '../lib/images';
+import { imageAlt } from '../lib/seo';
+---
+
+<section id="objekte" class="section">
+  <div class="container center">
+    <p class="section-label" style="justify-content:center">🏆 Handverlesene Objekte</p>
+    <h2 class="section-title">West Wind & ausgewählte Offplan-Projekte</h2>
+    <p class="section-desc">
+      Flagship West Wind in Sheikh Zayed — Clinics, Offices, Retail. Preise und Verfügbarkeit auf Anfrage — vorbehaltlich Prüfung.
+    </p>
+  </div>
+
+  <div class="container properties-grid">
+    {properties.map((p) => (
+      <article class="property-card">
+        <div class="property-image">
+          <OptimizedImage
+            src={propertyImages[p.title]}
+            alt={imageAlt(p.title, p.area, p.location)}
+            width={400}
+            height={250}
+            sizes={defaultSizes('card')}
+          />
+          <div class="property-tags">
+            {p.featured && <span class="badge badge-gold">FLAGSHIP</span>}
+            <span class="badge badge-gold">⏱️ {p.timeline}</span>
+          </div>
+        </div>
+        <div class="property-body">
+          <p class="property-location">{p.location}</p>
+          <h3>{p.title}</h3>
+          <p class="property-area">{p.area}</p>
+          <div class="property-price-row">
+            <div>
+              <span>Gesamtpreis</span>
+              <strong>{p.price}</strong>
+            </div>
+            <div>
+              <span>Anzahlung ab</span>
+              <strong>{p.down}</strong>
+            </div>
+          </div>
+          <div class="property-specs">
+            <div><span>Zimmer</span><strong>{p.rooms}</strong></div>
+            <div><span>Bäder</span><strong>{p.baths}</strong></div>
+            <div><span>Fläche</span><strong>{p.sqm}m²</strong></div>
+            <div><span>Potenzial</span><strong style="color:var(--gold)">{p.yieldNote}</strong></div>
+          </div>
+          <div class="property-roi">
+            <span>Miete / Cashflow</span>
+            <strong>{p.rent}</strong>
+          </div>
+          <div class="property-features">
+            {p.features.map((f) => <span>✓ {f}</span>)}
+          </div>
+          <p class="property-developer">Entwickler: {p.developer}</p>
+          <a href={p.href ?? sections.kontakt} class="btn btn-primary">Details anfragen</a>
+        </div>
+      </article>
+    ))}
+  </div>
+
+  <div class="container portfolio-cta">
+    <h3>Weitere 200+ exklusive Objekte verfügbar</h3>
+    <p style="color:var(--text-muted);margin:1rem 0 1.5rem">
+      Erhalten Sie Zugang zu unserem vollständigen Portfolio mit detaillierten Grundrissen, Videos und virtuellen Rundgängen.
+    </p>
+    <a href="/projekte" class="btn btn-outline" style="margin-right:0.75rem">Alle Projekte ansehen</a>
+    <a href={sections.kontakt} class="btn btn-primary">Portfolio anfordern</a>
+  </div>
+</section>

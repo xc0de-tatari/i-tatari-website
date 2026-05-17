@@ -1,0 +1,75 @@
+---
+import { cities } from '../data/site';
+import { cityImages } from '../data/images';
+import { sections } from '../data/links';
+---
+
+<section id="standorte" class="section section-alt">
+  <div class="container center">
+    <p class="section-label" style="justify-content:center">City Spotlights</p>
+    <h2 class="section-title">
+      Premium-<span class="text-gold">Standorte & Projekte</span>
+    </h2>
+    <p class="section-desc">
+      Fokus Ägypten — Sheikh Zayed, New Capital, Alamein. Renditepotenzial ist marktabhängig, nicht garantiert.*
+    </p>
+  </div>
+
+  <div class="container cities-grid">
+    {cities.map((city) => (
+      <article class="city-card">
+        {city.badge && <div style="padding:1.5rem 2rem 0"><span class="badge badge-top">{city.badge}</span></div>}
+        <div class="city-card-header" style={`background-image: linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.85) 100%), url('${cityImages[city.name]}')`}>
+          <div class="city-meta">
+            <span class="badge badge-gold">{city.country}</span>
+            {city.tag && <span class="badge badge-urgent">{city.tag}</span>}
+          </div>
+          <h3>{city.name}</h3>
+          <p class="city-subtitle">{city.subtitle}</p>
+          <div class="city-stats">
+            <div>
+              <div class="city-stat-label">Investment</div>
+              <div class="city-stat-value">Ab {city.priceFrom}</div>
+            </div>
+            <div>
+              <div class="city-stat-label">Potenzial</div>
+              <div class="city-stat-value">{city.yieldNote}</div>
+            </div>
+          </div>
+        </div>
+        <div class="city-card-body">
+          <div class="city-list">
+            <h4>Projektfakten</h4>
+            <ul>
+              {city.facts.map((f) => <li>{f}</li>)}
+            </ul>
+          </div>
+          <div class="city-list">
+            <h4>Investment Highlights</h4>
+            <ul>
+              {city.highlights.map((h) => <li>{h}</li>)}
+            </ul>
+          </div>
+        </div>
+        <div style="padding:0 2rem 2rem">
+          <a
+            href={city.name === 'Sheikh Zayed' ? '/projekte/west-wind' : sections.kontakt}
+            class="btn btn-outline"
+            style="width:100%;display:flex;justify-content:center"
+          >
+            {city.name === 'Sheikh Zayed' ? 'West Wind ansehen →' : `Mehr über ${city.name.split(' ')[0]} →`}
+          </a>
+        </div>
+      </article>
+    ))}
+  </div>
+
+  <div class="container">
+    <div class="mega-stats">
+      <div class="mega-stat"><strong>$65B+</strong><span>Investitionsvolumen</span></div>
+      <div class="mega-stat"><strong>15M+</strong><span>Neue Einwohner</span></div>
+      <div class="mega-stat"><strong>2.500+</strong><span>Neue Projekte</span></div>
+      <div class="mega-stat"><strong>300%</strong><span>Wertsteigerung</span></div>
+    </div>
+  </div>
+</section>

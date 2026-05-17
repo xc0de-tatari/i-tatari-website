@@ -1,0 +1,272 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import FloatingActions from '../../components/FloatingActions.astro';
+import Contact from '../../components/Contact.astro';
+import JsonLd from '../../components/seo/JsonLd.astro';
+import Breadcrumbs from '../../components/seo/Breadcrumbs.astro';
+import { projects, projectFilters } from '../../data/projects';
+import { images, cityImages } from '../../data/images';
+import { sections } from '../../data/links';
+import { imageAlt, canonicalUrl, buildBreadcrumbSchema, buildWebPageSchema, mergeSchemas } from '../../lib/seo';
+import { pillarPages } from '../../data/navigation';
+
+const title = 'Immobilien-Projekte Ägypten | Offplan & Commercial | Tatari Investment';
+const description =
+  'Alle Investment-Projekte: West Wind Sheikh Zayed, Offplan, Clinics, Offices, Retail — filtern nach Standort und Typ. Verfügbarkeit vorbehaltlich Prüfung.';
+const canonical = canonicalUrl('/projekte');
+
+const schemas = mergeSchemas(
+  buildBreadcrumbSchema([
+    { name: 'Start', url: '/' },
+    { name: 'Projekte', url: '/projekte' },
+  ]),
+  buildWebPageSchema({ name: title, description, url: '/projekte' })
+);
+
+const imageMap: Record<string, string> = {
+  westwind: cityImages['Sheikh Zayed'],
+  cairo: cityImages['New Cairo'] ?? images.heroBg,
+  coast: cityImages['New Alamein'] ?? images.heroBg,
+  capital: cityImages['New Administrative Capital'] ?? images.heroBg,
+  placeholder: images.og,
+};
+---
+
+<Layout title={title} description={description} canonical={canonical}>
+  <Fragment slot="head">
+    <JsonLd data={schemas} />
+  </Fragment>
+
+  <Header />
+  <main id="main-content">
+    <section class="hero" style="min-height:45vh">
+      <div class="container hero-content">
+        <Breadcrumbs items={[{ name: 'Start', url: '/' }, { name: 'Projekte', url: '/projekte' }]} />
+        <p class="section-label" style="justify-content:center">Projekte</p>
+        <h1>Investment-Projekte in Ägypten</h1>
+        <p class="hero-desc" style="max-width:720px;margin-inline:auto">
+          Offplan, Commercial, Medical & Retail — filtern Sie nach Typ und Standort. West Wind ist unser
+          Flagship in Sheikh Zayed.
+        </p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="filter-bar" role="group" aria-label="Projektfilter">
+          <button type="button" class="filter-btn active" data-filter="all">Alle</button>
+          {projectFilters.map((f) => (
+            <button type="button" class="filter-btn" data-filter={f.id}>{f.label}</button>
+          ))}
+        </div>
+
+        <div class="projects-grid" id="projects-grid">
+          {projects.map((project) => (
+            <article
+              class:list={['project-card', project.featured && 'featured']}
+              data-filters={project.filters.join(' ')}
+            >
+              <a href={project.href} class="project-card-link">
+                <div class="project-card-img">
+                  <img
+                    src={imageMap[project.imageKey]}
+                    alt={imageAlt(project.title, project.type, project.location)}
+                    width="400"
+                    height="240"
+                    loading="lazy"
+                  />
+                  <span class="project-tag">{project.tag}</span>
+                </div>
+                <div class="project-card-body">
+                  <p class="project-location">{project.location}</p>
+                  <h2>{project.title}</h2>
+                  <p class="project-type">{project.type}</p>
+                  <p class="project-desc">{project.description}</p>
+                  <p class="project-price">ab {project.priceFrom}</p>
+                  <span class="project-cta">Details ansehen →</span>
+                </div>
+              </a>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt">
+      <div class="container">
+        <p class="section-label">Ratgeber</p>
+        <h2 class="section-title">Mehr zu Investment-Themen</h2>
+        <nav class="pillar-links">
+          {pillarPages.slice(0, 8).map((p) => (
+            <a href={p.href}>{p.label}</a>
+          ))}
+        </nav>
+      </div>
+    </section>
+
+    <Contact />
+  </main>
+  <Footer />
+  <FloatingActions />
+</Layout>
+
+<script>
+  const buttons = document.querySelectorAll('.filter-btn');
+  const cards = document.querySelectorAll('.project-card');
+
+  buttons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const filter = btn.getAttribute('data-filter');
+      buttons.forEach((b) => b.classList.remove('active'));
+      btn.classList.add('active');
+      cards.forEach((card) => {
+        const filters = card.getAttribute('data-filters') ?? '';
+        const show = filter === 'all' || filters.split(' ').includes(filter ?? '');
+        (card as HTMLElement).style.display = show ? '' : 'none';
+      });
+    });
+  });
+</script>
+
+<style>
+  .filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .filter-btn {
+    padding: 0.45rem 0.9rem;
+    font-size: 0.8rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--bg-card);
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .filter-btn:hover,
+  .filter-btn.active {
+    border-color: var(--border-gold);
+    color: var(--gold);
+  }
+
+  .projects-grid {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .projects-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1100px) {
+    .projects-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .project-card {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--bg-card);
+    transition: border-color 0.2s;
+  }
+
+  .project-card.featured {
+    border-color: var(--border-gold);
+  }
+
+  .project-card:hover {
+    border-color: var(--border-gold);
+  }
+
+  .project-card-link {
+    display: block;
+    color: inherit;
+  }
+
+  .project-card-img {
+    position: relative;
+    aspect-ratio: 16/10;
+    overflow: hidden;
+  }
+
+  .project-card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .project-tag {
+    position: absolute;
+    top: 0.75rem;
+    left: 0.75rem;
+    padding: 0.25rem 0.6rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+    background: var(--gold);
+    color: #000;
+    border-radius: 4px;
+  }
+
+  .project-card-body {
+    padding: 1.25rem;
+  }
+
+  .project-location {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    margin-bottom: 0.25rem;
+  }
+
+  .project-card h2 {
+    font-size: 1.15rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .project-type {
+    font-size: 0.8rem;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+  }
+
+  .project-desc {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 0.75rem;
+  }
+
+  .project-price {
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .project-cta {
+    font-size: 0.85rem;
+    color: var(--gold);
+    font-weight: 600;
+  }
+
+  .pillar-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1rem;
+  }
+
+  .pillar-links a {
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    font-size: 0.85rem;
+    color: var(--gold);
+  }
+</style>

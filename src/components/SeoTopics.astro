@@ -1,0 +1,109 @@
+---
+import { clusters } from '../data/clusters';
+import { getClusterHref } from '../data/cluster-intros';
+---
+
+<section class="section section-alt" aria-labelledby="seo-topics-title">
+  <div class="container">
+    <p class="section-label">Themen & Suchanfragen</p>
+    <h2 id="seo-topics-title" class="section-title">
+      Offplan-Immobilien Ägypten — alle Investment-Themen
+    </h2>
+    <p class="section-desc">
+      Tatari Investment deckt die wichtigsten Suchintentionen ab: von zinsfreien Bauträger-Raten über
+      Commercial Units bis West Wind in Sheikh Zayed — natürlich integriert, ohne Keyword-Stuffing.
+    </p>
+
+    <div class="topics-grid">
+      {clusters.map((cluster) => (
+        <article class="topic-card">
+          <h3>{cluster.name.replace(/^\d+\s/, '')}</h3>
+          <p class="topic-count">{cluster.count} relevante Suchbegriffe</p>
+          <ul>
+            {cluster.sampleKeywords.map((kw) => (
+              <li>{kw}</li>
+            ))}
+          </ul>
+          <a href={getClusterHref(cluster.slug)} class="topic-link">
+            {cluster.slug.includes('west-wind')
+              ? 'West Wind Projekt ansehen →'
+              : 'Thema vertiefen →'}
+          </a>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .topics-grid {
+    display: grid;
+    gap: 1.25rem;
+    margin-top: 2.5rem;
+  }
+
+  @media (min-width: 640px) {
+    .topics-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .topics-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .topic-card {
+    padding: 1.5rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    transition: border-color 0.2s;
+  }
+
+  .topic-card:hover {
+    border-color: var(--border-gold);
+  }
+
+  .topic-card h3 {
+    font-size: 1rem;
+    color: var(--gold);
+    margin-bottom: 0.35rem;
+  }
+
+  .topic-count {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    margin-bottom: 0.75rem;
+  }
+
+  .topic-card ul {
+    margin-bottom: 1rem;
+  }
+
+  .topic-card li {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    padding: 0.2rem 0;
+    padding-left: 0.75rem;
+    position: relative;
+  }
+
+  .topic-card li::before {
+    content: '·';
+    position: absolute;
+    left: 0;
+    color: var(--gold);
+  }
+
+  .topic-link {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--gold);
+  }
+
+  .topic-link:hover {
+    text-decoration: underline;
+  }
+</style>

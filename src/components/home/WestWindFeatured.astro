@@ -1,0 +1,75 @@
+---
+import { westWind } from '../../data/westwind';
+import { cityImages } from '../../data/images';
+import { imageAlt } from '../../lib/seo';
+import { sections } from '../../data/links';
+import { ctas } from '../../data/ctas';
+---
+
+<section class="section section-alt" id="west-wind-featured">
+  <div class="container ww-featured">
+    <div class="ww-featured-media">
+      <img
+        src={cityImages['Sheikh Zayed']}
+        alt={imageAlt('West Wind Mixed-Use Projekt', 'Clinics Offices Retail', 'Sheikh Zayed Ägypten')}
+        width="640"
+        height="400"
+        loading="lazy"
+      />
+    </div>
+    <div>
+      <p class="section-label">Flagship-Projekt</p>
+      <h2 class="section-title">West Wind — Mixed-Use in Sheikh Zayed</h2>
+      <p class="section-desc">
+        {westWind.description}
+      </p>
+      <ul class="ww-featured-list">
+        {westWind.unitSpecs.map((u) => (
+          <li><strong>{u.type}</strong> ab {u.sizeFrom} — {u.desc}</li>
+        ))}
+      </ul>
+      <div class="hero-actions" style="justify-content:flex-start;margin-top:1.5rem">
+        <a href="/projekte/west-wind" class="btn btn-primary">{ctas.westWindAvailability.label}</a>
+        <a href={sections.kontakt} class="btn btn-outline">{ctas.floorPlans.label}</a>
+      </div>
+      <p class="ww-note">{westWind.disclaimers[0]}</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .ww-featured {
+    display: grid;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  @media (min-width: 900px) {
+    .ww-featured {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .ww-featured-media img {
+    width: 100%;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+  }
+
+  .ww-featured-list {
+    margin-top: 1rem;
+    display: grid;
+    gap: 0.5rem;
+  }
+
+  .ww-featured-list li {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+  }
+
+  .ww-note {
+    margin-top: 1rem;
+    font-size: 0.75rem;
+    color: var(--text-dim);
+  }
+</style>

@@ -1,0 +1,7 @@
+---
+import LandingPage from '../../components/templates/LandingPage.astro';
+import { landingPages } from '../../data/landing-pages';
+const lp = landingPages.find((p) => p.slug === 'west-wind');
+if (!lp) throw new Error('missing lp');
+---
+<LandingPage lp={lp} />

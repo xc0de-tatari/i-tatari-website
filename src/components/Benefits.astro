@@ -1,0 +1,32 @@
+---
+import { benefits } from '../data/site';
+---
+
+<section id="vorteile" class="section">
+  <div class="container">
+    <p class="section-label">Ihre Vorteile</p>
+    <h2 class="section-title">Warum Tatari Investments?</h2>
+    <p class="section-desc">
+      Wir machen internationale Immobilieninvestitionen sicher, transparent und hochrentabel für deutsche
+      Investoren.
+    </p>
+
+    <div class="benefits-grid">
+      {benefits.map((b) => (
+        <article class="benefit-card">
+          <div class="benefit-icon">{b.icon}</div>
+          <h3>{b.title}</h3>
+          <p>{b.desc}</p>
+        </article>
+      ))}
+    </div>
+
+    <div class="highlight-box">
+      <h3>Sicherheit steht an erster Stelle</h3>
+      <p>
+        Viele zögern bei internationalen Investments. Wir verstehen das. Deshalb begleiten wir Sie als deutsche
+        Makler persönlich und sorgen für vollständige Transparenz.
+      </p>
+    </div>
+  </div>
+</section>

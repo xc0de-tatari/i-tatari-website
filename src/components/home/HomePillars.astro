@@ -1,0 +1,122 @@
+---
+import { pillarPages, productPages } from '../../data/navigation';
+---
+
+<section class="section" id="investment-themen">
+  <div class="container">
+    <p class="section-label">Investment-Ratgeber</p>
+    <h2 class="section-title">Warum Ägypten, Offplan & Tatari — alle Kernthemen</h2>
+    <p class="section-desc">
+      Strukturierte SEO-Seiten für Ihre Recherche — intern verlinkt, claim-safe, deutschsprachig.
+    </p>
+
+    <div class="pillars-grid">
+      <article class="pillar-card">
+        <h3>Warum Ägypten jetzt</h3>
+        <p>Wachstumsmarkt, Offplan-Einstieg, Sachwert-Diversifikation für DACH-Investoren.</p>
+        <a href="/immobilien-kaufen-aegypten">Immobilien in Ägypten kaufen →</a>
+      </article>
+      <article class="pillar-card">
+        <h3>Warum Offplan</h3>
+        <p>Frühe Preise, Bauträger-Raten, Bauphasen — Chancen und Risiken transparent erklärt.</p>
+        <a href="/offplan-immobilien-aegypten">Offplan Immobilien →</a>
+      </article>
+      <article class="pillar-card">
+        <h3>Direkt vom Bauträger</h3>
+        <p>Developer Direct mit Due Diligence — ohne aufgeblähte Zwischenebenen.</p>
+        <a href="/direkt-vom-bautraeger-aegypten">Direkt vom Bauträger →</a>
+      </article>
+      <article class="pillar-card">
+        <h3>Immobilien auf Raten</h3>
+        <p>Zinsfreie Bauträger-Raten nach Vorprüfung — planbar statt Sofortzahlung.</p>
+        <a href="/immobilien-auf-raten-aegypten">Auf Raten kaufen →</a>
+      </article>
+      <article class="pillar-card">
+        <h3>Renditepotenzial</h3>
+        <p>Szenarien für ROI, Miete und Wertentwicklung — ohne Garantien.</p>
+        <a href="/rendite-immobilien-aegypten">Rendite erklärt →</a>
+      </article>
+      <article class="pillar-card">
+        <h3>Warum Tatari</h3>
+        <p>Lokale Präsenz, Projekt-Screening, deutschsprachige Begleitung.</p>
+        <a href="/warum-tatari-investment">Due Diligence →</a>
+      </article>
+    </div>
+
+    <nav class="pillars-more" aria-label="Weitere Ratgeber">
+      {pillarPages.map((p) => (
+        <a href={p.href}>{p.label}</a>
+      ))}
+      {productPages.map((p) => (
+        <a href={p.href}>{p.label}</a>
+      ))}
+    </nav>
+  </div>
+</section>
+
+<style>
+  .pillars-grid {
+    display: grid;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  @media (min-width: 640px) {
+    .pillars-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .pillars-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .pillar-card {
+    padding: 1.5rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+  }
+
+  .pillar-card h3 {
+    font-size: 1rem;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+  }
+
+  .pillar-card p {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 0.75rem;
+  }
+
+  .pillar-card a {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--gold);
+  }
+
+  .pillars-more {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .pillars-more a {
+    font-size: 0.75rem;
+    padding: 0.35rem 0.65rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    color: var(--text-muted);
+  }
+
+  .pillars-more a:hover {
+    border-color: var(--border-gold);
+    color: var(--gold);
+  }
+</style>

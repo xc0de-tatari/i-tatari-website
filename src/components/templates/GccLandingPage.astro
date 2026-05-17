@@ -1,0 +1,83 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import FloatingActions from '../../components/FloatingActions.astro';
+import JsonLd from '../../components/seo/JsonLd.astro';
+import Disclaimer from '../../components/conversion/Disclaimer.astro';
+import LeadForm from '../../components/conversion/LeadForm.astro';
+import WhatsAppButton from '../../components/conversion/WhatsAppButton.astro';
+import CTAButton from '../../components/conversion/CTAButton.astro';
+import type { GccPage } from '../../data/gcc-pages';
+import { canonicalUrl, buildWebPageSchema, buildArticleSchema, mergeSchemas } from '../../lib/seo';
+import { sections } from '../../data/links';
+
+interface Props {
+  page: GccPage;
+}
+
+const { page } = Astro.props;
+const path = `/${page.slug}`;
+const schemas = mergeSchemas(
+  buildWebPageSchema({ name: page.headline, description: page.seo.description, url: path }),
+  buildArticleSchema({ headline: page.headline, description: page.seo.description, url: path })
+);
+---
+
+<Layout
+  title={page.seo.title}
+  description={page.seo.description}
+  keywords={page.seo.keywords}
+  canonical={canonicalUrl(path)}
+  ogType="article"
+>
+  <Fragment slot="head"><JsonLd data={schemas} /></Fragment>
+  <Header />
+  <main id="main-content">
+    <section class="hero">
+      <div class="container hero-content center">
+        <p class="section-label" style="justify-content:center">{page.region}</p>
+        <h1>{page.headline}</h1>
+        <p class="hero-desc" style="max-width:720px;margin-inline:auto">{page.subheadline}</p>
+        <p class="gcc-angle">{page.localAngle}</p>
+        <div class="hero-actions">
+          <CTAButton href={sections.kontakt} label="Book consultation" />
+          <WhatsAppButton template="germany" label="WhatsApp" />
+        </div>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container">
+        <h2 class="section-title">Egypt as a regional growth market</h2>
+        <ul class="bullets">
+          <li>Offplan entry with developer-direct payment plans — subject to review</li>
+          <li>Commercial, medical and retail units in mixed-use projects</li>
+          <li>On-ground due diligence by Tatari in Greater Cairo</li>
+          <li>No guaranteed returns — transparent scenarios only</li>
+        </ul>
+      </div>
+    </section>
+    <section class="section section-alt">
+      <div class="container">
+        <h2 class="section-title">West Wind — flagship mixed-use</h2>
+        <p class="section-desc">Sheikh Zayed · clinics, offices, retail — availability on request.</p>
+        <CTAButton href="/projekte/west-wind" label="View West Wind" />
+      </div>
+    </section>
+    <section class="section">
+      <div class="container">
+        <LeadForm title="Request availability" source={`gcc-${page.slug}`} defaultCountry={page.region} />
+      </div>
+    </section>
+    <Disclaimer />
+  </main>
+  <Footer />
+  <FloatingActions />
+</Layout>
+
+<style>
+  .gcc-angle { color: var(--gold); font-style: italic; margin-top: 1rem; max-width: 640px; margin-inline: auto; }
+  .bullets { margin-top: 1rem; display: grid; gap: 0.5rem; max-width: 640px; }
+  .bullets li { padding: 0.75rem 1rem 0.75rem 2rem; position: relative; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); font-size: 0.9rem; color: var(--text-muted); }
+  .bullets li::before { content: '✓'; position: absolute; left: 0.75rem; color: var(--gold); }
+</style>

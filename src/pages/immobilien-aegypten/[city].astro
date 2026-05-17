@@ -1,0 +1,16 @@
+---
+import CityLandingPage from '../../components/templates/CityLandingPage.astro';
+import { germanCities, getCityBySlug } from '../../data/cities';
+
+export function getStaticPaths() {
+  return germanCities.map((city) => ({
+    params: { city: city.slug },
+    props: { city },
+  }));
+}
+
+const { city } = Astro.props;
+if (!city) return Astro.redirect('/immobilien-kaufen-aegypten');
+---
+
+<CityLandingPage city={city} />

@@ -1,0 +1,127 @@
+---
+import { images } from '../data/images';
+import JsonLd from '../components/seo/JsonLd.astro';
+import Tracking from '../components/seo/Tracking.astro';
+import { trackingConfig } from '../config/tracking.config';
+import {
+  buildOrganizationSchema,
+  buildLocalBusinessSchema,
+  buildWebsiteSchema,
+  mergeSchemas,
+} from '../lib/seo';
+
+interface Props {
+  title?: string;
+  description?: string;
+  canonical?: string;
+  ogImage?: string;
+  ogType?: 'website' | 'article';
+  twitterSite?: string;
+  noindex?: boolean;
+  keywords?: string[];
+  includeLocalBusiness?: boolean;
+  lang?: string;
+}
+
+const {
+  title = 'Tatari Investment | Offplan Immobilien Ägypten & Naher Osten | Deutsche Beratung',
+  description = 'Premium Offplan-Immobilien in Ägypten: direkt vom Bauträger, zinsfreie Raten nach Prüfung, lokale Due Diligence. Strukturierter Einstieg für Investoren aus DACH & Europa — Tatari Investment.',
+  canonical,
+  ogImage = images.og,
+  ogType = 'website',
+  twitterSite = '@TatariInvestment',
+  noindex = false,
+  keywords = [],
+  includeLocalBusiness = true,
+  lang = 'de',
+} = Astro.props;
+
+const canonicalUrl = canonical ?? new URL(Astro.url.pathname, Astro.site).href;
+const siteName = 'Tatari Investment';
+const gtmId = trackingConfig.gtmId;
+
+const globalSchemas = mergeSchemas(
+  buildOrganizationSchema(description),
+  buildWebsiteSchema(),
+  includeLocalBusiness ? buildLocalBusinessSchema() : null
+);
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {keywords.length > 0 && <meta name="keywords" content={keywords.join(', ')} />}
+    <link rel="canonical" href={canonicalUrl} />
+    <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large'} />
+    <meta name="theme-color" content="#050505" />
+    <meta name="author" content={siteName} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:site_name" content={siteName} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:alt" content={`${siteName} — Offplan Immobilien Ägypten`} />
+    <meta property="og:locale" content="de_DE" />
+    <meta property="og:locale:alternate" content="en_US" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content={twitterSite} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content={`${siteName} — Offplan Immobilien Ägypten`} />
+    <meta name="geo.region" content="EG" />
+    <meta name="language" content="German" />
+    <link rel="icon" href={images.logo} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://images.unsplash.com" crossorigin />
+    <link rel="preconnect" href="https://i-tatari.com" crossorigin />
+    <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+      />
+    </noscript>
+    <Tracking />
+    <JsonLd data={globalSchemas} />
+    <slot name="head" />
+  </head>
+  <body>
+    <a href="#main-content" class="skip-link">Zum Inhalt springen</a>
+    {gtmId && (
+      <noscript>
+        <iframe
+          src={`https://www.googletagmanager.com/ns.html?id=${gtmId}`}
+          height="0"
+          width="0"
+          style="display:none;visibility:hidden"
+          title="Google Tag Manager"></iframe>
+      </noscript>
+    )}
+    <slot />
+    <slot name="footer" />
+    <script>
+      import '../scripts/main.ts';
+    </script>
+  </body>
+</html>
+
+<style is:global>
+  @import '../styles/global.css';
+</style>

@@ -1,0 +1,33 @@
+---
+import { sections } from '../../data/links';
+import { links } from '../../data/links';
+import { ctas } from '../../data/ctas';
+---
+
+<section class="section final-cta">
+  <div class="container center">
+    <h2 class="section-title">Bereit für Ihr Offplan-Gespräch?</h2>
+    <p class="section-desc" style="max-width:560px;margin-inline:auto">
+      Kostenlose Erstberatung, West Wind Verfügbarkeit oder WhatsApp — Tatari antwortet innerhalb von 24 Stunden,
+      vorbehaltlich Verfügbarkeit.
+    </p>
+    <div class="hero-actions" style="justify-content:center;margin-top:1.5rem">
+      <a href={sections.kontakt} class="btn btn-primary btn-lg">{ctas.consultation.label}</a>
+      <a href={links.whatsapp} class="btn btn-outline" target="_blank" rel="noopener noreferrer">
+        {ctas.whatsapp.label}
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .final-cta {
+    background: linear-gradient(180deg, transparent, rgba(201, 162, 39, 0.06));
+    border-top: 1px solid var(--border);
+  }
+
+  .btn-lg {
+    padding: 1rem 2rem;
+    font-size: 1.05rem;
+  }
+</style>

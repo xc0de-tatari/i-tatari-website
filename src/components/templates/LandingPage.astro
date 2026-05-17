@@ -1,0 +1,81 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import Disclaimer from '../../components/conversion/Disclaimer.astro';
+import LeadForm from '../../components/conversion/LeadForm.astro';
+import WhatsAppButton from '../../components/conversion/WhatsAppButton.astro';
+import CTAButton from '../../components/conversion/CTAButton.astro';
+import { canonicalUrl, buildWebPageSchema } from '../../lib/seo';
+import JsonLd from '../../components/seo/JsonLd.astro';
+import { sections } from '../../data/links';
+
+import type { LpConfig } from '../../data/landing-pages';
+
+interface Props {
+  lp: LpConfig;
+}
+
+const { lp } = Astro.props;
+const path = `/lp/${lp.slug}`;
+---
+
+<Layout title={lp.seo.title} description={lp.seo.description} canonical={canonicalUrl(path)} noindex={false}>
+  <Fragment slot="head">
+    <JsonLd data={buildWebPageSchema({ name: lp.headline, description: lp.seo.description, url: path })} />
+  </Fragment>
+  <Header />
+  <main id="main-content" class="lp-main">
+    <section class="hero lp-hero">
+      <div class="container hero-content center">
+        <h1>{lp.headline}</h1>
+        <p class="hero-desc">{lp.subheadline}</p>
+        {lp.stats && (
+          <div class="stats-grid" style="margin-top:2rem">
+            {lp.stats.map((s) => (
+              <div class="stat-card">
+                <div class="stat-value">{s.value}</div>
+                <div class="stat-label">{s.label}</div>
+              </div>
+            ))}
+          </div>
+        )}
+        <div class="hero-actions">
+          <CTAButton href="#lp-form" label="Jetzt anfragen" />
+          <WhatsAppButton template={lp.whatsappTemplate ?? 'germany'} />
+        </div>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container">
+        <ul class="lp-benefits">
+          {lp.benefits.map((b) => (
+            <li>{b}</li>
+          ))}
+        </ul>
+      </div>
+    </section>
+    <section class="section section-alt" id="lp-form">
+      <div class="container">
+        <LeadForm title="Kostenlose Erstberatung" source={`lp-${lp.slug}`} />
+      </div>
+    </section>
+    <Disclaimer />
+  </main>
+  <Footer />
+  <WhatsAppButton variant="floating" template={lp.whatsappTemplate ?? 'germany'} label="" />
+</Layout>
+
+<style>
+  .lp-main .header { position: relative; }
+  .lp-hero { min-height: 70vh; display: flex; align-items: center; }
+  .lp-benefits { display: grid; gap: 0.75rem; max-width: 560px; margin-inline: auto; }
+  .lp-benefits li {
+    padding: 1rem 1.25rem 1rem 2.5rem;
+    position: relative;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+  }
+  .lp-benefits li::before { content: '✓'; position: absolute; left: 1rem; color: var(--gold); font-weight: 700; }
+</style>

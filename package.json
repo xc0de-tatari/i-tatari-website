@@ -1,0 +1,21 @@
+{
+  "name": "i-tatari-astro",
+  "type": "module",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "sync:keywords": "node scripts/sync-keywords.mjs",
+    "sync:keywords:all": "node scripts/sync-keywords.mjs && node scripts/generate-keyword-content.mjs",
+    "generate:articles": "node scripts/generate-articles.mjs",
+    "check:links": "node scripts/check-links.mjs"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.2",
+    "astro": "^5.7.0"
+  },
+  "devDependencies": {
+    "xlsx": "^0.18.5"
+  }
+}

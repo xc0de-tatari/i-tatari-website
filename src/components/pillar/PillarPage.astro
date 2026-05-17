@@ -1,0 +1,245 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../Header.astro';
+import Footer from '../Footer.astro';
+import FloatingActions from '../FloatingActions.astro';
+import StickyMobileCta from '../conversion/StickyMobileCta.astro';
+import { getPageSeoBundle } from '../../lib/page-seo';
+import Contact from '../Contact.astro';
+import Breadcrumbs from '../seo/Breadcrumbs.astro';
+import JsonLd from '../seo/JsonLd.astro';
+import InternalLinks from './InternalLinks.astro';
+import type { PillarPageConfig } from '../../data/pillar-pages/types';
+import { sections } from '../../data/links';
+import { ctas } from '../../data/ctas';
+import {
+  canonicalUrl,
+  buildBreadcrumbSchema,
+  buildFaqSchema,
+  buildWebPageSchema,
+  buildArticleSchema,
+  buildCityLandingSchema,
+  mergeSchemas,
+} from '../../lib/seo';
+
+interface Props {
+  page: PillarPageConfig;
+}
+
+const { page } = Astro.props;
+const path = `/${page.slug}`;
+const canonical = canonicalUrl(path);
+const seoBundle = getPageSeoBundle(path, {
+  metaTitle: page.seo.title,
+  metaDescription: page.seo.description,
+});
+const pageKeywords = [...(page.seo.keywords ?? []), ...seoBundle.metaKeywords].slice(0, 25);
+
+const breadcrumbs = [
+  { name: 'Start', url: '/' },
+  { name: page.hero.headline.split('—')[0].trim().slice(0, 48), url: path },
+];
+
+const schemas = mergeSchemas(
+  buildBreadcrumbSchema([
+    { name: 'Start', url: '/' },
+    { name: page.hero.headline.slice(0, 60), url: path },
+  ]),
+  buildFaqSchema(page.faqs ?? []),
+  page.schemaType === 'article'
+    ? buildArticleSchema({
+        headline: page.hero.headline,
+        description: page.seo.description,
+        url: path,
+      })
+    : buildWebPageSchema({
+        name: page.hero.headline,
+        description: page.seo.description,
+        url: path,
+      }),
+  page.citySchema
+    ? buildCityLandingSchema({
+        city: page.citySchema.city,
+        region: page.citySchema.region,
+        description: page.seo.description,
+        url: path,
+      })
+    : null
+);
+---
+
+<Layout
+  title={seoBundle.metaTitle}
+  description={seoBundle.metaDescription}
+  keywords={pageKeywords}
+  canonical={canonical}
+  ogType={page.schemaType === 'article' ? 'article' : 'website'}
+>
+  <Fragment slot="head">
+    <JsonLd data={schemas} />
+  </Fragment>
+
+  <Header />
+  <main id="main-content">
+    <section class="hero pillar-hero">
+      <div class="container hero-content">
+        <Breadcrumbs items={breadcrumbs} />
+        {page.hero.label && (
+          <p class="section-label" style="justify-content:center">{page.hero.label}</p>
+        )}
+        <h1>{page.hero.headline}</h1>
+        <p class="hero-desc" style="max-width:760px;margin-inline:auto">{page.hero.subheadline}</p>
+        <div class="hero-actions">
+          <a href={sections.kontakt} class="btn btn-primary">{ctas.consultation.label}</a>
+          <a href={ctas.whatsapp.href} class="btn btn-outline" target="_blank" rel="noopener noreferrer">
+            {ctas.whatsapp.label}
+          </a>
+        </div>
+        <p class="pillar-disclaimer">
+          Alle Angaben vorbehaltlich Verfügbarkeit und Prüfung. Keine garantierte Rendite, Zinsfreiheit oder
+          Finanzierungszusage.
+        </p>
+      </div>
+    </section>
+
+    {
+      page.sections.map((section, i) => (
+        <section
+          id={section.id}
+          class:list={['section', i % 2 === 1 && 'section-alt']}
+        >
+          <div class="container">
+            {section.label && <p class="section-label">{section.label}</p>}
+            <h2 class="section-title">{section.title}</h2>
+            {section.description && <p class="section-desc">{section.description}</p>}
+            {section.items && (
+              <ul class="pillar-list">
+                {section.items.map((item) => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            )}
+            {section.cards && (
+              <div class="benefits-grid" style="margin-top:2rem">
+                {section.cards.map((card) => (
+                  <article class="benefit-card">
+                    {card.icon && <div class="benefit-icon">{card.icon}</div>}
+                    <h3>{card.title}</h3>
+                    <p>{card.desc}</p>
+                  </article>
+                ))}
+              </div>
+            )}
+            {section.links && (
+              <div class="pillar-links">
+                {section.links.map((link) => (
+                  <a href={link.href} class="btn btn-outline">{link.label}</a>
+                ))}
+              </div>
+            )}
+          </div>
+        </section>
+      ))
+    }
+
+    {page.faqs && page.faqs.length > 0 && (
+      <section class="section section-alt" id="faq">
+        <div class="container">
+          <p class="section-label">FAQ</p>
+          <h2 class="section-title">Häufige Fragen</h2>
+          <div class="faq-list pillar-faq">
+            {page.faqs.map((faq, i) => (
+              <div class={`faq-item ${i === 0 ? 'open' : ''}`}>
+                <button type="button" class="faq-question">{faq.q}</button>
+                <div class="faq-answer">
+                  <p>{faq.a}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
+
+    {page.relatedLinks && page.relatedLinks.length > 0 && (
+      <InternalLinks title="Weiterlesen" links={page.relatedLinks} />
+    )}
+
+    <section class="section">
+      <div class="container center">
+        <h2 class="section-title">Nächster Schritt</h2>
+        <p class="section-desc" style="margin-bottom:1.5rem">
+          Kostenlose Erstberatung — persönliche Vorqualifizierung, Euro-Kalkulation, vorbehaltlich Verfügbarkeit.
+        </p>
+        <a href={sections.kontakt} class="btn btn-primary btn-lg">{ctas.consultation.label}</a>
+      </div>
+    </section>
+
+    <Contact />
+  </main>
+  <Footer />
+  <FloatingActions />
+  <StickyMobileCta />
+</Layout>
+
+<style>
+  .pillar-hero {
+    min-height: 52vh;
+  }
+
+  .pillar-disclaimer {
+    margin-top: 1.5rem;
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    max-width: 560px;
+    margin-inline: auto;
+  }
+
+  .pillar-list {
+    margin-top: 1.5rem;
+    max-width: 720px;
+    display: grid;
+    gap: 0.65rem;
+  }
+
+  .pillar-list li {
+    padding: 0.85rem 1rem 0.85rem 2rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    position: relative;
+  }
+
+  .pillar-list li::before {
+    content: '✓';
+    position: absolute;
+    left: 0.75rem;
+    color: var(--gold);
+  }
+
+  .pillar-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+  }
+
+  .benefit-card h3 {
+    font-size: 1rem;
+    margin-bottom: 0.35rem;
+    color: var(--text);
+  }
+
+  .pillar-faq {
+    margin-top: 2rem;
+    max-width: 800px;
+    margin-inline: auto;
+  }
+
+  .btn-lg {
+    padding: 1rem 2rem;
+    font-size: 1.05rem;
+  }
+</style>

@@ -1,0 +1,67 @@
+---
+import { images } from '../data/images';
+import { links, sections } from '../data/links';
+import { pillarPages, productPages } from '../data/navigation';
+import Disclaimer from './conversion/Disclaimer.astro';
+---
+
+<footer class="footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <a href="/" class="logo" data-scroll-top>
+        <img
+          src={images.logo}
+          alt="Tatari Investment — Offplan Immobilien Ägypten Logo"
+          class="logo-img"
+          width="140"
+          height="48"
+        />
+      </a>
+      <p>
+        Deutschsprachiger Partner für Offplan- und Commercial-Immobilien in Ägypten — direkt vom Bauträger,
+        vorbehaltlich Verfügbarkeit.
+      </p>
+    </div>
+    <div>
+      <h4>Investieren</h4>
+      <ul>
+        {pillarPages.slice(0, 6).map((p) => (
+          <li><a href={p.href}>{p.label}</a></li>
+        ))}
+      </ul>
+    </div>
+    <div>
+      <h4>Gewerbe & Ratgeber</h4>
+      <ul>
+        {pillarPages.slice(6).map((p) => (
+          <li><a href={p.href}>{p.label}</a></li>
+        ))}
+        <li><a href="/investieren">Alle Themen (20 Cluster)</a></li>
+        <li><a href="/immobilien-aegypten">Nach Stadt (DE)</a></li>
+        <li><a href="/wissen">Ratgeber</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Projekte & Kontakt</h4>
+      <ul>
+        {productPages.map((p) => (
+          <li><a href={p.href}>{p.label}</a></li>
+        ))}
+        <li><a href={sections.kontakt}>Beratung buchen</a></li>
+        <li><a href={`tel:${links.phone}`}>{links.phoneDisplay}</a></li>
+        <li><a href={`mailto:${links.email}`}>{links.email}</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <span>© 2026 Tatari Investment. Alle Rechte vorbehalten.</span>
+    <div class="footer-legal">
+      <a href={sections.kontakt} title="Impressum">Impressum</a>
+      <a href={sections.kontakt} title="Datenschutz">Datenschutz</a>
+      <a href={sections.kontakt} title="AGB">AGB</a>
+    </div>
+  </div>
+  <div class="container footer-disclaimer">
+    <Disclaimer compact />
+  </div>
+</footer>

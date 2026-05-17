@@ -1,0 +1,27 @@
+---
+/** Arabic-ready RTL layout — placeholder content, does not affect main DE site */
+import Layout from './Layout.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<Layout title={title} description={description} includeLocalBusiness={false}>
+  <div dir="rtl" lang="ar" class="rtl-root">
+    <slot />
+  </div>
+</Layout>
+
+<style>
+  .rtl-root {
+    text-align: right;
+  }
+  .rtl-root .hero-actions,
+  .rtl-root .breadcrumb {
+    flex-direction: row-reverse;
+  }
+</style>

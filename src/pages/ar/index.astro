@@ -1,0 +1,44 @@
+---
+import LayoutRtl from '../../layouts/LayoutRtl.astro';
+import { canonicalUrl } from '../../lib/seo';
+
+const title = 'تاتاري للاستثمار العقاري | مصر';
+const description = 'استثمار عقاري في مصر — مشاريع أوف بلان، أقساط بدون فوائد حسب المشروع.';
+---
+
+<LayoutRtl title={title} description={description}>
+  <main id="main-content" class="section">
+    <div class="container center">
+      <p class="section-label">قريباً · العربية</p>
+      <h1 class="section-title">استثمر في مصر — مع تاتاري</h1>
+      <p class="section-desc" style="max-width:640px;margin-inline:auto">
+        النسخة العربية قيد الإعداد. حتى ذلك الحين: تواصل عبر واتساب أو النسخة الألمانية.
+      </p>
+      <nav class="ar-links" aria-label="روابط عربية مخططة">
+        <a href="/ar">الرئيسية</a>
+        <a href="/">Deutsch</a>
+        <a href="/projekte/west-wind">West Wind</a>
+        <a href="/#kontakt">اتصل بنا</a>
+      </nav>
+      <p style="margin-top:2rem;font-size:0.8rem;color:var(--text-dim)">
+        مسارات مخططة: /ar/مشاريع · /ar/استثمار-عقاري-في-مصر · /ar/ويست-ويند-الشيخ-زايد
+      </p>
+    </div>
+  </main>
+</LayoutRtl>
+
+<style>
+  .ar-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    justify-content: center;
+    margin-top: 1.5rem;
+  }
+  .ar-links a {
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    color: var(--gold);
+  }
+</style>

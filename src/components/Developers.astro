@@ -1,0 +1,42 @@
+---
+import { developers, trustStats } from '../data/site';
+
+const doubled = [...developers, ...developers];
+---
+
+<section class="developers">
+  <div class="container">
+    <p class="section-label center" style="justify-content:center">Exklusiver Zugang zu</p>
+    <h3>Premium Entwickler-Partnern</h3>
+    <p class="sub">8 Premium-Entwickler • $200B+ Projektvolumen • Weltklasse-Qualität</p>
+  </div>
+
+  <div class="marquee">
+    <div class="marquee-track">
+      {doubled.map((dev) => (
+        <div class="dev-card">
+          <div class="dev-abbr">{dev.abbr}</div>
+          <div class="dev-name">{dev.name}</div>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <div class="container" style="margin-top: 3rem;">
+    <div class="stats-grid">
+      {trustStats.map((stat) => (
+        <div class="stat-card">
+          <div class="stat-value">{stat.value}</div>
+          <div class="stat-label">{stat.label}</div>
+        </div>
+      ))}
+    </div>
+
+    <div class="trust-bar">
+      <span>100% Deutsche Beratung</span>
+      <span>Rechtlich Abgesichert</span>
+      <span>Kostenlose Erstberatung</span>
+      <span>Transparente Prozesse</span>
+    </div>
+  </div>
+</section>

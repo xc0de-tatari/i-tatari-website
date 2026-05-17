@@ -1,0 +1,248 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import FloatingActions from '../../components/FloatingActions.astro';
+import Breadcrumbs from '../../components/seo/Breadcrumbs.astro';
+import JsonLd from '../../components/seo/JsonLd.astro';
+import ProcessSteps from '../../components/conversion/ProcessSteps.astro';
+import Disclaimer from '../../components/conversion/Disclaimer.astro';
+import CTAButton from '../../components/conversion/CTAButton.astro';
+import WhatsAppButton from '../../components/conversion/WhatsAppButton.astro';
+import LeadForm from '../../components/conversion/LeadForm.astro';
+import InternalLinks from '../../components/pillar/InternalLinks.astro';
+import ConversionCta from '../../components/conversion/ConversionCta.astro';
+import StickyMobileCta from '../../components/conversion/StickyMobileCta.astro';
+import type { CityData } from '../../data/cities';
+import { getCityUniqueBlock } from '../../lib/city-content';
+import { getPageSeoBundle } from '../../lib/page-seo';
+import {
+  getCityIntro,
+  cityMeta,
+  cityFaqs,
+  defaultProcessSteps,
+} from '../../data/cities';
+import {
+  canonicalUrl,
+  buildBreadcrumbSchema,
+  buildFaqSchema,
+  buildWebPageSchema,
+  buildCityLandingSchema,
+  mergeSchemas,
+} from '../../lib/seo';
+import { sections } from '../../data/links';
+
+interface Props {
+  city: CityData;
+}
+
+const { city } = Astro.props;
+const meta = cityMeta(city);
+const intro = getCityIntro(city);
+const faqs = cityFaqs(city);
+const unique = getCityUniqueBlock(city);
+const path = `/immobilien-aegypten/${city.slug}`;
+const seoBundle = getPageSeoBundle(path);
+
+const schemas = mergeSchemas(
+  buildBreadcrumbSchema([
+    { name: 'Start', url: '/' },
+    { name: 'Ägypten', url: '/immobilien-kaufen-aegypten' },
+    { name: city.name, url: path },
+  ]),
+  buildFaqSchema(faqs),
+  buildWebPageSchema({ name: meta.headline, description: meta.description, url: path }),
+  buildCityLandingSchema({
+    city: city.name,
+    region: city.state ?? 'Deutschland',
+    description: meta.description,
+    url: path,
+  })
+);
+
+const related = [
+  { href: '/immobilien-kaufen-aegypten', label: 'Immobilien in Ägypten kaufen' },
+  { href: '/immobilien-auf-raten-aegypten', label: 'Immobilien auf Raten' },
+  { href: '/offplan-immobilien-aegypten', label: 'Offplan erklärt' },
+  { href: '/projekte/west-wind', label: 'West Wind Projekt' },
+  { href: '/wissen', label: 'Ratgeber & Wissen' },
+];
+---
+
+<Layout
+  title={seoBundle.metaTitle || meta.title}
+  description={seoBundle.metaDescription || meta.description}
+  keywords={seoBundle.metaKeywords}
+  canonical={canonicalUrl(path)}
+>
+  <Fragment slot="head"><JsonLd data={schemas} /></Fragment>
+  <Header />
+  <main id="main-content">
+    <section class="hero city-hero">
+      <div class="container hero-content">
+        <Breadcrumbs
+          items={[
+            { name: 'Start', url: '/' },
+            { name: 'Ägypten', url: '/immobilien-kaufen-aegypten' },
+            { name: city.name, url: path },
+          ]}
+        />
+        <p class="section-label" style="justify-content:center">
+          Investoren aus {city.name}{city.state ? ` · ${city.state}` : ''}
+        </p>
+        <h1>{meta.headline}</h1>
+        <p class="hero-desc">{intro}</p>
+        <p class="city-angle">{city.localAngle}</p>
+        <div class="hero-actions">
+          <CTAButton href={sections.kontakt} label="Kostenlose Beratung" />
+          <WhatsAppButton template="germany" />
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <h2 class="section-title">{unique.h2}</h2>
+        {unique.paragraphs.map((p) => (
+          <p class="section-desc city-unique-p">{p}</p>
+        ))}
+        <p class="city-profile">{unique.investorProfile}</p>
+        <ul class="city-bullets">
+          {unique.bullets.map((b) => (
+            <li>{b}</li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <section class="section section-alt">
+      <div class="container">
+        <h2 class="section-title">Ägypten als Wachstumsmarkt</h2>
+        <ul class="city-bullets">
+          <li>Urbanisierung und steigende Nachfrage in Greater Cairo</li>
+          <li>Offplan-Einstieg mit planbaren Bauträger-Raten nach Prüfung</li>
+          <li>Commercial & Mixed-Use — z. B. West Wind in Sheikh Zayed</li>
+          <li>Keine garantierte Rendite — transparente Szenarien statt Hype</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <h2 class="section-title">Offplan direkt vom Bauträger</h2>
+        <p class="section-desc">
+          Direkt vom Bauträger. Mit lokaler Prüfung. Auf Deutsch begleitet. Kleine Rate. Großer Sachwert — projektabhängig
+          nach Vorprüfung.
+        </p>
+        <CTAButton href="/direkt-vom-bautraeger-aegypten" label="Direkt vom Bauträger →" variant="outline" />
+      </div>
+    </section>
+
+    <section class="section section-alt">
+      <div class="container">
+        <h2 class="section-title">Ratenzahlung statt voller Sofortzahlung</h2>
+        <p class="section-desc">Monatliche Raten statt voller Sofortzahlung — Aus Raten wird Eigentum, nach Prüfung.</p>
+        <CTAButton href="/immobilien-auf-raten-aegypten" label="Immobilien auf Raten →" variant="outline" />
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <h2 class="section-title">West Wind als Beispielprojekt</h2>
+        <p class="section-desc">
+          Mixed-Use in Sheikh Zayed: Clinics, Offices, Retail & Pharmacy. Life in Flow — Verfügbarkeit auf Anfrage.
+        </p>
+        <CTAButton href="/projekte/west-wind" label="West Wind ansehen" />
+      </div>
+    </section>
+
+    <section class="section section-alt">
+      <div class="container">
+        <ProcessSteps city={city.name} steps={defaultProcessSteps} />
+      </div>
+    </section>
+
+    <section class="section" id="faq">
+      <div class="container">
+        <h2 class="section-title">FAQ — Investoren aus {city.name}</h2>
+        <div class="faq-list">
+          {faqs.map((f, i) => (
+            <div class:list={['faq-item', i === 0 && 'open']}>
+              <button type="button" class="faq-question">{f.q}</button>
+              <div class="faq-answer"><p>{f.a}</p></div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt">
+      <div class="container">
+        <LeadForm
+          title={`Beratung für Investoren aus ${city.name}`}
+          source={`city-${city.slug}`}
+          defaultCity={city.name}
+          defaultCountry="Deutschland"
+        />
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <ConversionCta
+          headline={`Beratung für Investoren aus ${city.name}`}
+          subline="Verfügbarkeit West Wind, Ratenplan-Prüfung & Euro-Kalkulation — vorbehaltlich Prüfung."
+        />
+      </div>
+    </section>
+
+    <InternalLinks title="Weiterführende Seiten" links={related} />
+    <Disclaimer />
+  </main>
+  <Footer />
+  <FloatingActions />
+  <StickyMobileCta />
+</Layout>
+
+<style>
+  .city-hero { min-height: 48vh; }
+  .city-unique-p {
+    max-width: 720px;
+    margin-bottom: 1rem;
+  }
+  .city-profile {
+    margin: 1rem 0;
+    padding: 1rem 1.25rem;
+    border-left: 3px solid var(--gold);
+    color: var(--text-muted);
+    font-size: 0.9rem;
+  }
+  .city-angle {
+    max-width: 640px;
+    margin: 1rem auto 0;
+    font-size: 0.95rem;
+    color: var(--gold);
+    font-style: italic;
+  }
+  .city-bullets {
+    margin-top: 1rem;
+    display: grid;
+    gap: 0.5rem;
+    max-width: 640px;
+  }
+  .city-bullets li {
+    padding: 0.75rem 1rem 0.75rem 2rem;
+    position: relative;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    font-size: 0.9rem;
+    color: var(--text-muted);
+  }
+  .city-bullets li::before {
+    content: '✓';
+    position: absolute;
+    left: 0.75rem;
+    color: var(--gold);
+  }
+</style>

@@ -1,0 +1,200 @@
+---
+interface Props {
+  title?: string;
+  source?: string;
+  defaultCity?: string;
+  defaultCountry?: string;
+  compact?: boolean;
+  magnetId?: string;
+}
+
+const {
+  title = 'Kostenlose Investment-Beratung',
+  source = 'website',
+  defaultCity = '',
+  defaultCountry = 'Deutschland',
+  compact = false,
+  magnetId = '',
+} = Astro.props;
+
+const formId = `lead-form-${source}`;
+---
+
+<form class:list={['lead-form', compact && 'lead-form--compact']} id={formId} data-source={source} data-magnet={magnetId} novalidate>
+  <h3>{title}</h3>
+  <p class="lead-form-desc">Kostenlose Erstberatung — Rückmeldung in der Regel innerhalb von 24h. Alle Felder mit * sind Pflicht.</p>
+  <ul class="lead-trust">
+    <li>🇩🇪 Beratung auf Deutsch</li>
+    <li>📋 Ratenplan-Prüfung — keine Finanzierungszusage</li>
+    <li>🏗️ West Wind & Offplan direkt vom Bauträger</li>
+  </ul>
+  <p class="form-status" role="status" aria-live="polite" hidden></p>
+
+  <div class="lead-form-grid">
+    <div class="form-group">
+      <label for={`${formId}-name`}>Vollständiger Name *</label>
+      <input id={`${formId}-name`} name="name" type="text" required autocomplete="name" />
+    </div>
+    <div class="form-group">
+      <label for={`${formId}-email`}>E-Mail *</label>
+      <input id={`${formId}-email`} name="email" type="email" required autocomplete="email" />
+    </div>
+    <div class="form-group">
+      <label for={`${formId}-phone`}>WhatsApp / Telefon *</label>
+      <input id={`${formId}-phone`} name="phone" type="tel" required autocomplete="tel" />
+    </div>
+    <div class="form-group">
+      <label for={`${formId}-country`}>Land</label>
+      <input id={`${formId}-country`} name="country" type="text" value={defaultCountry} />
+    </div>
+    <div class="form-group">
+      <label for={`${formId}-city`}>Stadt</label>
+      <input id={`${formId}-city`} name="city" type="text" value={defaultCity} />
+    </div>
+    <div class="form-group">
+      <label for={`${formId}-budget`}>Budget (EUR)</label>
+      <select id={`${formId}-budget`} name="budget">
+        <option value="">Bitte wählen</option>
+        <option value="unter-50k">unter 50.000 €</option>
+        <option value="50-100k">50.000 – 100.000 €</option>
+        <option value="100-250k">100.000 – 250.000 €</option>
+        <option value="250k-plus">über 250.000 €</option>
+      </select>
+    </div>
+    <div class="form-group form-group--full">
+      <label for={`${formId}-goal`}>Investment-Ziel</label>
+      <select id={`${formId}-goal`} name="goal">
+        <option value="">Bitte wählen</option>
+        <option value="rendite">Renditepotenzial / Kapitalanlage</option>
+        <option value="eigennutzung">Eigennutzung / Zweitwohnsitz</option>
+        <option value="gewerbe">Gewerbe / Commercial</option>
+        <option value="urlaub">Urlaub & Investment</option>
+        <option value="diversifikation">Diversifikation</option>
+      </select>
+    </div>
+    <div class="form-group form-group--full">
+      <label>Interesse an</label>
+      <div class="checkbox-grid">
+        {['Clinics', 'Offices', 'Retail', 'Residential', 'Ratenkauf', 'West Wind', 'Allgemein Ägypten'].map(
+          (opt) => (
+            <label class="checkbox-label">
+              <input type="checkbox" name="interest" value={opt} />
+              {opt}
+            </label>
+          )
+        )}
+      </div>
+    </div>
+    <div class="form-group">
+      <label for={`${formId}-timeline`}>Zeithorizont</label>
+      <select id={`${formId}-timeline`} name="timeline">
+        <option value="">Bitte wählen</option>
+        <option value="sofort">Sofort / 1–3 Monate</option>
+        <option value="mittel">3–12 Monate</option>
+        <option value="lang">12+ Monate</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for={`${formId}-contact-method`}>Bevorzugter Kontakt</label>
+      <select id={`${formId}-contact-method`} name="contactMethod">
+        <option value="whatsapp">WhatsApp</option>
+        <option value="email">E-Mail</option>
+        <option value="phone">Telefon</option>
+      </select>
+    </div>
+    <div class="form-group form-group--full">
+      <label for={`${formId}-message`}>Nachricht</label>
+      <textarea id={`${formId}-message`} name="message" rows={3} placeholder="Ihre Fragen…"></textarea>
+    </div>
+    <div class="form-group form-group--full">
+      <label class="checkbox-label consent">
+        <input type="checkbox" name="consent" required />
+        Ich willige ein, dass Tatari Investment meine Daten zur Bearbeitung der Anfrage nutzt. *
+      </label>
+    </div>
+  </div>
+
+  <button type="submit" class="btn btn-primary lead-submit">Kostenlose Beratung anfragen →</button>
+  <p class="lead-form-note">Vorbehaltlich Verfügbarkeit. Keine garantierte Rendite oder Genehmigung.</p>
+</form>
+
+<style>
+  .lead-form {
+    padding: 2rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    max-width: 720px;
+    margin-inline: auto;
+  }
+
+  .lead-form h3 {
+    margin-bottom: 0.5rem;
+  }
+
+  .lead-form-desc {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    margin-bottom: 0.75rem;
+  }
+
+  .lead-trust {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+    margin-bottom: 1.25rem;
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    list-style: none;
+  }
+
+  .lead-form-note {
+    margin-top: 0.75rem;
+    font-size: 0.72rem;
+    color: var(--text-dim);
+    text-align: center;
+  }
+
+  .lead-form-grid {
+    display: grid;
+    gap: 1rem;
+  }
+
+  @media (min-width: 640px) {
+    .lead-form-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+    .form-group--full {
+      grid-column: 1 / -1;
+    }
+  }
+
+  .checkbox-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+    margin-top: 0.35rem;
+  }
+
+  .checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    cursor: pointer;
+  }
+
+  .consent {
+    font-size: 0.8rem;
+    line-height: 1.4;
+  }
+
+  .lead-submit {
+    width: 100%;
+    margin-top: 1rem;
+  }
+
+  .form-status--success { color: #4ade80; }
+  .form-status--error { color: #f87171; }
+</style>

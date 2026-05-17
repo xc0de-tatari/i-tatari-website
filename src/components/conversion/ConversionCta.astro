@@ -1,0 +1,79 @@
+---
+import { sections } from '../../data/links';
+import { whatsappUrl, whatsappTemplates } from '../../config/site.config';
+
+interface Props {
+  headline?: string;
+  subline?: string;
+  variant?: 'default' | 'westwind';
+}
+
+const {
+  headline = 'Kostenlose Erstberatung — in 24h Rückmeldung',
+  subline = 'Verfügbarkeit, Grundrisse, Euro-Kalkulation & Ratenplan-Prüfung. Vorbehaltlich Prüfung — keine Zusage.',
+  variant = 'default',
+} = Astro.props;
+
+const wa = variant === 'westwind' ? whatsappTemplates.westWind : whatsappTemplates.germany;
+---
+
+<aside class="conversion-cta">
+  <p class="conversion-cta-label">Nächster Schritt</p>
+  <h3>{headline}</h3>
+  <p>{subline}</p>
+  <ul class="conversion-trust">
+    <li>🇩🇪 Beratung auf Deutsch</li>
+    <li>📋 Vorqualifizierung & Ratenplan-Prüfung</li>
+    <li>🏗️ Direkt vom Bauträger</li>
+  </ul>
+  <div class="conversion-actions">
+    <a href={sections.kontakt} class="btn btn-primary">Jetzt Beratung anfragen</a>
+    <a href={whatsappUrl(wa)} class="btn btn-outline" target="_blank" rel="noopener noreferrer" data-track-location="conversion-cta">
+      WhatsApp
+    </a>
+  </div>
+</aside>
+
+<style>
+  .conversion-cta {
+    margin: 2rem 0;
+    padding: 2rem;
+    text-align: center;
+    background: linear-gradient(135deg, rgba(197, 160, 89, 0.12), rgba(5, 5, 5, 0.9));
+    border: 1px solid var(--border-gold);
+    border-radius: var(--radius-xl);
+  }
+  .conversion-cta-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--gold);
+    margin-bottom: 0.5rem;
+  }
+  .conversion-cta h3 {
+    font-size: 1.35rem;
+    margin-bottom: 0.75rem;
+  }
+  .conversion-cta > p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    max-width: 520px;
+    margin-inline: auto;
+  }
+  .conversion-trust {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem 1.25rem;
+    margin: 1.25rem 0;
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    list-style: none;
+  }
+  .conversion-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    justify-content: center;
+  }
+</style>

@@ -1,0 +1,250 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import FloatingActions from '../../components/FloatingActions.astro';
+import Contact from '../../components/Contact.astro';
+import { clusters } from '../../data/clusters';
+import { getClusterIntro, getClusterHref } from '../../data/cluster-intros';
+import { getKeywordsByCluster } from '../../data/keywords';
+import { sections } from '../../data/links';
+import { ctas } from '../../data/ctas';
+
+export function getStaticPaths() {
+  return clusters
+    .filter((c) => c.slug !== 'west-wind-project-keywords')
+    .map((cluster) => ({
+      params: { slug: cluster.slug },
+      props: { cluster },
+    }));
+}
+
+const { cluster } = Astro.props;
+const intro = getClusterIntro(cluster.slug);
+const clusterKeywords = getKeywordsByCluster(cluster.name)
+  .sort((a, b) => Number(b.score) - Number(a.score));
+const metaKeywords = clusterKeywords.slice(0, 20).map((k) => k.keyword);
+const related = clusters
+  .filter((c) => c.slug !== cluster.slug)
+  .slice(0, 4);
+
+const pageTitle = `${intro.headline} | Tatari Investment`;
+const pageDescription = `${intro.intro.slice(0, 155)}…`;
+const canonical = `https://www.i-tatari.com/investieren/${cluster.slug}`;
+---
+
+<Layout
+  title={pageTitle}
+  description={pageDescription}
+  keywords={metaKeywords}
+  canonical={canonical}
+>
+  <Header />
+  <main id="main-content">
+    <section class="hero cluster-hero">
+      <div class="container hero-content">
+        <nav class="breadcrumb" aria-label="Brotkrumen">
+          <a href="/">Start</a>
+          <span aria-hidden="true">/</span>
+          <a href="/investieren">Investieren</a>
+          <span aria-hidden="true">/</span>
+          <span>{cluster.name.replace(/^\d+\s/, '')}</span>
+        </nav>
+        <p class="section-label" style="justify-content:center">{cluster.count} relevante Suchbegriffe</p>
+        <h1>{intro.headline}</h1>
+        <p class="hero-desc" style="max-width:720px;margin-inline:auto">{intro.subheadline}</p>
+        <div class="hero-actions">
+          <a href={sections.kontakt} class="btn btn-primary">{ctas.consultation.label}</a>
+          {cluster.slug.includes('commercial') || cluster.slug.includes('clinic') || cluster.slug.includes('office') || cluster.slug.includes('retail') ? (
+            <a href="/projekte/west-wind" class="btn btn-outline">West Wind ansehen</a>
+          ) : (
+            <a href="/investieren" class="btn btn-outline">Alle Themen</a>
+          )}
+        </div>
+        <p class="cluster-disclaimer">
+          Alle Angaben vorbehaltlich Verfügbarkeit. Keine garantierte Rendite oder Mieteinnahmen.
+        </p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <p class="section-desc" style="max-width:800px">{intro.intro}</p>
+        <ul class="cluster-highlights">
+          {intro.highlights.map((h) => (
+            <li>{h}</li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <section class="section section-alt">
+      <div class="container">
+        <p class="section-label">Suchbegriffe in diesem Cluster</p>
+        <h2 class="section-title">Keywords aus Ihrer Recherche</h2>
+        <p class="section-desc">
+          Natürlich integriert — diese Begriffe stammen aus unserer Keyword-Recherche für deutschsprachige
+          Investoren (Quelle: Tatari Investment Keyword-Strategie).
+        </p>
+        <ul class="keyword-cloud">
+          {clusterKeywords.map((k) => (
+            <li>
+              <span class="kw">{k.keyword}</span>
+              {k.priority === 'High' ? <span class="kw-badge">High</span> : null}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    {cluster.slug === 'long-tail-seo-fragen' && (
+      <section class="section">
+        <div class="container center">
+          <a href={sections.faq} class="btn btn-outline">Alle FAQ auf der Startseite →</a>
+        </div>
+      </section>
+    )}
+
+    <section class="section">
+      <div class="container">
+        <p class="section-label">Weitere Themen</p>
+        <h2 class="section-title">Verwandte Investment-Cluster</h2>
+        <div class="topics-grid">
+          {related.map((c) => (
+            <article class="topic-card">
+              <h3>
+                <a href={getClusterHref(c.slug)}>{c.name.replace(/^\d+\s/, '')}</a>
+              </h3>
+              <p class="topic-count">{c.topKeyword}</p>
+              <a href={getClusterHref(c.slug)} class="topic-link">Mehr erfahren →</a>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <Contact />
+  </main>
+  <Footer />
+  <FloatingActions />
+</Layout>
+
+<style>
+  .cluster-hero {
+    min-height: 55vh;
+  }
+
+  .breadcrumb {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem 0.5rem;
+    justify-content: center;
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    margin-bottom: 1.5rem;
+  }
+
+  .breadcrumb a:hover {
+    color: var(--gold);
+  }
+
+  .cluster-disclaimer {
+    margin-top: 1.5rem;
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    max-width: 560px;
+    margin-inline: auto;
+  }
+
+  .cluster-highlights {
+    display: grid;
+    gap: 0.75rem;
+    margin-top: 2rem;
+    max-width: 640px;
+  }
+
+  .cluster-highlights li {
+    padding: 0.85rem 1rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    padding-left: 2rem;
+    position: relative;
+  }
+
+  .cluster-highlights li::before {
+    content: '✓';
+    position: absolute;
+    left: 0.75rem;
+    color: var(--gold);
+  }
+
+  .keyword-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 2rem;
+    list-style: none;
+    padding: 0;
+  }
+
+  .keyword-cloud li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.4rem 0.75rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    font-size: 0.8rem;
+  }
+
+  .kw-badge {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 700;
+  }
+
+  .topics-grid {
+    display: grid;
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .topics-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .topic-card {
+    padding: 1.25rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+  }
+
+  .topic-card h3 {
+    font-size: 1rem;
+    margin-bottom: 0.35rem;
+  }
+
+  .topic-card h3 a {
+    color: var(--gold);
+  }
+
+  .topic-count {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    margin-bottom: 0.5rem;
+  }
+
+  .topic-link {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--gold);
+  }
+</style>

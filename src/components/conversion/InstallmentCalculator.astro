@@ -1,0 +1,94 @@
+---
+import { siteConfig } from '../../config/site.config';
+import Disclaimer from './Disclaimer.astro';
+---
+
+<div class="calc-module" id="installment-calculator" data-rate={siteConfig.eurToEgp}>
+  <h3 class="section-title" style="font-size:1.25rem">Ratenplan-Rechner (Richtwert)</h3>
+  <p class="section-desc" style="margin-bottom:1.5rem">{siteConfig.calculatorDisclaimer}</p>
+  <div class="calc-grid">
+    <div class="form-group">
+      <label for="calc-sqm">Fläche (m²)</label>
+      <input id="calc-sqm" type="number" value="79" min="1" />
+    </div>
+    <div class="form-group">
+      <label for="calc-ppm">Preis pro m² (EGP)</label>
+      <input id="calc-ppm" type="number" value="45000" min="1" />
+    </div>
+    <div class="form-group">
+      <label for="calc-down">Anzahlung (%)</label>
+      <input id="calc-down" type="number" value="10" min="0" max="100" />
+    </div>
+    <div class="form-group">
+      <label for="calc-years">Laufzeit (Jahre)</label>
+      <input id="calc-years" type="number" value="5" min="1" max="15" />
+    </div>
+  </div>
+  <div class="calc-results" aria-live="polite">
+    <div class="calc-row"><span>Gesamt EGP</span><strong id="out-total-egp">—</strong></div>
+    <div class="calc-row"><span>Gesamt EUR (Richtwert)</span><strong id="out-total-eur">—</strong></div>
+    <div class="calc-row"><span>Anzahlung EGP / EUR</span><strong id="out-down">—</strong></div>
+    <div class="calc-row"><span>Restbetrag</span><strong id="out-remaining">—</strong></div>
+    <div class="calc-row highlight"><span>≈ Monatliche Rate EUR</span><strong id="out-monthly">—</strong></div>
+  </div>
+  <Disclaimer compact />
+</div>
+
+<style>
+  .calc-module {
+    padding: 1.5rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+  }
+  .calc-grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    margin-bottom: 1.5rem;
+  }
+  .calc-results { display: grid; gap: 0.5rem; }
+  .calc-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.65rem 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.9rem;
+    color: var(--text-muted);
+  }
+  .calc-row.highlight strong { color: var(--gold); font-size: 1.1rem; }
+</style>
+
+<script>
+  function initInstallmentCalculator() {
+    const root = document.getElementById('installment-calculator');
+    if (!root) return;
+    const rate = Number(root.dataset.rate) || 62;
+    const sqm = document.getElementById('calc-sqm') as HTMLInputElement;
+    const ppm = document.getElementById('calc-ppm') as HTMLInputElement;
+    const down = document.getElementById('calc-down') as HTMLInputElement;
+    const years = document.getElementById('calc-years') as HTMLInputElement;
+    const fmtEur = (n: number) =>
+      new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(n);
+    const fmtEgp = (n: number) =>
+      new Intl.NumberFormat('de-DE', { maximumFractionDigits: 0 }).format(n) + ' EGP';
+
+    function update() {
+      const totalEgp = Number(sqm.value) * Number(ppm.value);
+      const totalEur = totalEgp / rate;
+      const downPct = Number(down.value) / 100;
+      const downEgp = totalEgp * downPct;
+      const downEur = downEgp / rate;
+      const remEur = totalEur - downEur;
+      const monthly = remEur / (Number(years.value) * 12);
+      (document.getElementById('out-total-egp')!).textContent = fmtEgp(totalEgp);
+      (document.getElementById('out-total-eur')!).textContent = fmtEur(totalEur);
+      (document.getElementById('out-down')!).textContent = `${fmtEgp(downEgp)} / ${fmtEur(downEur)}`;
+      (document.getElementById('out-remaining')!).textContent = fmtEur(remEur);
+      (document.getElementById('out-monthly')!).textContent = fmtEur(monthly);
+    }
+    [sqm, ppm, down, years].forEach((el) => el.addEventListener('input', update));
+    update();
+  }
+  document.addEventListener('DOMContentLoaded', initInstallmentCalculator);
+</script>

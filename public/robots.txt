@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# Thank-you page is noindex (excluded from sitemap)
+Disallow: /danke
+
+Sitemap: https://www.i-tatari.com/sitemap-index.xml

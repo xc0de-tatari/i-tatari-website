@@ -1,0 +1,39 @@
+---
+import { newsItems } from '../data/site';
+import { sections } from '../data/links';
+---
+
+<section class="section section-alt">
+  <div class="container center">
+    <p class="section-label" style="justify-content:center">🔴 LIVE Updates</p>
+    <h2 class="section-title">Aktuelle Markt-News</h2>
+    <p class="section-desc">Die heißesten Entwicklungen und warum JETZT der perfekte Zeitpunkt ist</p>
+  </div>
+
+  <div class="container news-grid">
+    {newsItems.map((item) => (
+      <article class="news-card">
+        <div class="news-card-header">
+          <span class="badge badge-urgent">{item.badge}</span>
+          {item.year && <span class="badge badge-gold">{item.year}</span>}
+        </div>
+        <h3>{item.title}</h3>
+        <p>{item.desc}</p>
+        <p class="news-impact">Impact: {item.impact}</p>
+      </article>
+    ))}
+  </div>
+
+  <div class="container news-cta">
+    <h3>Der Markt wartet nicht!</h3>
+    <p style="color:var(--text-muted);margin:1rem 0">
+      Frühinvestoren in der New Administrative Capital haben bereits 40-60% Wertsteigerung vor Fertigstellung erzielt.
+    </p>
+    <div class="news-cta-stats">
+      <div><strong>+18%</strong><span>Preissteigerung 2025</span></div>
+      <div><strong>$68B</strong><span>Investitionsvolumen</span></div>
+      <div><strong>2026</strong><span>Jahr der Chancen</span></div>
+    </div>
+    <a href={sections.kontakt} class="btn btn-primary">Jetzt Top-Projekte sichern</a>
+  </div>
+</section>

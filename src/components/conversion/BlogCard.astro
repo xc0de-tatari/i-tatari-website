@@ -1,0 +1,35 @@
+---
+import type { articles } from '../../data/articles';
+
+type Article = (typeof articles)[number];
+
+interface Props {
+  article: Article;
+}
+
+const { article } = Astro.props;
+---
+
+<a href={`/wissen/${article.slug}`} class="blog-card">
+  <span class="blog-card-cat">{article.category}</span>
+  <h3>{article.title}</h3>
+  <p>{article.intro.slice(0, 120)}…</p>
+  <span class="blog-card-link">Lesen →</span>
+</a>
+
+<style>
+  .blog-card {
+    display: block;
+    padding: 1.25rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    color: inherit;
+    transition: border-color 0.2s;
+  }
+  .blog-card:hover { border-color: var(--border-gold); }
+  .blog-card-cat { font-size: 0.7rem; color: var(--gold); text-transform: uppercase; letter-spacing: 0.05em; }
+  .blog-card h3 { font-size: 1rem; margin: 0.5rem 0; }
+  .blog-card p { font-size: 0.85rem; color: var(--text-muted); }
+  .blog-card-link { font-size: 0.85rem; color: var(--gold); font-weight: 600; }
+</style>

@@ -1,0 +1,9 @@
+---
+import PillarPage from '../components/pillar/PillarPage.astro';
+import { pillarPages } from '../data/pillar-pages';
+
+const page = pillarPages['warum-tatari-investment'];
+if (!page) throw new Error('Pillar page not found: warum-tatari-investment');
+---
+
+<PillarPage page={page} />

@@ -1,0 +1,254 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import FloatingActions from '../../components/FloatingActions.astro';
+import StickyMobileCta from '../../components/conversion/StickyMobileCta.astro';
+import Contact from '../../components/Contact.astro';
+import ConversionCta from '../../components/conversion/ConversionCta.astro';
+import InternalLinks from '../../components/pillar/InternalLinks.astro';
+import JsonLd from '../../components/seo/JsonLd.astro';
+import { westWind } from '../../data/westwind';
+import { getWestWindKeywords } from '../../data/keywords';
+import { sections, anchors } from '../../data/links';
+import {
+  canonicalUrl,
+  buildBreadcrumbSchema,
+  buildRealEstateListingSchema,
+  buildWebPageSchema,
+  mergeSchemas,
+} from '../../lib/seo';
+import { cityImages } from '../../data/images';
+
+const wwKeywords = getWestWindKeywords().slice(0, 12).map((k) => k.keyword);
+const listingSchema = buildRealEstateListingSchema({
+  name: westWind.headline,
+  description: westWind.description,
+  url: '/projekte/west-wind',
+  addressLocality: 'Sheikh Zayed City',
+  image: cityImages['Sheikh Zayed'],
+});
+const pageSchemas = mergeSchemas(
+  buildBreadcrumbSchema([
+    { name: 'Start', url: '/' },
+    { name: 'Projekte', url: '/projekte' },
+    { name: 'West Wind', url: '/projekte/west-wind' },
+  ]),
+  buildWebPageSchema({
+    name: westWind.seo.title,
+    description: westWind.seo.description,
+    url: '/projekte/west-wind',
+  }),
+  listingSchema
+);
+---
+
+<Layout
+  title={westWind.seo.title}
+  description={westWind.seo.description}
+  keywords={[...westWind.seo.keywords, ...wwKeywords]}
+  canonical={canonicalUrl('/projekte/west-wind')}
+>
+  <Fragment slot="head">
+    <JsonLd data={pageSchemas} />
+  </Fragment>
+  <Header />
+  <main id="main-content">
+    <section class="hero ww-hero">
+      <div class="container hero-content">
+        <p class="section-label" style="justify-content:center">Pins & Corners · El Bostan Street · Sheikh Zayed</p>
+        <h1>{westWind.headline}</h1>
+        <p class="hero-desc" style="max-width:720px;margin-inline:auto">{westWind.subheadline}</p>
+        <div class="hero-actions">
+          {westWind.ctas.map((cta) => (
+            <a
+              href={cta.external ? cta.href : cta.href.includes('#kontakt') ? anchors.kontakt : cta.href}
+              class={cta.external ? 'btn btn-outline' : 'btn btn-primary'}
+              target={cta.external ? '_blank' : undefined}
+              rel={cta.external ? 'noopener noreferrer' : undefined}
+            >
+              {cta.label}
+            </a>
+          ))}
+        </div>
+        <p class="ww-disclaimer">{westWind.disclaimers[0]}</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <p class="section-label">Life in Flow</p>
+        <h2 class="section-title">{westWind.tagline} — Mixed-Use Offplan an der El Bostan Street</h2>
+        <p class="section-desc">{westWind.description}</p>
+        <ul class="ww-list">
+          {westWind.concept.map((item) => (
+            <li>{item}</li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <section class="section section-alt">
+      <div class="container">
+        <p class="section-label">Mikrolage</p>
+        <h2 class="section-title">Sheikh Zayed — El Bostan Street, Rofayda Hospital & Park Street</h2>
+        <p class="section-desc">
+          West Wind liegt in einer etablierten Achse von Sheikh Zayed: ca. 1 Minute zur Mehwar Road, in der Nähe von
+          Rofayda Hospital und Park Street — mit Anbindung zu Mall of Arabia, Capital Business Park und Arkana Plaza.
+        </p>
+        <div class="benefits-grid" style="margin-top:2rem">
+          {westWind.microLocation.map((h) => (
+            <article class="benefit-card">
+              <div class="benefit-icon">📍</div>
+              <p>{h}</p>
+            </article>
+          ))}
+        </div>
+        <p class="ww-address">
+          <strong>Adresse:</strong> {westWind.address.street}, {westWind.address.area}, {westWind.address.city}
+        </p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <p class="section-label">Einheiten</p>
+        <h2 class="section-title">Clinics ab 24 m² · Offices ab 79 m² · Retail ab 37 m²</h2>
+        <div class="benefits-grid">
+          {westWind.unitSpecs.map((u) => (
+            <article class="benefit-card">
+              <div class="benefit-icon">{u.icon}</div>
+              <h3>{u.type}</h3>
+              <p class="ww-size">ab {u.sizeFrom}</p>
+              <p>{u.desc}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-alt">
+      <div class="container">
+        <p class="section-label">Amenities</p>
+        <h2 class="section-title">Parking, EV Charging, Concierge, Pool, Gym & Basement Entrances</h2>
+        <div class="amenities-grid">
+          {westWind.amenities.map((a) => (
+            <article class="amenity-card">
+              <span class="amenity-icon">{a.icon}</span>
+              <h3>{a.title}</h3>
+              <p>{a.desc}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <p class="section-label">Investment-Rahmen</p>
+        <h2 class="section-title">Offplan direkt vom Bauträger — nach Ratenplan-Prüfung</h2>
+        <ul class="ww-list">
+          {westWind.investmentAngles.map((a) => (
+            <li>{a}</li>
+          ))}
+        </ul>
+        <ConversionCta
+          variant="westwind"
+          headline="West Wind Verfügbarkeit & Grundrisse anfragen"
+          subline="Euro-Kalkulation, Einheiten-Matrix und Ratenplan-Prüfung — vorbehaltlich Verfügbarkeit. Keine Rendite- oder Finanzierungszusage."
+        />
+      </div>
+    </section>
+
+    <section class="section section-alt">
+      <div class="container">
+        <p class="section-label">Rechtlicher Hinweis</p>
+        <ul class="ww-disclaimer-list">
+          {westWind.disclaimers.map((d) => (
+            <li>{d}</li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <InternalLinks title="Weiterführend" links={[...westWind.relatedLinks]} />
+    <Contact />
+  </main>
+  <Footer />
+  <FloatingActions />
+  <StickyMobileCta />
+</Layout>
+
+<style>
+  .ww-hero {
+    padding-top: calc(var(--header-h) + 4rem);
+    padding-bottom: 4rem;
+    text-align: center;
+    background: linear-gradient(180deg, rgba(197, 160, 89, 0.06), transparent);
+  }
+  .ww-disclaimer {
+    margin-top: 1.5rem;
+    font-size: 0.75rem;
+    color: var(--text-dim);
+  }
+  .ww-address {
+    margin-top: 1.5rem;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+  }
+  .ww-size {
+    color: var(--gold);
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin: 0.25rem 0;
+  }
+  .ww-list {
+    margin-top: 1.5rem;
+    display: grid;
+    gap: 0.75rem;
+    max-width: 720px;
+  }
+  .ww-list li {
+    padding-left: 1.25rem;
+    position: relative;
+    color: var(--text-muted);
+  }
+  .ww-list li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--gold);
+  }
+  .amenities-grid {
+    display: grid;
+    gap: 1rem;
+    margin-top: 2rem;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+  .amenity-card {
+    padding: 1.25rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    text-align: center;
+  }
+  .amenity-icon {
+    font-size: 1.75rem;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  .amenity-card h3 {
+    font-size: 0.95rem;
+    margin-bottom: 0.35rem;
+  }
+  .amenity-card p {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+  }
+  .ww-disclaimer-list {
+    color: var(--text-dim);
+    font-size: 0.85rem;
+    display: grid;
+    gap: 0.5rem;
+  }
+</style>

@@ -1,0 +1,36 @@
+---
+import { siteConfig } from '../../config/site.config';
+
+interface Props {
+  compact?: boolean;
+}
+
+const { compact = false } = Astro.props;
+---
+
+<aside class:list={['legal-disclaimer', compact && 'legal-disclaimer--compact']} role="note">
+  <p>{siteConfig.legalDisclaimer}</p>
+</aside>
+
+<style>
+  .legal-disclaimer {
+    margin-top: 2rem;
+    padding: 1rem 1.25rem;
+    background: rgba(201, 162, 39, 0.06);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    border-left: 3px solid var(--gold);
+  }
+
+  .legal-disclaimer p {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  .legal-disclaimer--compact {
+    margin-top: 1rem;
+    padding: 0.75rem 1rem;
+  }
+</style>

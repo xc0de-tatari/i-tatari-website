@@ -1,0 +1,61 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import FloatingActions from '../../components/FloatingActions.astro';
+import { germanCities } from '../../data/cities';
+import { canonicalUrl, buildWebPageSchema } from '../../lib/seo';
+import JsonLd from '../../components/seo/JsonLd.astro';
+
+const title = 'Immobilien Ägypten nach Stadt | Deutsche Metropolen | Tatari';
+const description =
+  'Offplan-Immobilien in Ägypten — für Investoren aus Berlin, München, Hamburg und 70+ weiteren deutschen Städten.';
+---
+
+<Layout title={title} description={description} canonical={canonicalUrl('/immobilien-aegypten')}>
+  <Fragment slot="head">
+    <JsonLd data={buildWebPageSchema({ name: title, description, url: '/immobilien-aegypten' })} />
+  </Fragment>
+  <Header />
+  <main id="main-content">
+    <section class="hero" style="min-height:40vh">
+      <div class="container hero-content center">
+        <h1>Immobilien in Ägypten — nach Ihrer Stadt</h1>
+        <p class="hero-desc" style="max-width:640px;margin-inline:auto">
+          Wählen Sie Ihre deutsche Metropole für eine lokale Einstiegsseite mit Beratung, Prozess und FAQ.
+        </p>
+        <a href="/immobilien-kaufen-aegypten" class="btn btn-outline">Ägypten Hub</a>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container">
+        <nav class="city-index" aria-label="Städte">
+          {germanCities.map((c) => (
+            <a href={`/immobilien-aegypten/${c.slug}`}>{c.name}</a>
+          ))}
+        </nav>
+      </div>
+    </section>
+  </main>
+  <Footer />
+  <FloatingActions />
+</Layout>
+
+<style>
+  .city-index {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .city-index a {
+    padding: 0.45rem 0.85rem;
+    font-size: 0.85rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    color: var(--text-muted);
+  }
+  .city-index a:hover {
+    border-color: var(--border-gold);
+    color: var(--gold);
+  }
+</style>

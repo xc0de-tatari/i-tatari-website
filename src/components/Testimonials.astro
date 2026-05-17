@@ -1,0 +1,29 @@
+---
+import { testimonials } from '../data/site';
+---
+
+<section class="section section-alt">
+  <div class="container center">
+    <h2 class="section-title">Das sagen unsere Investoren</h2>
+    <p class="section-desc">
+      Über 500 zufriedene Kunden vertrauen auf unsere Expertise bei Auslandsimmobilien
+    </p>
+  </div>
+  <div class="container testimonials-grid">
+    {testimonials.map((t) => (
+      <article class="testimonial-card">
+        <p>"{t.quote}"</p>
+        <div class="testimonial-author">
+          <span class="testimonial-emoji">{t.emoji}</span>
+          <div>
+            <strong>{t.name}</strong>
+            <span>{t.city} · {t.role}</span>
+          </div>
+        </div>
+      </article>
+    ))}
+  </div>
+  <p class="container center" style="margin-top:2rem;color:var(--text-muted);font-size:0.9rem">
+    ⭐ 4.9/5 Durchschnittsbewertung • 500+ verifizierte Bewertungen
+  </p>
+</section>

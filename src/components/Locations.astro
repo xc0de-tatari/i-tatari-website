@@ -1,0 +1,36 @@
+---
+import { locations } from '../data/site';
+import { locationImages } from '../data/images';
+import { sections } from '../data/links';
+---
+
+<section class="section">
+  <div class="container center">
+    <p class="section-label" style="justify-content:center">Premium Standorte</p>
+    <h2 class="section-title">Top Investment-Locations</h2>
+    <p class="section-desc">
+      Sorgfältig ausgewählte Projekte in den am schnellsten wachsenden Märkten des Nahen Ostens.
+    </p>
+  </div>
+
+  <div class="container locations-grid">
+    {locations.map((loc) => (
+      <article class={`location-card ${loc.featured ? 'featured' : ''}`}>
+        <div class="location-image">
+          <img src={locationImages[loc.name]} alt={loc.name} loading="lazy" />
+          {loc.featured && <span class="location-badge badge badge-top">Top Investment</span>}
+        </div>
+        <p class="country">{loc.country}</p>
+        <h3>{loc.name}</h3>
+        <div class="location-roi">
+          <span>Potenzial <strong>{loc.yieldNote}</strong></span>
+          <span>Ab <strong>{loc.price}</strong></span>
+        </div>
+        <ul>
+          {loc.points.map((pt) => <li>{pt}</li>)}
+        </ul>
+        <a href={sections.kontakt} class="btn btn-outline">Mehr erfahren</a>
+      </article>
+    ))}
+  </div>
+</section>

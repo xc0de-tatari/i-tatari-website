@@ -1,0 +1,105 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import FloatingActions from '../../components/FloatingActions.astro';
+import { clusters } from '../../data/clusters';
+import { getClusterHref, getClusterIntro } from '../../data/cluster-intros';
+import { sections } from '../../data/links';
+---
+
+<Layout
+  title="Investment-Themen | Offplan Ägypten | Tatari Investment"
+  description="20 SEO-Themencluster zu Offplan, zinsfreien Raten, Gewerbe, West Wind und mehr — Tatari Investment begleitet deutschsprachige Investoren in Ägypten."
+  canonical="https://www.i-tatari.com/investieren"
+>
+  <Header />
+  <main id="main-content">
+    <section class="hero" style="min-height:50vh">
+      <div class="container hero-content">
+        <p class="section-label" style="justify-content:center">Themenübersicht</p>
+        <h1>Investieren in Ägypten — alle Themen</h1>
+        <p class="hero-desc" style="max-width:720px;margin-inline:auto">
+          Über 997 Suchbegriffe in 20 Cluster — von Makro & Offplan über Commercial Units bis West Wind.
+          Wählen Sie Ihr Thema oder starten Sie direkt mit der Beratung.
+        </p>
+        <div class="hero-actions">
+          <a href={sections.kontakt} class="btn btn-primary">Kostenlose Beratung</a>
+          <a href="/projekte/west-wind" class="btn btn-outline">West Wind Projekt</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="topics-grid">
+          {clusters.map((cluster) => {
+            const intro = getClusterIntro(cluster.slug);
+            const href = getClusterHref(cluster.slug);
+            return (
+              <article class="topic-card">
+                <h2>
+                  <a href={href}>{cluster.name.replace(/^\d+\s/, '')}</a>
+                </h2>
+                <p class="topic-count">{cluster.count} Suchbegriffe · Top: {cluster.topKeyword}</p>
+                <p style="font-size:0.9rem;color:var(--text-muted);margin-bottom:0.75rem">
+                  {intro.subheadline}
+                </p>
+                <a href={href} class="topic-link">Thema vertiefen →</a>
+              </article>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+  <FloatingActions />
+</Layout>
+
+<style>
+  .topics-grid {
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  @media (min-width: 640px) {
+    .topics-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .topics-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .topic-card {
+    padding: 1.5rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+  }
+
+  .topic-card h2 {
+    font-size: 1.05rem;
+    margin-bottom: 0.35rem;
+  }
+
+  .topic-card h2 a {
+    color: var(--gold);
+  }
+
+  .topic-count {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    margin-bottom: 0.5rem;
+  }
+
+  .topic-link {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--gold);
+  }
+</style>

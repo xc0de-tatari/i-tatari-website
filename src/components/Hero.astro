@@ -1,0 +1,71 @@
+---
+import { heroStats } from '../data/site';
+import { images } from '../data/images';
+import { sections } from '../data/links';
+import { ctas } from '../data/ctas';
+import OptimizedImage from './seo/OptimizedImage.astro';
+import { defaultSizes } from '../lib/images';
+---
+
+<section class="hero" aria-labelledby="hero-heading">
+  <div class="hero-bg" aria-hidden="true">
+    <OptimizedImage
+      src={images.heroBg}
+      alt="Offplan Immobilien Investment Ägypten — Skyline und Wachstumsmarkt"
+      width={1920}
+      height={1080}
+      priority
+      sizes={defaultSizes('hero')}
+      class="hero-bg-img"
+    />
+    <div class="hero-bg-overlay"></div>
+  </div>
+  <div class="container hero-content">
+    <div class="hero-badge">
+      <span class="badge badge-urgent">
+        <span class="hero-dot"></span>
+        Marktfenster · vorbehaltlich Verfügbarkeit
+      </span>
+    </div>
+
+    <h1 id="hero-heading">
+      Offplan Immobilien in Ägypten —<br />
+      <span class="text-gradient">früh einsteigen, smart Vermögen aufbauen</span>
+    </h1>
+
+    <div class="hero-offer">
+      <span style="font-size:1.25rem">⭐</span>
+      <div>
+        <strong>Strukturierter Einstieg — direkt vom Bauträger</strong>
+        <span>Zinsfreie Bauträger-Raten nach Prüfung · Euro-Kalkulation · lokale Due Diligence</span>
+      </div>
+    </div>
+
+    <p class="hero-desc">
+      <strong>Zinsfreie Raten nach Prüfung. Direkte Bauträger-Projekte. Immobilienbesitz im Wachstumsmarkt Ägypten.</strong>
+      Tatari begleitet Investoren aus Deutschland, Österreich und der Schweiz — mit persönlicher Beratung,
+      Euro-Kalkulation und lokaler Due Diligence. Investiere dort, wo Wachstum gerade entsteht.
+    </p>
+
+    <div class="hero-actions">
+      <a href={sections.kontakt} class="btn btn-primary">{ctas.consultation.label}</a>
+      <a href="/projekte" class="btn btn-outline">Alle Projekte</a>
+      <a href="/projekte/west-wind" class="btn btn-outline">{ctas.westWindAvailability.label}</a>
+    </div>
+
+    <div class="hero-trust">
+      <span>🇩🇪 Deutschsprachige Beratung</span>
+      <span>📋 Persönliche Vorqualifizierung</span>
+      <span>🏗️ Direkt vom Bauträger</span>
+    </div>
+
+    <div class="stats-grid hero-stats">
+      {heroStats.map((stat) => (
+        <div class="stat-card">
+          <div class="stat-value">{stat.value}</div>
+          <div class="stat-label">{stat.label}</div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,75 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import FloatingActions from '../../components/FloatingActions.astro';
+import BlogCard from '../../components/conversion/BlogCard.astro';
+import { articles, articleCategories } from '../../data/articles';
+import { canonicalUrl, buildWebPageSchema } from '../../lib/seo';
+import JsonLd from '../../components/seo/JsonLd.astro';
+
+const title = 'Wissen & Ratgeber | Offplan Ägypten | Tatari Investment';
+const description =
+  '40+ Ratgeber zu Offplan, Raten, Rendite, West Wind und Kaufprozess — für deutschsprachige Investoren in Ägypten.';
+---
+
+<Layout title={title} description={description} canonical={canonicalUrl('/wissen')}>
+  <Fragment slot="head">
+    <JsonLd data={buildWebPageSchema({ name: title, description, url: '/wissen' })} />
+  </Fragment>
+  <Header />
+  <main id="main-content">
+    <section class="hero" style="min-height:40vh">
+      <div class="container hero-content center">
+        <p class="section-label" style="justify-content:center">Ratgeber</p>
+        <h1>Wissen & Ratgeber</h1>
+        <p class="hero-desc" style="max-width:640px;margin-inline:auto">
+          Offplan, Raten, Standorte, Recht & Prozess — premium aufbereitet, claim-safe, mit internen Links zu
+          Projekt- und Pillar-Seiten.
+        </p>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container">
+        <div class="category-tags">
+          {articleCategories.map((c) => (
+            <span class="tag">{c}</span>
+          ))}
+        </div>
+        <div class="blog-grid">
+          {articles.map((a) => (
+            <BlogCard article={a} />
+          ))}
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+  <FloatingActions />
+</Layout>
+
+<style>
+  .category-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 2rem;
+  }
+  .tag {
+    font-size: 0.75rem;
+    padding: 0.35rem 0.75rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    color: var(--text-dim);
+  }
+  .blog-grid {
+    display: grid;
+    gap: 1.25rem;
+  }
+  @media (min-width: 640px) {
+    .blog-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (min-width: 1024px) {
+    .blog-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+</style>
